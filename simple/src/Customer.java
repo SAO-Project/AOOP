@@ -10,7 +10,7 @@ public class Customer extends Person{
 	private Checking checking;
 	private Savings savings;
 	private Credit credit;
-	
+
 	public Customer(){
 		super();
 	}
@@ -58,8 +58,7 @@ public class Customer extends Person{
 		int creditAccountNumber,
 		double creditAmount,
 		int maxCredit
-	)
-	{
+	) {
 		super(firstName, lastName, dob, address, phone);
 		this.id = id;
 		this.checking = new Checking(
@@ -78,6 +77,19 @@ public class Customer extends Person{
 			maxCredit
 		);
 		this.credit.setCustomer(this);
+	}
+
+	/**
+	 * Used for file util.
+	 */
+	public Customer(String firstName, String lastName, String dob, String id,
+					String address, String phoneNumber,
+					Checking checkingAccount, Credit creditAccount,
+					Savings savingsAccount) {
+		super(firstName, lastName, dob, address, phoneNumber);
+		this.checking = checkingAccount;
+		this.credit = creditAccount;
+		this.savings = savingsAccount;
 	}
 	
 	/*-----------------------------------------------------------------------------------------------------------------
