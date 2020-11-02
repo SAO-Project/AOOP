@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * @author Alex Avila
@@ -35,7 +36,14 @@ public interface IBankDB {
 	 * @param fullName the name of the Customer
 	 * @return returns the Customer of the name fullName
 	 */
-	Customer getCustomer(String fullName);
+	Optional<Customer> getCustomer(String fullName);
+
+	/**
+	 * Get a customer using their respective
+	 * @param id
+	 * @return
+	 */
+	Optional<Customer> getCustomerId(String id);
 	
 	/**
 	 * checks if the bank contains a Checkings account
@@ -63,7 +71,7 @@ public interface IBankDB {
 	 * @param accountNumber queries account using account number
 	 * @return returns the respective account of the account number
 	 */
-	Account getAccount(int accountNumber);
+	Optional<Account> getAccount(int accountNumber);
 	
 	/**
 	 * adds a transactions that was made when the users does a transaction
