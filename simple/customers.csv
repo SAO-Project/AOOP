@@ -1,0 +1,37 @@
+First Name,Last Name,Date of Birth,IdentificationNumber,Address,Phone Number,Checking Account Number,Savings Account Number,Credit Account Number,Checking Starting Balance,Savings Starting Balance,Credit Starting Balance
+Mickey,Mouse,"November 22, 1943",000-00-0001,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1000,2000,3000,960.94,3845.93,-1549.33
+Donald,Duck,"September 5, 1983",000-00-0002,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1001,2001,3001,1688.89,1731.09,-986.23
+Minnie,Mouse,"April 9, 2010",000-00-0003,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1002,2002,3002,121.36,676.12,-459.78
+Goofy,Disney,"July 2, 1933",000-00-0004,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1003,2003,3003,1587.85,4811.16,-752.22
+Pluto,Disney,"July 5, 1941",000-00-0005,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1004,2004,3004,547.56,2316.37,-411.84
+Chip,Disney,"January 12, 1947",000-00-0006,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1005,2005,3005,1060.3,3286.32,-1492.58
+Dale,Disney,"November 28, 1930",000-00-0007,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1006,2006,3006,301.9,1940.11,-1775.92
+Cinderella,Disney,"November 14, 1977",000-00-0008,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1007,2007,3007,1061.07,2876.42,-1039.75
+Ariel,Disney,"September 15, 1932",000-00-0009,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1008,2008,3008,19.45,3091.05,-113.11
+Jasmine,Disney,"September 20, 1932",000-00-0010,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1009,2009,3009,1745.05,4135.41,-1456.51
+Aladdin,Disney,"November 9, 1992",000-00-0011,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1010,2010,3010,699.52,3517.98,-464.05
+Simba,Disney,"July 25, 1934",000-00-0012,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1011,2011,3011,1566.61,1570.65,-980.76
+Mufassa,Disney,"July 29, 1965",000-00-0013,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1012,2012,3012,958.83,3483.09,-1918.16
+Aurora,Disney,"January 21, 1937",000-00-0014,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1013,2013,3013,1396.14,1644.06,-271.98
+Peter,Pan,"November 11, 1973",000-00-0015,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1014,2014,3014,1817.07,1405.99,-307.82
+Woody,Disney,"July 2, 1990",000-00-0016,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1015,2015,3015,1486.52,3904.7,-1610.58
+Buzz,Lightyear,"June 5, 2003",000-00-0017,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1016,2016,3016,1969.33,3035.22,-481.38
+Jafar,Aladdin,"December 11, 1995",000-00-0018,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1017,2017,3017,803.62,3034.57,-1822.07
+Ursela,Mermaid,"January 9, 1937",000-00-0019,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1018,2018,3018,855.38,2398.88,-250.54
+Beast,Disney,"August 29, 1969",000-00-0020,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1019,2019,3019,682.79,168.04,-128.34
+Belle,Disney,"September 6, 1928",000-00-0021,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1020,2020,3020,403.9,1412.94,-391.33
+Cruella,De Vil,"September 22, 1996",000-00-0022,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1021,2021,3021,966.03,4079.2,-69.18
+Scar,Lion,"June 18, 2017",000-00-0023,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1022,2022,3022,344.68,3510.62,-311.93
+Simba,King,"March 13, 2018",000-00-0024,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1023,2023,3023,1624.91,3397.5,-211.95
+Gaston,Disney,"July 11, 1943",000-00-0025,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1024,2024,3024,1181.1,414.81,-1403.22
+Shere,Khan,"September 15, 1962",000-00-0026,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1025,2025,3025,1972.54,3912.97,-714.46
+Captaiin,Hook,"December 6, 1971",000-00-0027,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1026,2026,3026,997.05,1425.77,-1869.37
+Kaa,Disney,"November 10, 1961",000-00-0028,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1027,2027,3027,1084.34,4665.51,-1979.55
+Evil,Queen,"February 18, 1981",000-00-0029,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1028,2028,3028,955.49,4205.99,-1858.65
+Pinocchio,Disney,"July 3, 1941",000-00-0030,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1029,2029,3029,1713.08,3767.19,-215.12
+Prince,Eric,"September 28, 1953",000-00-0031,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1030,2030,3030,114.21,1978.53,-1016.1
+Quasimodo,Disney,"November 4, 1989",000-00-0032,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1031,2031,3031,1206.59,4790.61,-1975.11
+Hercules,Disney,"February 14, 1966",000-00-0033,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1032,2032,3032,668.7,1602.05,-1767.56
+Mulan,Disney,"July 6, 1966",000-00-0034,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1033,2033,3033,1096.88,285.32,-1441.93
+Lilo,Disney,"September 21, 1969",000-00-0035,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1034,2034,3034,1844.34,146.14,-1790.21
+Stitch,Disney,"January 20, 1954",000-00-0036,"1313 Disneyland Dr, Anaheim, CA 92802",(714) 781-4636,1035,2035,3035,341.33,1858.86,-35.2
