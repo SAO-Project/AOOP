@@ -3,6 +3,7 @@ public abstract class Account {
 	protected int number;
 	protected double balance;
 	protected Customer customer;
+	protected Boolean isActive;
 	
 	/**
 	 * Default constructor
@@ -17,6 +18,7 @@ public abstract class Account {
 	public Account(int number, double balance){
 		this.number = number;
 		this.balance = balance;
+		this.isActive = true;
 	}
 	
 	/*-----------------------------------------------------------------------------------------------------------------
@@ -34,6 +36,8 @@ public abstract class Account {
 	public Customer getCustomer() {
 		return customer;
 	}
+
+	public Boolean  getIsActive() {return isActive;}
 	
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Setters
