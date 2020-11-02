@@ -15,7 +15,13 @@ public class CheckingTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-	
+
+	@Test
+	public void testCheckingAccountType() {
+		assertEquals(checking.getAccountType(), AccountType.CHECKING);
+	}
+
+
 	@Test
 	public void deposit1() {
 		checking.deposit(100);

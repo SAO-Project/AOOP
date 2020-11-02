@@ -18,7 +18,12 @@ public class CreditTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-	
+
+	@Test
+	public void testAccountType() {
+		assertEquals(credit1.getAccountType(), AccountType.CREDIT);
+	}
+
 	@Test
 	public void deposit1() {
 		try{

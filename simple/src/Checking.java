@@ -11,7 +11,9 @@ public class Checking extends Account {
 	/**
 	 * Default constructor
 	 */
-	public Checking(){}
+	public Checking(){
+		this.accountType = AccountType.CHECKING;
+	}
 	
 	/**
 	 * Constructor that uses the number and balance as parameter because they are the only information about
@@ -21,6 +23,7 @@ public class Checking extends Account {
 	 */
 	public Checking(int number, double balance){
 		super(number, balance);
+		this.accountType  = AccountType.CHECKING;
 	}
 	
 	/**

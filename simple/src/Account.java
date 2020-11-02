@@ -4,6 +4,7 @@ public abstract class Account {
 	protected double balance;
 	protected Customer customer;
 	protected Boolean isActive;
+	protected AccountType accountType;
 	
 	/**
 	 * Default constructor
@@ -38,6 +39,8 @@ public abstract class Account {
 	}
 
 	public Boolean  getIsActive() {return isActive;}
+
+	public AccountType getAccountType() {return accountType;}
 	
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Setters

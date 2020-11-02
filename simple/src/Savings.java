@@ -11,7 +11,9 @@ public class Savings extends Account {
 	/**
 	 * Default Constructor
 	 */
-	public Savings(){}
+	public Savings(){
+		this.accountType = AccountType.SAVINGS;
+	}
 	
 	/**
 	 * This constructor is the does not take interest rate but it is the one used in RunBank because
@@ -21,6 +23,7 @@ public class Savings extends Account {
 	 */
 	public Savings(int number, double balance){
 		super(number, balance);
+		this.accountType = AccountType.SAVINGS;
 	}
 	
 	/**
