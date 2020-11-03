@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class BankCustomerData implements IBankDB{
     private HashMap<String, Customer> nameToCustomer;
-    private HashMap<String, Customer> idToCustomer;
+    private HashMap<Integer, Customer> idToCustomer;
     private HashMap<Integer, Customer> accountNumberToCustomer;
     private HashMap<Integer, Account> accountNumberToAccount;
     private HashMap<Customer, ArrayList<String>> transactions;
@@ -25,7 +25,7 @@ public class BankCustomerData implements IBankDB{
      * @param idToCustomer Customer id to customer object.
      */
     public BankCustomerData(HashMap<String, Customer> nameToCustomer,
-                            HashMap<String, Customer> idToCustomer) {
+                            HashMap<Integer, Customer> idToCustomer) {
         this.nameToCustomer = nameToCustomer;
         this.idToCustomer = idToCustomer;
         createAccountNumberToCustomerHashMap(this.nameToCustomer);
@@ -60,13 +60,13 @@ public class BankCustomerData implements IBankDB{
     @Override
     public Optional<Customer> getCustomer(String fullName) {
         if (nameToCustomer.containsKey(fullName)) {
-            return Optional.of(idToCustomer.get(fullName));
+            return Optional.of(nameToCustomer.get(fullName));
         }
         return Optional.empty();
     }
 
     @Override
-    public Optional<Customer> getCustomerId(String id) {
+    public Optional<Customer> getCustomer(int id) {
         if (idToCustomer.containsKey(id)) {
             return Optional.of(idToCustomer.get(id));
         }

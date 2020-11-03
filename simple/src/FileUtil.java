@@ -60,7 +60,7 @@ public class FileUtil {
      */
     public static BankCustomerData readFile(String pathToFile) {
         HashMap<String, Customer> nameToCustomer = new HashMap<>();
-        HashMap<String, Customer> idToCustomer = new HashMap<>();
+        HashMap<Integer, Customer> idToCustomer = new HashMap<>();
         try {
             // Open file.
             BufferedReader  cvsReader =
@@ -157,7 +157,7 @@ public class FileUtil {
                             splitLine[FIRST_NAME],              /* =firstName */
                             splitLine[LAST_NAME],               /* =lastName */
                             splitLine[DOB],                     /* =DOB */
-                            splitLine[ID],                      /* =id */
+                            parseIdNum(splitLine[ID]).orElseThrow(), /* =id */
                             removeQuotes(splitLine[ADDRESS]),   /* =address */
                             splitLine[PHONE_NUMBER],            /* =phoneNumber */
                             splitLine[EMAIL],                   /* =email */

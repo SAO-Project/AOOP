@@ -43,7 +43,7 @@ public interface IBankDB {
 	 * @param id
 	 * @return
 	 */
-	Optional<Customer> getCustomerId(String id);
+	Optional<Customer> getCustomer(int id);
 	
 	/**
 	 * checks if the bank contains a Checkings account

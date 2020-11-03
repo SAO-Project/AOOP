@@ -35,6 +35,7 @@ public class Credit extends Account{
 	public Credit(int number, double balance, int maxCredit){
 		super(number, balance);
 		this.maxCredit = maxCredit;
+		this.accountType = AccountType.CREDIT;
 	}
 	
 	/**
