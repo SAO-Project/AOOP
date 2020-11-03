@@ -116,6 +116,10 @@ public class Customer extends Person{
 		return credit;
 	}
 	
+	public String getFullName(){
+		return firstName + " " + lastName;
+	}
+	
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Setters
 	 ----------------------------------------------------------------------------------------------------------------*/
@@ -159,6 +163,19 @@ public class Customer extends Person{
 	public void paySomeone(Customer dest, double amount) throws RuntimeException{
 		//get checking account from customer
 		transfer(checking, dest.getChecking(), amount);
+	}
+	
+	Account getAccountByType(String type) throws RuntimeException{
+		switch(type){
+			case "Savings":
+				return savings;
+			case "Checking":
+				return checking;
+			case "Credit":
+				return credit;
+			default:
+				throw new RuntimeException("not a valid account type");
+		}
 	}
 	
 	/**
