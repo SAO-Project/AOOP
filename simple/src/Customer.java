@@ -6,6 +6,8 @@
  * Is a person who has an ID and owns three different type of accounts for the bank
  */
 public class Customer extends Person{
+	private String password;
+	private String email;
 	private String id;
 	private Checking checking;
 	private Savings savings;
@@ -83,13 +85,15 @@ public class Customer extends Person{
 	 * Used for file util.
 	 */
 	public Customer(String firstName, String lastName, String dob, String id,
-					String address, String phoneNumber,
-					Checking checkingAccount, Credit creditAccount,
-					Savings savingsAccount) {
+					String address, String phoneNumber, String email,
+					String password, Checking checkingAccount,
+					Credit creditAccount, Savings savingsAccount) {
 		super(firstName, lastName, dob, address, phoneNumber);
 		this.checking = checkingAccount;
 		this.credit = creditAccount;
 		this.savings = savingsAccount;
+		this.password = password;
+		this.email = email;
 	}
 	
 	/*-----------------------------------------------------------------------------------------------------------------
@@ -236,5 +240,17 @@ public class Customer extends Person{
 			checkingString +
 			savingsString +
 			creditString;
+	}
+
+
+
+	/**
+	 * Use this method to retrieve hash name.
+	 *
+	 * @param customer Customer to get hashName from object.
+	 * @return Hash name.
+	 */
+	public static String getHashName(Customer customer) {
+		return customer.getFirstName() + " " + customer.getLastName();
 	}
 }

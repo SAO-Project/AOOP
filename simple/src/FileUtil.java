@@ -20,7 +20,6 @@ import java.util.Optional;
  * Runs operations related to file writing and reading.
  */
 public class FileUtil {
-
     private static final String FAILURE_PARSE_MESSAGE = "Failed to parse ";
     private static final String REGEX = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
@@ -38,6 +37,8 @@ public class FileUtil {
     static int SAVING_STARTING_BALANCE = -1;
     static int CREDIT_STATING_BALANCE = -1;
     static int CREDIT_MAX = -1;
+    static int PASSWORD = -1;
+    static int EMAIL = -1;
 
     /**
      * No Instance of the class should be allowed.
@@ -58,9 +59,8 @@ public class FileUtil {
      * BankCustomerData object also contains the next ID available.
      */
     public static BankCustomerData readFile(String pathToFile) {
-        HashMap<String, Customer> hashNameToCustomer = new HashMap<>();
-        HashMap<Integer, Customer> idToCustomer = new HashMap<>();
-
+        HashMap<String, Customer> nameToCustomer = new HashMap<>();
+        HashMap<String, Customer> idToCustomer = new HashMap<>();
         try {
             // Open file.
             BufferedReader  cvsReader =
@@ -69,12 +69,17 @@ public class FileUtil {
 
             setEachIndex(cvsReader.readLine().split(","));
             while ((line = cvsReader.readLine()) != null) {
+                Customer customer = parseLine(line.split(REGEX)).orElseThrow();
 
+                nameToCustomer.put(Customer.getHashName(customer), customer);
+                idToCustomer.put(customer.getId(), customer);
             }
         } catch (Exception e) {
-
+            // Uncomment if debugging
+            e.printStackTrace();
+            System.out.println("Failed to read line");
         }
-        return new BankCustomerData(hashNameToCustomer, idToCustomer);
+        return new BankCustomerData(nameToCustomer, idToCustomer);
     }
 
     /**
@@ -85,11 +90,8 @@ public class FileUtil {
     public static void setEachIndex(String[] listOfValues) {
         for (int i = 0; i < listOfValues.length; i++) {
             switch (listOfValues[i]) {
-                case "Identification Number":
-                    ID = i;
-                    break;
-                case "Savings Account Number":
-                    SAVING_ACCOUNT_NUMBER = i;
+                case "First Name":
+                    FIRST_NAME = i;
                     break;
                 case "Last Name":
                     LAST_NAME = i;
@@ -97,35 +99,45 @@ public class FileUtil {
                 case "Date of Birth":
                     DOB = i;
                     break;
-                case "Checking Account Number":
-                    CHECKING_ACCOUNT_NUMBER = i;
+                case "Identification Number":
+                    ID = i;
                     break;
-                case "Credit Account Number":
-                    CREDIT_ACCOUNT_NUMBER = i;
+                case "Password":
+                    PASSWORD = i;
                     break;
-                case "Phone Number":
-                    PHONE_NUMBER = i;
-                    break;
-                case "Checking Starting Balance":
-                    CHECKING_STARTING_BALANCE = i;
-                    break;
-                case "Savings Starting Balance":
-                    SAVING_STARTING_BALANCE = i;
-                    break;
-                case "Credit Max":
-                    CREDIT_MAX = i;
-                    break;
-                case "Credit Starting Balance":
-                    CREDIT_STATING_BALANCE = i;
+                case "Email":
+                    EMAIL = i;
                     break;
                 case "Address":
                     ADDRESS = i;
                     break;
-                case "First Name":
-                    FIRST_NAME = i;
+                case "Phone Number":
+                    PHONE_NUMBER = i;
+                    break;
+                case "Savings Account Number":
+                    SAVING_ACCOUNT_NUMBER = i;
+                    break;
+                case "Savings Starting Balance":
+                    SAVING_STARTING_BALANCE = i;
+                    break;
+                case "Checking Account Number":
+                    CHECKING_ACCOUNT_NUMBER = i;
+                    break;
+                case "Checking Starting Balance":
+                    CHECKING_STARTING_BALANCE = i;
+                    break;
+                case "Credit Account Number":
+                    CREDIT_ACCOUNT_NUMBER = i;
+                    break;
+                case "Credit Starting Balance":
+                    CREDIT_STATING_BALANCE = i;
+                    break;
+                case "Credit Max":
+                    CREDIT_MAX = i;
                     break;
                 default:
                     System.out.println("ERROR at " + i);
+                    System.out.println(listOfValues[i]);
             }
         }
     }
@@ -142,12 +154,14 @@ public class FileUtil {
         try {
             return Optional.of(
                     new Customer(
-                            splitLine[FIRST_NAME], /* =firstName */
-                            splitLine[LAST_NAME], /* =lastName */
-                            splitLine[DOB], /* =DOB */
-                            splitLine[ID], /* =id */
-                            removeQuotes(splitLine[ADDRESS]), /* =address */
-                            splitLine[PHONE_NUMBER], /* =phoneNumber */
+                            splitLine[FIRST_NAME],              /* =firstName */
+                            splitLine[LAST_NAME],               /* =lastName */
+                            splitLine[DOB],                     /* =DOB */
+                            splitLine[ID],                      /* =id */
+                            removeQuotes(splitLine[ADDRESS]),   /* =address */
+                            splitLine[PHONE_NUMBER],            /* =phoneNumber */
+                            splitLine[EMAIL],                   /* =email */
+                            splitLine[PASSWORD],                /* =password*/
                             parseCheckingAccount(
                                     splitLine[CHECKING_ACCOUNT_NUMBER] /* =accountNumStr */,
                                     splitLine[CHECKING_STARTING_BALANCE] /* =accountBalanceStr */)

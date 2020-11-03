@@ -13,6 +13,7 @@ public class Credit extends Account{
 	 */
 	public Credit(){
 		super();
+		this.accountType = AccountType.CREDIT;
 	}
 	
 	/**
@@ -22,6 +23,7 @@ public class Credit extends Account{
 	 */
 	public Credit(int number, double balance){
 		super(number, balance);
+		this.accountType  = AccountType.CREDIT;
 	}
 	
 	/**

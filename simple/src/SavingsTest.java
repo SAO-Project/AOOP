@@ -15,7 +15,12 @@ public class SavingsTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-	
+
+	@Test
+	public void testAccountType() {
+		assertEquals(savings.getAccountType(), AccountType.SAVINGS);
+	}
+
 	@Test
 	public void deposit1() {
 		savings.deposit(20);
