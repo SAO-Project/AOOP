@@ -16,7 +16,7 @@ public class CustomerTest {
 			"November",
 			"1313 Disneyland",
 			"(714) 781-4636",
-			"000-00-0001",
+			000-00-0001,
 			new Checking(
 				1000,
 				960.94
@@ -36,7 +36,7 @@ public class CustomerTest {
 			"September",
 			"1313 Disneyland",
 			"(714) 781-4636",
-			"000-00-0002",
+			000000002,
 			new Checking(
 				1001,
 				1688.89

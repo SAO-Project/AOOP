@@ -8,7 +8,7 @@
 public class Customer extends Person{
 	private String password;
 	private String email;
-	private String id;
+	private int id;
 	private Checking checking;
 	private Savings savings;
 	private Credit credit;
@@ -34,7 +34,7 @@ public class Customer extends Person{
 		String dob,
 		String address,
 		String phone,
-		String id,
+		int id,
 		Checking checking,
 		Savings savings,
 		Credit credit)
@@ -52,7 +52,7 @@ public class Customer extends Person{
 		String dob,
 		String address,
 		String phone,
-		String id,
+		int id,
 		int checkingAccountNumber,
 		double checkingAmount,
 		int savingsAccountNumber,
@@ -84,11 +84,12 @@ public class Customer extends Person{
 	/**
 	 * Used for file util.
 	 */
-	public Customer(String firstName, String lastName, String dob, String id,
+	public Customer(String firstName, String lastName, String dob, int id,
 					String address, String phoneNumber, String email,
 					String password, Checking checkingAccount,
 					Credit creditAccount, Savings savingsAccount) {
 		super(firstName, lastName, dob, address, phoneNumber);
+		this.id = id;
 		this.checking = checkingAccount;
 		this.credit = creditAccount;
 		this.savings = savingsAccount;
@@ -100,7 +101,7 @@ public class Customer extends Person{
 	                                            Getters
 	 ----------------------------------------------------------------------------------------------------------------*/
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 	
@@ -128,7 +129,7 @@ public class Customer extends Person{
 	                                            Setters
 	 ----------------------------------------------------------------------------------------------------------------*/
 	
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	

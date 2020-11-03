@@ -119,4 +119,15 @@ public abstract class Account {
 			throw e;
 		}
 	}
+
+	/**
+	 * Retrieves account info.
+	 *
+	 * @return account info in string.
+	 */
+	public String accountStr() {
+		return "\n" + getAccountTypeStr() + ": \n" +
+				"Account number: " + number + "\n" +
+				"Account balance: " + balance + "\n";
+	}
 }

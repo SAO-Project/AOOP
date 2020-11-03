@@ -21,7 +21,12 @@ public class RunBank {
         userOrBankManager(bankCustomerData);
     }
 
-
+    /**
+     * Runs main menu.
+     *
+     * @param bankCustomer
+     * @return
+     */
     private static ArrayList<String> userOrBankManager(
             BankCustomerData bankCustomer) {
         ArrayList<String> logs = new ArrayList<String>();
@@ -39,6 +44,7 @@ public class RunBank {
             try {
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
+                        logs.addAll(accessCustomer(bankCustomer));
                         break;
                     case 2:
                         break;
@@ -64,9 +70,10 @@ public class RunBank {
         Scanner scanner = new Scanner(System.in);
 
         if (customer.isEmpty()) {
-            // TODO(Edd1e234): Add bank statement code.
             return logs;
         }
+
+        System.out.println(customer.get().getId());
 
         while (true) {
             try {
@@ -162,9 +169,11 @@ public class RunBank {
         System.out.println("Select account to inquire");
         Optional<Account> account = getAccount(customer);
         if (account.isPresent()) {
+            System.out.println(account.get().accountStr());
             return Optional.of(customer.getFullName() + " inquires " +
                     account.get().getAccountTypeStr() + " balance.");
         }
+        System.out.println("Failed to locate");
         return Optional.empty();
     }
 
@@ -318,7 +327,7 @@ public class RunBank {
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
                         System.out.println("Enter Id: ");
-                        String customerId = scanner.nextLine();
+                        int customerId = Integer.parseInt(scanner.nextLine());
 
                         customer = bankCustomerData.getCustomer(customerId);
 
@@ -390,6 +399,7 @@ public class RunBank {
                         break;
                     case 3:
                         if (customer.getCredit().getIsActive()) {
+                            System.out.println("Credit account...");
                             return Optional.of(customer.getCredit());
                         }
                         System.out.println("You do not have an active Credit" +
