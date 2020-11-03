@@ -115,6 +115,14 @@ public class Customer extends Person{
 	public Credit getCredit() {
 		return credit;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getFullName() {
+		return firstName + " " + lastName;
+	}
 	
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Setters

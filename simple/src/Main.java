@@ -7,8 +7,23 @@ import java.util.Optional;
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello World");
-        System.out.println("Alex Hello world");
-        Optional<String> hey = Optional.empty();
+        String str = "Alex";
+
+        Optional<String> option = Optional.of(str);
+        Optional<String> option2 = Optional.empty();
+
+        if (option.isPresent()) {
+            System.out.println(option.get());
+        }
+
+        if (option2.isEmpty()) {
+            System.out.println("Option2");
+        }
+
+
+        option.ifPresent(System.out::println);
+
+        // Throw if empty.
+        String str2 = option2.orElseThrow();
     }
 }

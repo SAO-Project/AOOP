@@ -41,6 +41,18 @@ public abstract class Account {
 	public Boolean  getIsActive() {return isActive;}
 
 	public AccountType getAccountType() {return accountType;}
+
+	public String getAccountTypeStr() {
+		switch (accountType) {
+			case CHECKING:
+				return "Checking account";
+			case SAVINGS:
+				return "Savings account";
+			case CREDIT:
+				return "Credit account";
+		}
+		return "FAIL FAIL";
+	}
 	
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Setters
