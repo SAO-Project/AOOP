@@ -13,11 +13,10 @@ import java.util.Arrays;
  */
 public class RunBank {
     final private static String SELECT_ONE = "Please select one";
-    final private static String PATH_TO_FILE = "/Users/greywind/Desktop/Utep" +
-            "/Fall 2020/AOOP/Programming Assignment 4/simple/Bank_4_users.csv";
+    final private static String PATH_TO_FILE = "simple/Bank_4_users.csv";
 
     public static void main(String[] args) {
-        BankCustomerData bankCustomerData = FileUtil.readFile(PATH_TO_FILE);
+        IBankDB bankCustomerData = FileUtil.readFile(PATH_TO_FILE);
         userOrBankManager(bankCustomerData);
     }
 
@@ -27,8 +26,7 @@ public class RunBank {
      * @param bankCustomer
      * @return
      */
-    private static ArrayList<String> userOrBankManager(
-            BankCustomerData bankCustomer) {
+    private static ArrayList<String> userOrBankManager(IBankDB bankCustomer) {
         ArrayList<String> logs = new ArrayList<String>();
         Scanner scanner = new Scanner(System.in);
 
@@ -51,6 +49,8 @@ public class RunBank {
                     case 3:
                         break;
                     case 4:
+                        TransactionFileMenu transactionFileMenu = new TransactionFileMenu(bankCustomer, scanner);
+                        transactionFileMenu.askForFileName();
                         break;
                     case 5:
                         return null;
@@ -64,7 +64,7 @@ public class RunBank {
     }
 
     public static ArrayList<String> accessCustomer(
-            BankCustomerData bankCustomerData) {
+            IBankDB bankCustomerData) {
         ArrayList<String> logs = new ArrayList<>();
         Optional<Customer> customer = getCustomer(bankCustomerData);
         Scanner scanner = new Scanner(System.in);
@@ -100,9 +100,10 @@ public class RunBank {
         }
     }
 
-    public static ArrayList<String> customerMenu(Customer customer,
-                                                 BankCustomerData
-                                                         bankCustomerData) {
+    public static ArrayList<String> customerMenu(
+        Customer customer,
+        IBankDB bankCustomerData
+    ) {
         ArrayList<String> logs = new ArrayList<String>();
         Scanner scanner = new Scanner(System.in);
 
@@ -136,8 +137,7 @@ public class RunBank {
                         transferMoney(customer).ifPresent(logs::add);
                         break;
                     case 5:
-                        paySomeone(customer, bankCustomerData)
-                                .ifPresent(logs::add);
+                        paySomeone(customer, bankCustomerData).ifPresent(logs::add);
                         break;
                     case 6:
                         System.out.println("Printing logs of current session");
@@ -278,9 +278,10 @@ public class RunBank {
      * @param bankCustomerData Used to retrieve customer to pay money to.
      * @return If empty failed to pay.
      */
-    public static Optional<String> paySomeone(Customer customer,
-                                              BankCustomerData
-                                                         bankCustomerData) {
+    public static Optional<String> paySomeone(
+        Customer customer,
+        IBankDB bankCustomerData
+    ) {
         System.out.println("Select customer to pay");
         Optional<Customer> toCustomer = getCustomer(bankCustomerData);
         if (toCustomer.isEmpty()) {
@@ -311,8 +312,7 @@ public class RunBank {
      * @return If empty user did not wish to select customer account, else
      * contains customer.
      */
-    public static Optional<Customer> getCustomer(
-            BankCustomerData bankCustomerData) {
+    public static Optional<Customer> getCustomer(IBankDB bankCustomerData) {
         Scanner scanner = new Scanner(System.in);
         Optional<Customer> customer;
         while (true) {
