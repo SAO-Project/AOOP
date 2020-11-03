@@ -72,7 +72,7 @@ public class RunBank {
         if (customer.isEmpty()) {
             return logs;
         }
-        
+
         while (true) {
             try {
                 System.out.println("Hello " + customer.get().getFirstName() +
