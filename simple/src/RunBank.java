@@ -16,14 +16,13 @@ import java.util.regex.Matcher;
  * Runs Bank
  */
 public class RunBank {
+    private final static String EXIT = "exit";
     private final static String INVALID_INPUT = "Could not read input";
     final private static String SELECT_ONE = "Please select one";
-    final private static String PATH_TO_FILE = "/Users/greywind/Desktop/Utep" +
-            "/Fall 2020/AOOP/Programming Assignment 4/simple/Bank_4_users.csv";
-    private final static String EXIT = "exit";
+    final private static String PATH_TO_FILE = "simple/Bank_4_users.csv";
 
     public static void main(String[] args) {
-        BankCustomerData bankCustomerData = FileUtil.readFile(PATH_TO_FILE);
+        IBankDB bankCustomerData = FileUtil.readFile(PATH_TO_FILE);
         userOrBankManager(bankCustomerData);
     }
 
@@ -33,8 +32,7 @@ public class RunBank {
      * @param bankCustomerData
      * @return
      */
-    private static ArrayList<String> userOrBankManager(
-            BankCustomerData bankCustomerData) {
+    private static ArrayList<String> userOrBankManager(IBankDB bankCustomerData) {
         ArrayList<String> logs = new ArrayList<String>();
         Scanner scanner = new Scanner(System.in);
 
@@ -57,8 +55,11 @@ public class RunBank {
                                 attemptToAddCustomerToSystem(bankCustomerData));
                         break;
                     case 3:
+                        bankManager(bankCustomerData);
                         break;
                     case 4:
+                        TransactionFileMenu transactionFileMenu = new TransactionFileMenu(bankCustomerData, scanner);
+                        transactionFileMenu.askForFileName();
                         break;
                     case 5:
                         return null;
@@ -72,7 +73,7 @@ public class RunBank {
     }
 
     public static ArrayList<String> accessCustomer(
-            BankCustomerData bankCustomerData) {
+            IBankDB bankCustomerData) {
         ArrayList<String> logs = new ArrayList<>();
         Optional<Customer> customer = getCustomer(bankCustomerData);
         Scanner scanner = new Scanner(System.in);
@@ -108,9 +109,10 @@ public class RunBank {
         }
     }
 
-    public static ArrayList<String> customerMenu(Customer customer,
-                                                 BankCustomerData
-                                                         bankCustomerData) {
+    public static ArrayList<String> customerMenu(
+        Customer customer,
+        IBankDB bankCustomerData
+    ) {
         ArrayList<String> logs = new ArrayList<String>();
         Scanner scanner = new Scanner(System.in);
 
@@ -144,8 +146,7 @@ public class RunBank {
                         transferMoney(customer).ifPresent(logs::add);
                         break;
                     case 5:
-                        paySomeone(customer, bankCustomerData)
-                                .ifPresent(logs::add);
+                        paySomeone(customer, bankCustomerData).ifPresent(logs::add);
                         break;
                     case 6:
                         System.out.println("Printing logs of current session");
@@ -155,6 +156,8 @@ public class RunBank {
                         printBankAccount(customer);
                         break;
                     case 8:
+                        logs.addAll(activateAccounts(customer, bankCustomerData,
+                                false));
                         break;
                     case 9:
                         return logs;
@@ -169,13 +172,101 @@ public class RunBank {
     }
 
     /**
+     * Run Bank menu. Can inquire about anyone's account.
+     *
+     * Search for any customer and print out there info. Search for any
+     * account and print out that accounts info.
+     *
+     * @param bankDB Contains all customer accounts
+     */
+    public static void bankManager(IBankDB bankDB) {
+        System.out.println("Welcome Manager!");
+        Scanner scanner = new Scanner(System.in);
+
+        while(true) {
+            displayMenuNewLine(new String[] {
+                    "Bank Manager Menu",
+                    "1. View Customer",
+                    "2. Inquire account by number",
+                    "3. Print all customers",
+                    "4. Exit"
+            });
+            try {
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
+                        getCustomer(bankDB).ifPresent(customer ->
+                                bankManagerCustomerMenu(customer, bankDB));
+                        break;
+                    case 2:
+                        System.out.println("Enter account number");
+
+                        // Prints out account
+                        bankDB.getAccount(Integer.parseInt(scanner.nextLine()))
+                                .ifPresent(Account::accountStr);
+                        break;
+                    case 3:
+                        // Prints out all customers
+                        bankDB.getCustomers().forEach(customer ->
+                                System.out.println(customer.toString()));
+                        break;
+                    case 4:
+                        return;
+                    default:
+                        System.out.println(SELECT_ONE);
+                }
+            } catch (Exception e) {
+                System.out.println(INVALID_INPUT);
+            }
+        }
+    }
+
+    /**
+     * Handles all actions having to do with bank manager and single customer.
+     *
+     * @param customer         Single customer bank manager has selected.
+     * @param bankDB Contains all customer data. Used to retrieve all
+     *                         bank statements.
+     */
+    public static void bankManagerCustomerMenu(
+            Customer customer, IBankDB bankDB) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(customer.getFullName() + " customer account");
+        while (true) {
+            try {
+                displayMenuNewLine(new String[] {
+                        "1. View Accounts",
+                        "2. Execute BankStatement",
+                        "3. Exit"
+                });
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
+                        getAccount(customer)
+                                .ifPresent(account ->
+                                        System.out.println(
+                                                account.accountStr()));
+                        break;
+                    case 2:
+                        // Create BankStatement
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        System.out.println(SELECT_ONE);
+                }
+            } catch (Exception e) {
+                System.out.println(INVALID_INPUT);
+            }
+        }
+    }
+
+    /**
      * Attempt to add a customer to the system.
      *
      * @param bankCustomerData
      * @return
      */
     private static ArrayList<String> attemptToAddCustomerToSystem(
-            BankCustomerData bankCustomerData) {
+            IBankDB bankCustomerData) {
         ArrayList<String> logs = new ArrayList<String>();
         Scanner scanner = new Scanner(System.in);
         String firstName;
@@ -433,9 +524,10 @@ public class RunBank {
      * @param bankCustomerData Used to retrieve customer to pay money to.
      * @return If empty failed to pay.
      */
-    public static Optional<String> paySomeone(Customer customer,
-                                              BankCustomerData
-                                                         bankCustomerData) {
+    public static Optional<String> paySomeone(
+        Customer customer,
+        IBankDB bankCustomerData
+    ) {
         System.out.println("Select customer to pay");
         Optional<Customer> toCustomer = getCustomer(bankCustomerData);
         if (toCustomer.isEmpty()) {
@@ -466,8 +558,7 @@ public class RunBank {
      * @return If empty user did not wish to select customer account, else
      * contains customer.
      */
-    public static Optional<Customer> getCustomer(
-            BankCustomerData bankCustomerData) {
+    public static Optional<Customer> getCustomer(IBankDB bankCustomerData) {
         Scanner scanner = new Scanner(System.in);
         Optional<Customer> customer;
         while (true) {
@@ -642,7 +733,7 @@ public class RunBank {
      * @return Returns logs containing all actions.
      */
     public static ArrayList<String> activateAccounts(
-            Customer customer, BankCustomerData bankCustomerData,
+            Customer customer, IBankDB bankCustomerData,
             boolean activateAtLeastOneAccountIsNecessary) {
 
         ArrayList<String> logs = new ArrayList<>();
@@ -723,7 +814,7 @@ public class RunBank {
      * @param bankCustomerData Used to validate the account number setting.
      */
     public static Optional<String> setAccountInfo(
-            Account account, BankCustomerData bankCustomerData) {
+            Account account, IBankDB bankCustomerData) {
         int accountNumberType = 1000;
         if (account.getAccountType() == AccountType.SAVINGS) {
             accountNumberType = 2000;
@@ -767,7 +858,8 @@ public class RunBank {
      * @return Logging info.
      */
     public static Optional<String> setCreditAccount(
-            Credit creditAccount, BankCustomerData bankCustomerData) {
+            Credit creditAccount, IBankDB
+            bankCustomerData) {
         Scanner scanner = new Scanner(System.in);
 
         // Generates an account number necessary.
@@ -809,7 +901,7 @@ public class RunBank {
      * @return New account number.
      */
     public static int generateAccountNumber(
-            BankCustomerData bankCustomerData,
+            IBankDB bankCustomerData,
             int accountNumberType) {
         int accountNumber = accountNumberType + bankCustomerData.getNextId();
         if (bankCustomerData.containsAccountNumber(accountNumber)) {

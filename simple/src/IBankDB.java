@@ -105,4 +105,10 @@ public interface IBankDB {
 	 * @return return the bank statement of the user.
 	 */
 	BankStatement getBankStatement(Customer customer);
+
+	/**
+	 * Get next available ID.
+	 * @return Next available ID.
+	 */
+	int getNextId();
 }
