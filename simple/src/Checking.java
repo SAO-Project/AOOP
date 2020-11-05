@@ -12,6 +12,7 @@ public class Checking extends Account {
 	 * Default constructor
 	 */
 	public Checking(){
+		super();
 		this.accountType = AccountType.CHECKING;
 	}
 	

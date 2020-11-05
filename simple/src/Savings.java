@@ -12,6 +12,7 @@ public class Savings extends Account {
 	 * Default Constructor
 	 */
 	public Savings(){
+		super();
 		this.accountType = AccountType.SAVINGS;
 	}
 	
