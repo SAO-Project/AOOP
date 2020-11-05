@@ -66,4 +66,8 @@ public class Credit extends Account{
 	public void withdraw(double amount){
 		throw new RuntimeException("No withdraw allowed from credit account");
 	}
+
+	public void setCreditMax(int maxCredit) {
+		this.maxCredit = maxCredit;
+	}
 }

@@ -263,16 +263,4 @@ public class Customer extends Person{
 			savingsString +
 			creditString;
 	}
-
-
-
-	/**
-	 * Use this method to retrieve hash name.
-	 *
-	 * @param customer Customer to get hashName from object.
-	 * @return Hash name.
-	 */
-	public static String getHashName(Customer customer) {
-		return customer.getFirstName() + " " + customer.getLastName();
-	}
 }

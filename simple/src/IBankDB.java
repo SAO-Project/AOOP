@@ -65,7 +65,14 @@ public interface IBankDB {
 	 * @return returns the account of certain account number
 	 */
 	boolean containsCredit(int accountNumber);
-	
+
+	/**
+	 * Checks if the bank contains this account.
+	 * @param accountNumber uses account number to query account.
+	 * @return returns the account of certain account number.
+	 */
+	boolean containsAccountNumber(int accountNumber);
+
 	/**
 	 * gets account using its account number
 	 * @param accountNumber queries account using account number
@@ -98,4 +105,10 @@ public interface IBankDB {
 	 * @return return the bank statement of the user.
 	 */
 	BankStatement getBankStatement(Customer customer);
+
+	/**
+	 * Get next available ID.
+	 * @return Next available ID.
+	 */
+	int getNextId();
 }

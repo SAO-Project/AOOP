@@ -9,7 +9,9 @@ public abstract class Account {
 	/**
 	 * Default constructor
 	 */
-	public Account(){ }
+	public Account(){
+		this.isActive = false;
+	}
 	
 	/**
 	 * Abstract constructor use to initiate the attributes that the account types will inherit
@@ -69,6 +71,11 @@ public abstract class Account {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive  = isActive;
+	}
+
 	
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Actuators

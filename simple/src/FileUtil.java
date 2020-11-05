@@ -71,7 +71,7 @@ public class FileUtil {
             while ((line = cvsReader.readLine()) != null) {
                 Customer customer = parseLine(line.split(REGEX)).orElseThrow();
 
-                nameToCustomer.put(Customer.getHashName(customer), customer);
+                nameToCustomer.put(customer.getFullName(), customer);
                 idToCustomer.put(customer.getId(), customer);
             }
         } catch (Exception e) {
