@@ -37,12 +37,14 @@ public class BankCustomerData implements IBankDB{
      * Will not add.
      */
     public void addCustomer(Customer customer) {
-        if (!containsCustomer(Customer.getHashName(customer))) {
+        // TODO(Eddie): Remove this.
+        if (containsCustomer(customer.getFullName())) {
             // TODO(Alex): Should we throw here if we try to add a customer
             //  that's already present. Its an edge case...
+            System.out.println("Customer already active!");
             return;
         }
-        this.nameToCustomer.put(Customer.getHashName(customer), customer);
+        this.nameToCustomer.put(customer.getFullName(), customer);
         this.idToCustomer.put(customer.getId(), customer);
         addCustomerToAccountNumberToCustomerMap(customer);
     }
@@ -53,8 +55,8 @@ public class BankCustomerData implements IBankDB{
     }
 
     @Override
-    public boolean containsCustomer(String hashName) {
-        return this.nameToCustomer.containsKey(hashName);
+    public boolean containsCustomer(String fullName) {
+        return this.nameToCustomer.containsKey(fullName);
     }
 
     @Override
@@ -86,6 +88,13 @@ public class BankCustomerData implements IBankDB{
     @Override
     public boolean containsCredit(int accountNumber) {
         return getAccount(accountNumber).isPresent();
+    }
+
+    @Override
+    public boolean containsAccountNumber(int accountNumber) {
+        return containsSavings(accountNumber) ||
+                containsChecking(accountNumber) ||
+                containsCredit(accountNumber);
     }
 
     @Override
@@ -158,5 +167,9 @@ public class BankCustomerData implements IBankDB{
             this.accountNumberToAccount.put(
                     customer.getCredit().getNumber(), customer.getCredit());
         }
+    }
+
+    public int getNextId() {
+        return idToCustomer.values().size() +1;
     }
 }

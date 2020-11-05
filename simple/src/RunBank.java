@@ -1,7 +1,11 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 
 /**
@@ -12,9 +16,11 @@ import java.util.Arrays;
  * Runs Bank
  */
 public class RunBank {
+    private final static String INVALID_INPUT = "Could not read input";
     final private static String SELECT_ONE = "Please select one";
     final private static String PATH_TO_FILE = "/Users/greywind/Desktop/Utep" +
             "/Fall 2020/AOOP/Programming Assignment 4/simple/Bank_4_users.csv";
+    private final static String EXIT = "exit";
 
     public static void main(String[] args) {
         BankCustomerData bankCustomerData = FileUtil.readFile(PATH_TO_FILE);
@@ -24,11 +30,11 @@ public class RunBank {
     /**
      * Runs main menu.
      *
-     * @param bankCustomer
+     * @param bankCustomerData
      * @return
      */
     private static ArrayList<String> userOrBankManager(
-            BankCustomerData bankCustomer) {
+            BankCustomerData bankCustomerData) {
         ArrayList<String> logs = new ArrayList<String>();
         Scanner scanner = new Scanner(System.in);
 
@@ -44,9 +50,11 @@ public class RunBank {
             try {
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
-                        logs.addAll(accessCustomer(bankCustomer));
+                        logs.addAll(accessCustomer(bankCustomerData));
                         break;
                     case 2:
+                        logs.addAll(
+                                attemptToAddCustomerToSystem(bankCustomerData));
                         break;
                     case 3:
                         break;
@@ -144,18 +152,165 @@ public class RunBank {
                         logs.forEach(System.out::println);
                         break;
                     case 7:
+                        printBankAccount(customer);
                         break;
                     case 8:
                         break;
                     case 9:
                         return logs;
                     default:
+                        System.out.println("Please select one");
 
                 }
             } catch (Exception e) {
                 // TODO(Edd1e234): Fill this...
             }
         }
+    }
+
+    /**
+     * Attempt to add a customer to the system.
+     *
+     * @param bankCustomerData
+     * @return
+     */
+    private static ArrayList<String> attemptToAddCustomerToSystem(
+            BankCustomerData bankCustomerData) {
+        ArrayList<String> logs = new ArrayList<String>();
+        Scanner scanner = new Scanner(System.in);
+        String firstName;
+        String lastName;
+        String dob;
+        String address;
+        String phoneNumber;
+        String email;
+
+        // Get first name.
+        do {
+            System.out.println("Enter First Name");
+            firstName = scanner.nextLine();
+            if (firstName.toLowerCase().equals(EXIT)) {
+                return logs;
+            }
+
+        } while (!nameValidator(firstName));
+
+        // Get last name
+        do {
+            System.out.println("Enter Last Name");
+            lastName = scanner.nextLine();
+            if (lastName.toLowerCase().equals(EXIT)) {
+                return logs;
+            }
+        } while (!nameValidator(lastName));
+
+        // Get date of birth
+        do {
+            System.out.println("Enter Date of Birth DD/MM/YEAR");
+            System.out.print("DD: ");
+            String dd = scanner.nextLine();
+
+            if (dd.toLowerCase().equals(EXIT)) {
+                return logs;
+            }
+
+            System.out.print("MM: ");
+            String mm = scanner.nextLine();
+
+
+            System.out.print("YEAR: ");
+            String year = scanner.nextLine();
+
+            dob = dd + "/" + mm + "/" + year;
+
+        } while (!dateOfBirthValidator(dob));
+
+        do {
+            System.out.println("Enter email");
+            email = scanner.nextLine();
+
+            if (email.toLowerCase().equals(EXIT)) {
+                return logs;
+            }
+        } while (!emailValidator(email));
+
+        // Get Address
+        while (true) {
+            System.out.println("Enter address");
+            address = scanner.nextLine();
+
+            if (address.toLowerCase().equals(EXIT)) {
+                return logs;
+            }
+
+            System.out.println("Confirm address: " + "\n\t" + address);
+            displayMenuNewLine(new String[]{
+                    "1. Yes",
+                    "2. No"
+            });
+            try {
+                int answer = Integer.parseInt(scanner.nextLine());
+
+                if (answer == 1) {
+                    break;
+                }
+                // TODO(Edd1e234) Check this at some point!
+                if (answer != 2) {
+                    System.out.println(INVALID_INPUT);
+                }
+                System.out.println("Restarting address input");
+            } catch (Exception exception) {
+                System.out.println("Restarting address input");
+            }
+        }
+        // Get Phone number
+        while (true) {
+            System.out.println("Enter Phone number (9xxxxxxxxx)");
+            phoneNumber = scanner.nextLine();
+            if (phoneNumber.toLowerCase().equals(EXIT)) {
+                return new ArrayList<>();
+            }
+            if (phoneNumberValidator(phoneNumber)) {
+                phoneNumber = "(" + phoneNumber.substring(0, 3) + ") " +
+                        phoneNumber.substring(3, 6) + "-"
+                        + phoneNumber.substring(6, 10);
+                break;
+            } else {
+                System.out.println("Failed to validate phone number\n" +
+                        "Try again.");
+            }
+        }
+
+        Customer customer = new Customer(
+                firstName,
+                lastName,
+                dob,
+                bankCustomerData.getNextId(),
+                phoneNumber,
+                email,
+                address,
+                generatePassword(firstName, lastName),
+                new Checking(),
+                new Credit(),
+                new Savings());
+        if (bankCustomerData.containsCustomer(customer.getFirstName())) {
+            System.out.println("Customer already in system... EXISTING");
+            return new ArrayList<>();
+        }
+        System.out.println(bankCustomerData.getNextId());
+        logs.addAll(activateAccounts(customer, bankCustomerData,
+                true));
+
+        // Add customer
+        bankCustomerData.addCustomer(customer);
+
+        // Add customer to the system.
+        logs.add(customer.getFullName() + " Added to the system");
+
+
+        System.out.println("\nID: " + customer.getId());
+        System.out.println("Password: " + customer.getPassword());
+        return logs;
     }
 
     /**
@@ -450,5 +605,273 @@ public class RunBank {
     // Util methods
     public static void displayMenuNewLine(String[] prompts) {
         Arrays.stream(prompts).forEach(System.out::println);
+    }
+
+    /**
+     * Prints out Bank info for customer
+     * @param customer
+     */
+    private static void printBankAccount(Customer customer) {
+        System.out.println(customer.getFullName());
+        System.out.println(customer.getId());
+
+        if (customer.getChecking().getIsActive()) {
+            System.out.println(customer.getChecking().accountStr());
+        }
+
+        if (customer.getSavings().getIsActive()) {
+            System.out.println(customer.getSavings().accountStr());
+        }
+
+        if (customer.getCredit().getIsActive()) {
+            System.out.println(customer.getSavings().accountStr());
+        }
+    }
+
+
+    /**
+     * Activate customers
+     *
+     * @param customer                             Creates account for this
+     *                                             account.
+     * @param bankCustomerData                     Contains customer data used
+     *                                             to create a new account.
+     * @param activateAtLeastOneAccountIsNecessary If this is activate at least
+     *                                             one account. Will not allow
+     *                                             the user to exit.
+     * @return Returns logs containing all actions.
+     */
+    public static ArrayList<String> activateAccounts(
+            Customer customer, BankCustomerData bankCustomerData,
+            boolean activateAtLeastOneAccountIsNecessary) {
+
+        ArrayList<String> logs = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        String alreadyActive = "Already Active";
+        while (true) {
+            displayMenuNewLine(new String[]{
+                    "Activate accounts",
+                    "1. Checking",
+                    "2. Saving",
+                    "3. Credit",
+                    "4. Exit"
+            });
+            try {
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
+                        // TODO(Edd1e234): Check this funtionality
+                        if (customer.getChecking().getIsActive()) {
+                            System.out.println(alreadyActive);
+                            break;
+                        }
+                        // Prints and adds to logs action
+                        setAccountInfo(
+                                customer.getChecking(), bankCustomerData)
+                                .ifPresent(System.out::println);
+                        logs.add("Checking account was activated");
+                        break;
+                    case 2:
+                        if (customer.getSavings().getIsActive()) {
+                            System.out.println(alreadyActive);
+                            break;
+                        }
+                        // Prints and adds to logs action
+                        setAccountInfo(
+                                customer.getSavings(), bankCustomerData)
+                                .ifPresent(System.out::println);
+                        logs.add("Saving Account was activated");
+                        break;
+                    case 3:
+                        if (customer.getCredit().getIsActive()) {
+                            System.out.println(alreadyActive);
+                            break;
+                        }
+                        // Prints and adds to logs action
+                        setCreditAccount(
+                                customer.getCredit(), bankCustomerData)
+                                .ifPresent(System.out::println);
+                        logs.add("Credit Account was activated");
+                        break;
+                    case 4:
+                        // In the case that at least one account
+                        if (activateAtLeastOneAccountIsNecessary) {
+                            if (customer.getChecking().getIsActive() ||
+                                    customer.getSavings().getIsActive() ||
+                                    customer.getCredit().getIsActive()) {
+                                return logs;
+                            }
+                            System.out.println("Need to activate at least " +
+                                    "one account!");
+                            break;
+                        }
+                        return logs;
+                    default:
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                System.out.println(INVALID_INPUT);
+            }
+        }
+    }
+
+    /**
+     * Meant to only be used for checking and savings account.
+     * <p>
+     * Credit accounts are set separately.
+     *
+     * @param account          Needs to be Savings or Checking account.
+     * @param bankCustomerData Used to validate the account number setting.
+     */
+    public static Optional<String> setAccountInfo(
+            Account account, BankCustomerData bankCustomerData) {
+        int accountNumberType = 1000;
+        if (account.getAccountType() == AccountType.SAVINGS) {
+            accountNumberType = 2000;
+        }
+
+        int accountNumber = generateAccountNumber(
+                bankCustomerData, accountNumberType);
+
+        // Set starting balance!
+        // TODO(Edd1e234): Make sure this works properly
+        Optional<Double> startingBalance;
+        while (true) {
+            try {
+                // Change in accounts
+                if (account.getAccountType() == AccountType.SAVINGS) {
+                    startingBalance = getAmountOfMoney("Enter starting " +
+                            "balance");
+                } else {
+                    startingBalance = getAmountOfMoney("Enter Checking " +
+                            "balance");
+                }
+                if (startingBalance.isEmpty()) {
+                    return Optional.empty();
+                }
+                break;
+            } catch (Exception exception) {
+                System.out.println(INVALID_INPUT);
+            }
+        }
+        account.setBalance(startingBalance.get());
+        account.setNumber(accountNumber);
+        account.setIsActive(true);
+        return Optional.of("Account activated\n");
+    }
+
+    /**
+     * Credit is unique, needs to be settled differently.
+     *
+     * @param creditAccount    The actual credit account.
+     * @param bankCustomerData Contains all customer data necessary.
+     * @return Logging info.
+     */
+    public static Optional<String> setCreditAccount(
+            Credit creditAccount, BankCustomerData bankCustomerData) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Generates an account number necessary.
+        int accountNumber =
+                generateAccountNumber(bankCustomerData, 3000);
+
+        // Generates starting balance!
+        Optional<Double> startingBalance =
+                getAmountOfMoney("Enter starting balance(Enter as a " +
+                        "positive will convert to negative)");
+
+        if (startingBalance.isEmpty()) {
+            return Optional.empty();
+        }
+
+        int creditMax;
+        while (true) {
+            try {
+                System.out.println("What is the credit max");
+                creditMax = Integer.parseInt(scanner.nextLine());
+                break;
+            } catch (Exception exception) {
+                System.out.println(INVALID_INPUT);
+            }
+        }
+        creditAccount.setCreditMax(creditMax);
+        creditAccount.setNumber(accountNumber);
+        creditAccount.setBalance(startingBalance.get() * -1);
+        creditAccount.setIsActive(true);
+        return Optional.of("Account activated\n");
+    }
+
+    /**
+     * Generates account number.
+     *
+     * @param bankCustomerData Used to get next available account number and
+     *                         check if the next available account number is not
+     *                         already set.
+     * @return New account number.
+     */
+    public static int generateAccountNumber(
+            BankCustomerData bankCustomerData,
+            int accountNumberType) {
+        int accountNumber = accountNumberType + bankCustomerData.getNextId();
+        if (bankCustomerData.containsAccountNumber(accountNumber)) {
+            System.out.println("Something has gone wrong. Account logic" +
+                    " has failed");
+        }
+        return accountNumber;
+    }
+
+
+    /**
+     * Validates name.
+     *
+     * @param name Name to validate.
+     * @return If valid.
+     */
+    public static boolean nameValidator(String name) {
+        return Pattern.matches("[a-zA-Z]+", name);
+    }
+
+    /**
+     * Validates DOB.
+     *
+     * @param dob DOB to validate.
+     * @return If valid or not
+     */
+    public static boolean dateOfBirthValidator(String dob) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(dob);
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
+    }
+
+    /**
+     * Validates phone number.
+     *
+     * @param phoneNumber Number to validate.
+     * @return If phone number is valid.
+     */
+    private static boolean phoneNumberValidator(String phoneNumber) {
+        return phoneNumber.charAt(0) == '9' && phoneNumber.length() == 10
+                && Pattern.matches("[0-9]+", phoneNumber);
+    }
+
+    /**
+     * Validates email.
+     *
+     * @param email email to validate.
+     * @return If email is valid.
+     */
+    private static boolean emailValidator(String email) {
+        String emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
+        Pattern emailPattern = Pattern.compile(emailRegex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = emailPattern.matcher(email);
+        return matcher.find();
+    }
+
+    private static String generatePassword(String firstName, String lastName) {
+        return lastName + "*" + firstName + "!987";
     }
 }
