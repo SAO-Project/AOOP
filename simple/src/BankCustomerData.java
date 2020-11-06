@@ -16,18 +16,21 @@ public class BankCustomerData implements IBankDB{
     private HashMap<Integer, Customer> idToCustomer;
     private HashMap<Integer, Customer> accountNumberToCustomer;
     private HashMap<Integer, Account> accountNumberToAccount;
-    private HashMap<Customer, ArrayList<String>> transactions;
+    private ArrayList<Transaction> transactions;
+    private HashMap<Customer, ArrayList<Transaction>> customerToTransactions;
 
     /**
      * Creates a object to contain all bank data.
      *
-     * @param nameToCustomer "first_name last_name" -> customer
-     * @param idToCustomer Customer id to customer object.
      */
-    public BankCustomerData(HashMap<String, Customer> nameToCustomer,
-                            HashMap<Integer, Customer> idToCustomer) {
-        this.nameToCustomer = nameToCustomer;
-        this.idToCustomer = idToCustomer;
+    public BankCustomerData() {
+        this.nameToCustomer = new HashMap<>();
+        this.idToCustomer = new HashMap<>();
+        this.transactions = new ArrayList<>();
+        this.customerToTransactions = new HashMap<>();
+    
+        
+        
         createAccountNumberToCustomerHashMap(this.nameToCustomer);
     }
 
@@ -46,6 +49,7 @@ public class BankCustomerData implements IBankDB{
         }
         this.nameToCustomer.put(customer.getFullName(), customer);
         this.idToCustomer.put(customer.getId(), customer);
+        this.customerToTransactions.put(customer, new ArrayList<>());
         addCustomerToAccountNumberToCustomerMap(customer);
     }
 
@@ -92,9 +96,10 @@ public class BankCustomerData implements IBankDB{
 
     @Override
     public boolean containsAccountNumber(int accountNumber) {
-        return containsSavings(accountNumber) ||
-                containsChecking(accountNumber) ||
-                containsCredit(accountNumber);
+        return (containsSavings(accountNumber) ||
+            containsChecking(accountNumber) ||
+            containsCredit(accountNumber)
+        );
     }
 
     @Override
@@ -107,16 +112,27 @@ public class BankCustomerData implements IBankDB{
 
     @Override
     public void addTransaction(Transaction transaction) {
+        transactions.add(transaction);
+        Customer srcCustomer = transaction.getSrcCustomer();
+        Customer destCustomer = transaction.getDestCustomer();
+        
+        if(srcCustomer != null){
+            customerToTransactions.get(srcCustomer).add(transaction);
+        }
+    
+        if(destCustomer != null){
+            customerToTransactions.get(destCustomer).add(transaction);
+        }
     }
 
     @Override
     public Collection<Transaction> getTransactions() {
-        return null;
+        return transactions;
     }
 
     @Override
     public Collection<Transaction> getTransactions(Customer customer) {
-        return null;
+        return customerToTransactions.get(customer);
     }
 
     @Override
@@ -146,7 +162,7 @@ public class BankCustomerData implements IBankDB{
      *
      * @param customer Customer to add.
      */
-    public void addCustomerToAccountNumberToCustomerMap(Customer customer) {
+    private void addCustomerToAccountNumberToCustomerMap(Customer customer) {
         if (customer.getChecking().getIsActive()) {
             this.accountNumberToCustomer.put(
                     customer.getChecking().getNumber(), customer);

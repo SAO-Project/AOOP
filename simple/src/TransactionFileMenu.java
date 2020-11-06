@@ -25,7 +25,7 @@ public class TransactionFileMenu {
 		
 		fileScanner.nextLine();
 		while(fileScanner.hasNextLine()){
-			actionReader.proccess(fileScanner.nextLine());
+			actionReader.process(fileScanner.nextLine());
 		}
 	}
 }

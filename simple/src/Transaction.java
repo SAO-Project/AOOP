@@ -24,7 +24,6 @@ public class Transaction implements Printable {
 	 * @param destAccount Account where money is going to
 	 * @param amount amount of money that was transferred
 	 * @param action what type of transaction occurred
-	 * @param date the time when the transaction occurred
 	 */
 	public Transaction(
 		Customer srcCustomer,
@@ -32,8 +31,7 @@ public class Transaction implements Printable {
 		Customer destCustomer,
 		Account destAccount,
 		double amount,
-		String action,
-		String date
+		String action
 	){
 		this.srcCustomer = srcCustomer;
 		this.srcAccount = srcAccount;
@@ -41,7 +39,38 @@ public class Transaction implements Printable {
 		this.destAccount = destAccount;
 		this.amount = amount;
 		this.action = action;
-		this.date = date;
+	}
+	
+	/*-----------------------------------------------------------------------------------------------------------------
+	                                            Getters
+	 ----------------------------------------------------------------------------------------------------------------*/
+	
+	public Account getDestAccount() {
+		return destAccount;
+	}
+	
+	public Account getSrcAccount() {
+		return srcAccount;
+	}
+	
+	public Customer getSrcCustomer() {
+		return srcCustomer;
+	}
+	
+	public Customer getDestCustomer() {
+		return destCustomer;
+	}
+	
+	public double getAmount() {
+		return amount;
+	}
+	
+	public String getAction() {
+		return action;
+	}
+	
+	public String getDate() {
+		return date;
 	}
 	
 	/**
@@ -125,9 +154,9 @@ public class Transaction implements Printable {
 	 * @return returns formatted string
 	 */
 	private String depositsString(){
-		return ( srcCustomer.getFullName() + " deposited " +
+		return ( destCustomer.getFullName() + " deposited " +
 			getBalanceString() + " into their " +
-			destAccount.getClass().toString() + "account"
+			destAccount.getClass().toString() + " account"
 		);
 	}
 	
