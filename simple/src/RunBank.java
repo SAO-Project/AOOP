@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +26,24 @@ public class RunBank {
     public static void main(String[] args) {
         IBankDB bankCustomerData = FileUtil.readFile(PATH_TO_FILE);
         userOrBankManager(bankCustomerData);
+    
+        //Write log file
+        try {
+            FileWriter myWriter = new FileWriter("transactions.txt");
+        
+            //First line of the output file
+            myWriter.write("Disney Bank transaction file\n");
+        
+            //gets transaction from iterable
+        
+            for(Transaction transaction : bankCustomerData.getTransactions()){
+                myWriter.write(transaction.getString() + "\n");
+            }
+        
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+        }
     }
 
     /**
@@ -67,7 +87,8 @@ public class RunBank {
                         System.out.println(SELECT_ONE);
                 }
             } catch (Exception e) {
-                System.out.println("Exception caught");
+                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
     }

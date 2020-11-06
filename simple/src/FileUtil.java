@@ -58,9 +58,10 @@ public class FileUtil {
      * customer object. The other is customer ID to customer object.
      * BankCustomerData object also contains the next ID available.
      */
-    public static BankCustomerData readFile(String pathToFile) {
+    public static IBankDB readFile(String pathToFile) {
         HashMap<String, Customer> nameToCustomer = new HashMap<>();
         HashMap<Integer, Customer> idToCustomer = new HashMap<>();
+        IBankDB bankCustomerData = new BankCustomerData();
         try {
             // Open file.
             BufferedReader  cvsReader =
@@ -70,16 +71,15 @@ public class FileUtil {
             setEachIndex(cvsReader.readLine().split(","));
             while ((line = cvsReader.readLine()) != null) {
                 Customer customer = parseLine(line.split(REGEX)).orElseThrow();
-
-                nameToCustomer.put(customer.getFullName(), customer);
-                idToCustomer.put(customer.getId(), customer);
+                
+                bankCustomerData.addCustomer(customer);
             }
         } catch (Exception e) {
             // Uncomment if debugging
             e.printStackTrace();
             System.out.println("Failed to read line");
         }
-        return new BankCustomerData(nameToCustomer, idToCustomer);
+        return bankCustomerData;
     }
 
     /**
