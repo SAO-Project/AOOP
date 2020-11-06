@@ -36,6 +36,10 @@ public abstract class Account {
 		return balance;
 	}
 	
+	public String getBalanceString(){
+		return String.format("$%.2f", balance);
+	}
+	
 	public Customer getCustomer() {
 		return customer;
 	}
