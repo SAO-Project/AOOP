@@ -58,11 +58,12 @@ public class RunBank {
 
         while (true) {
             displayMenuNewLine(new String[]{
-                    "1. Customer",
-                    "2. Create Customer",
-                    "3. Bank Manager",
-                    "4. Read Transaction File",
-                    "5. Exit"
+                "What would you like to do today?\n",
+                "\t1. Sign in as Customer",
+                "\t2. Create Customer",
+                "\t3. Sign in as Bank Manager",
+                "\t4. Read Transaction File",
+                "\t5. Exit\n"
             });
 
             try {
@@ -84,11 +85,12 @@ public class RunBank {
                     case 5:
                         return null;
                     default:
-                        System.out.println(SELECT_ONE);
+                        System.out.println("Please enter a valid number");
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
+                System.out.println("Please insert a valid option");
+            } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
-                e.printStackTrace();
             }
         }
     }
@@ -141,16 +143,16 @@ public class RunBank {
         while (true) {
             try {
                 displayMenuNewLine(new String[] {
-                        "Select prompt",
-                        "1. Inquire Balance",
-                        "2. Deposit Money",
-                        "3. Withdraw money",
-                        "4. Transfer Money",
-                        "5. Pay Someone",
-                        "6. Print Logs",
-                        "7. View Bank Account",
-                        "8. Activate account",
-                        "9. Exit"
+                        "Select prompt\n",
+                        "\t1. Inquire Balance",
+                        "\t2. Deposit Money",
+                        "\t3. Withdraw money",
+                        "\t4. Transfer Money",
+                        "\t5. Pay Someone",
+                        "\t6. Print Logs",
+                        "\t7. View Bank Account",
+                        "\t8. Activate account",
+                        "\t9. Exit\n"
                 });
 
                 switch (Integer.parseInt(scanner.nextLine())) {
@@ -183,11 +185,13 @@ public class RunBank {
                     case 9:
                         return logs;
                     default:
-                        System.out.println("Please select one");
+                        System.out.println("Please select a valid option");
 
                 }
-            } catch (Exception e) {
-                // TODO(Edd1e234): Fill this...
+            } catch (NumberFormatException e) {
+                System.out.println("Please select a valid option");
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -223,7 +227,7 @@ public class RunBank {
 
                         // Prints out account
                         bankDB.getAccount(Integer.parseInt(scanner.nextLine()))
-                                .ifPresent(Account::accountStr);
+                                .ifPresent(Account::getString);
                         break;
                     case 3:
                         // Prints out all customers
@@ -261,10 +265,7 @@ public class RunBank {
                 });
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
-                        getAccount(customer)
-                                .ifPresent(account ->
-                                        System.out.println(
-                                                account.accountStr()));
+                        getAccount(customer).ifPresent(Account::print);
                         break;
                     case 2:
                         // Create BankStatement
@@ -431,12 +432,13 @@ public class RunBank {
      * @return Logs of action.
      */
     public static Optional<String> inquireBalance(Customer customer) {
-        System.out.println("Select account to inquire");
+        System.out.println("Select account to inquire\n");
         Optional<Account> account = getAccount(customer);
         if (account.isPresent()) {
-            System.out.println(account.get().accountStr());
-            return Optional.of(customer.getFullName() + " inquires " +
-                    account.get().getAccountTypeStr() + " balance.");
+            account.ifPresent(Account::print);
+            return Optional.of(
+                customer.getFullName() + " inquires " + account.get().getAccountTypeStr() + " balance."
+            );
         }
         System.out.println("Failed to locate");
         return Optional.empty();
@@ -448,7 +450,7 @@ public class RunBank {
      * @return If empty failed to deposit, else successful.
      */
     public static Optional<String> depositMoney(Customer customer) {
-        System.out.println("Select account deposit into");
+        System.out.println("Select account deposit into\n");
         Optional<Account> account = getAccount(customer);
         if (account.isEmpty()) {
             return Optional.empty();
@@ -479,7 +481,7 @@ public class RunBank {
      * @return If empty failed to withdraw, else successful.
      */
     public static Optional<String> withdrawMoney(Customer customer) {
-        System.out.println("Select account to withdraw from");
+        System.out.println("Select account to withdraw from\n");
         Optional<Account> account = getAccount(customer);
         if (account.isEmpty()) {
             return Optional.empty();
@@ -503,13 +505,13 @@ public class RunBank {
     }
 
     public static Optional<String> transferMoney(Customer customer) {
-        System.out.println("Select account to transfer from");
+        System.out.println("Select account to transfer from\n");
         Optional<Account> sourceAccount = getAccount(customer);
         if (sourceAccount.isEmpty()) {
             return Optional.empty();
         }
 
-        System.out.println("Select account to transfer to");
+        System.out.println("Select account to transfer to\n");
         Optional<Account> destAccount = getAccount(customer);
         if (destAccount.isEmpty()) {
             return Optional.empty();
@@ -549,7 +551,7 @@ public class RunBank {
         Customer customer,
         IBankDB bankCustomerData
     ) {
-        System.out.println("Select customer to pay");
+        System.out.println("Select customer to pay\n");
         Optional<Customer> toCustomer = getCustomer(bankCustomerData);
         if (toCustomer.isEmpty()) {
             return Optional.empty();
@@ -584,14 +586,15 @@ public class RunBank {
         Optional<Customer> customer;
         while (true) {
             displayMenuNewLine(new String[]{
-                    "1. Enter Customer Id",
-                    "2. Enter Full Name",
-                    "3. Exit"
+                "Select sign in option\n",
+                "\t1. Enter Customer Id",
+                "\t2. Enter Full Name",
+                "\t3. Exit\n"
             });
             try {
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
-                        System.out.println("Enter Id: ");
+                        System.out.print("Enter Id: ");
                         int customerId = Integer.parseInt(scanner.nextLine());
 
                         customer = bankCustomerData.getCustomer(customerId);
@@ -604,7 +607,7 @@ public class RunBank {
                         }
                         return customer;
                     case 2:
-                        System.out.println("Enter: Name");
+                        System.out.print("Enter full name: ");
 
                         customer =
                                 bankCustomerData.getCustomer(scanner.nextLine());
@@ -619,12 +622,12 @@ public class RunBank {
                     case 3:
                         return Optional.empty();
                     default:
-                        System.out.println("Please select one of the two.");
+                        System.out.println("Please select one of the options.");
                 }
-            } catch (Exception exception) {
-                // TODO(Edd1e234): Make this functionally work better.
-                System.out.println("ERROR AT getCustomerFromHashMapV2" +
-                        "(TRY AGAIN)");
+            } catch (NumberFormatException  e){
+                System.out.println("Please enter a valid option");
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -640,10 +643,10 @@ public class RunBank {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             displayMenuNewLine(new String[]{
-                    "1. Checking Account",
-                    "2. Saving Account",
-                    "3. Credit Account",
-                    "4. Type -1 to EXIT"
+                "\t1. Checking Account",
+                "\t2. Saving Account",
+                "\t3. Credit Account",
+                "\t4. Type -1 to EXIT\n"
             });
 
             try {
@@ -652,31 +655,29 @@ public class RunBank {
                         if (customer.getChecking().getIsActive()) {
                             return Optional.of(customer.getChecking());
                         }
-                        System.out.println("You do not have an active Checking" +
-                                " Account");
+                        System.out.println("You do not have an active Checking Account");
                         break;
                     case 2:
                         if (customer.getSavings().getIsActive()) {
                             return Optional.of(customer.getSavings());
                         }
-                        System.out.println("You do not have an active Savings" +
-                                " Account");
+                        System.out.println("You do not have an active Savings Account");
                         break;
                     case 3:
                         if (customer.getCredit().getIsActive()) {
-                            System.out.println("Credit account...");
                             return Optional.of(customer.getCredit());
                         }
-                        System.out.println("You do not have an active Credit" +
-                                " Account");
+                        System.out.println("You do not have an active Credit Account");
                         break;
                     case -1:
                         return Optional.empty();
                     default:
-                        System.out.println("Please select one. ");
+                        System.out.println("Please select a valid option. ");
                 }
-            } catch (Exception exception) {
-                System.out.println("Could not read input.");
+            } catch(NumberFormatException e){
+                System.out.println("Invalid option. please try again");
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -706,10 +707,10 @@ public class RunBank {
                     continue;
                 }
                 return Optional.of(amount);
-            } catch (Exception exception) {
-
-                // TODO(Edd1e234): Clean this us, make error message generic.
-                System.out.println("Could not read input please try again.");
+            } catch(NumberFormatException e){
+                System.out.println("Invalid amount. please try again");
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -728,15 +729,15 @@ public class RunBank {
         System.out.println(customer.getId());
 
         if (customer.getChecking().getIsActive()) {
-            System.out.println(customer.getChecking().accountStr());
+            customer.getChecking().print();
         }
 
         if (customer.getSavings().getIsActive()) {
-            System.out.println(customer.getSavings().accountStr());
+            customer.getSavings().print();
         }
 
         if (customer.getCredit().getIsActive()) {
-            System.out.println(customer.getSavings().accountStr());
+            customer.getCredit().print();
         }
     }
 
@@ -754,9 +755,9 @@ public class RunBank {
      * @return Returns logs containing all actions.
      */
     public static ArrayList<String> activateAccounts(
-            Customer customer, IBankDB bankCustomerData,
-            boolean activateAtLeastOneAccountIsNecessary) {
-
+        Customer customer, IBankDB bankCustomerData,
+        boolean activateAtLeastOneAccountIsNecessary
+    ) {
         ArrayList<String> logs = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String alreadyActive = "Already Active";
@@ -812,15 +813,13 @@ public class RunBank {
                                     customer.getCredit().getIsActive()) {
                                 return logs;
                             }
-                            System.out.println("Need to activate at least " +
-                                    "one account!");
+                            System.out.println("Need to activate at least one account!");
                             break;
                         }
                         return logs;
                     default:
                 }
             } catch (Exception exception) {
-                exception.printStackTrace();
                 System.out.println(INVALID_INPUT);
             }
         }
