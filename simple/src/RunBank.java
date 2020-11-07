@@ -25,7 +25,7 @@ public class RunBank {
     final private static String PATH_TO_FILE = "simple/Bank_4_users.csv";
 
     public static void main(String[] args) {
-        IBankDB bankCustomerData = FileUtil.readFile(PATH_TO_FILE);
+        IBankDB bankCustomerData = FileUtil.readFile(askForFileName());
         userOrBankManager(bankCustomerData);
     
         //Write log file
@@ -292,13 +292,11 @@ public class RunBank {
     /**
      * Attempt to add a customer to the system.
      *
-     * @param bankCustomerData
-     * @return
+     * @param bankCustomerData Contains customer data.
      */
-    private static ArrayList<String> attemptToAddCustomerToSystem(
+    private static void attemptToAddCustomerToSystem(
         IBankDB bankCustomerData
     ) {
-        ArrayList<String> logs = new ArrayList<String>();
         Scanner scanner = new Scanner(System.in);
         String firstName;
         String lastName;
@@ -312,7 +310,7 @@ public class RunBank {
             System.out.println("Enter First Name");
             firstName = scanner.nextLine();
             if (firstName.toLowerCase().equals(EXIT)) {
-                return logs;
+                return;
             }
 
         } while (!nameValidator(firstName));
@@ -322,7 +320,7 @@ public class RunBank {
             System.out.println("Enter Last Name");
             lastName = scanner.nextLine();
             if (lastName.toLowerCase().equals(EXIT)) {
-                return logs;
+                return;
             }
         } while (!nameValidator(lastName));
 
@@ -333,7 +331,7 @@ public class RunBank {
             String dd = scanner.nextLine();
 
             if (dd.toLowerCase().equals(EXIT)) {
-                return logs;
+                return;
             }
 
             System.out.print("MM: ");
@@ -352,7 +350,7 @@ public class RunBank {
             email = scanner.nextLine();
 
             if (email.toLowerCase().equals(EXIT)) {
-                return logs;
+                return;
             }
         } while (!emailValidator(email));
 
@@ -362,7 +360,7 @@ public class RunBank {
             address = scanner.nextLine();
 
             if (address.toLowerCase().equals(EXIT)) {
-                return logs;
+                return;
             }
 
             System.out.println("Confirm address: " + "\n\t" + address);
@@ -389,7 +387,7 @@ public class RunBank {
             System.out.println("Enter Phone number (9xxxxxxxxx)");
             phoneNumber = scanner.nextLine();
             if (phoneNumber.toLowerCase().equals(EXIT)) {
-                return new ArrayList<>();
+                return;
             }
             if (phoneNumberValidator(phoneNumber)) {
                 phoneNumber = "(" + phoneNumber.substring(0, 3) + ") " +
@@ -416,22 +414,13 @@ public class RunBank {
                 new Savings());
         if (bankCustomerData.containsCustomer(customer.getFirstName())) {
             System.out.println("Customer already in system... EXISTING");
-            return new ArrayList<>();
+            return;
         }
-        System.out.println(bankCustomerData.getNextId());
-        logs.addAll(activateAccounts(customer, bankCustomerData,
-                true));
 
         // Add customer
         bankCustomerData.addCustomer(customer);
-
-        // Add customer to the system.
-        logs.add(customer.getFullName() + " Added to the system");
-
-
         System.out.println("\nID: " + customer.getId());
         System.out.println("Password: " + customer.getPassword());
-        return logs;
     }
 
     /**
@@ -507,7 +496,7 @@ public class RunBank {
         
         Optional<Double> amountToWithdraw = 
                 getAmountOfMoney("Enter amount to withdraw");
-        if (account.isEmpty()) {
+        if (amountToWithdraw.isEmpty()) {
             return Optional.empty();
         }
         
@@ -762,7 +751,7 @@ public class RunBank {
 
     /**
      * Prints out Bank info for customer
-     * @param customer
+     * @param customer Contains bank info for user.
      */
     private static void printBankAccount(Customer customer) {
         System.out.println(customer.getFullName());
@@ -792,12 +781,10 @@ public class RunBank {
      * @param activateAtLeastSavingsAccount         If this is activate at least
      *                                             one account. Will not allow
      *                                             the user to exit.
-     * @return Returns logs containing all actions.
      */
-    public static ArrayList<String> activateAccounts(
+    public static void activateAccounts(
         Customer customer, IBankDB bankCustomerData,
         boolean activateAtLeastSavingsAccount) {
-        ArrayList<String> logs = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String alreadyActive = "Already Active";
         while (true) {
@@ -819,7 +806,6 @@ public class RunBank {
                         setAccountInfo(
                                 customer.getChecking(), bankCustomerData)
                                 .ifPresent(System.out::println);
-                        logs.add("Checking account was activated");
                         break;
                     case 2:
                         if (customer.getSavings().getIsActive()) {
@@ -830,7 +816,6 @@ public class RunBank {
                         setAccountInfo(
                                 customer.getSavings(), bankCustomerData)
                                 .ifPresent(System.out::println);
-                        logs.add("Saving Account was activated");
                         break;
                     case 3:
                         if (customer.getCredit().getIsActive()) {
@@ -841,18 +826,17 @@ public class RunBank {
                         setCreditAccount(
                                 customer.getCredit(), bankCustomerData)
                                 .ifPresent(System.out::println);
-                        logs.add("Credit Account was activated");
                         break;
                     case 4:
                         // In the case that at least one account
                         if (activateAtLeastSavingsAccount) {
                             if (customer.getSavings().getIsActive()) {
-                                return logs;
+                                return;
                             }
                             System.out.println("Need to activate at least one account!");
                             break;
                         }
-                        return logs;
+                        return;
                     default:
                 }
             } catch (Exception exception) {
@@ -1019,5 +1003,26 @@ public class RunBank {
 
     private static String generatePassword(String firstName, String lastName) {
         return lastName + "*" + firstName + "!987";
+    }
+
+    /**
+     * Retrieves user input file.
+     *
+     * Method is not dynamic. If file is not valid program should fail, but
+     * will fail gracefully.
+     * @return Path to customer data.
+     */
+    private static String askForFileName() {
+        Scanner scanner = new Scanner(System.in);
+        displayMenuNewLine(new String[] {
+                "If file is " + PATH_TO_FILE + " please type 1",
+                "Else type in file name"
+        });
+        String input = scanner.nextLine();
+
+        if (input.equals("1")) {
+            return PATH_TO_FILE;
+        }
+        return input;
     }
 }
