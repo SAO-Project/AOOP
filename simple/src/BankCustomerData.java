@@ -113,16 +113,12 @@ public class BankCustomerData implements IBankDB{
     @Override
     public void addTransaction(Transaction transaction) {
         transactions.add(transaction);
-        Customer srcCustomer = transaction.getSrcCustomer();
-        Customer destCustomer = transaction.getDestCustomer();
-        
-        if(srcCustomer != null){
-            customerToTransactions.get(srcCustomer).add(transaction);
-        }
-    
-        if(destCustomer != null){
-            customerToTransactions.get(destCustomer).add(transaction);
-        }
+        transaction.getSrcCustomer()
+                .ifPresent(customer ->
+                        customerToTransactions.get(customer).add(transaction));
+        transaction.getSrcCustomer()
+                .ifPresent(customer ->
+                        customerToTransactions.get(customer).add(transaction));
     }
 
     @Override

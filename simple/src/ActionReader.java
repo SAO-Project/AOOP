@@ -49,8 +49,12 @@ public class ActionReader {
 			srcAccount.transfer(destAccount, amount);
 			
 			bank.addTransaction(
-				new Transaction(srcCustomer, srcAccount, destCustomer, destAccount, amount, "pays")
-			);
+					new Transaction(
+							Optional.of(srcCustomer),
+							Optional.of(srcAccount),
+							Optional.of(destCustomer),
+							Optional.of(destAccount),
+							amount, "pays"));
 			
 		}catch(RuntimeException e){
 			String log = e.getMessage() + " in transaction: " + String.join(", ", actions);
@@ -71,8 +75,12 @@ public class ActionReader {
 			srcAccount.transfer(destAccount, amount);
 			
 			bank.addTransaction(
-				new Transaction(srcCustomer, srcAccount, destCustomer, destAccount, amount, "pays")
-			);
+				new Transaction(
+						Optional.of(srcCustomer),
+						Optional.of(srcAccount),
+						Optional.of(destCustomer),
+						Optional.of(destAccount),
+						amount, "pays"));
 			
 		}catch (NumberFormatException e){
 			System.out.println("Please enter a number");
@@ -91,14 +99,12 @@ public class ActionReader {
 		//Add transaction
 		bank.addTransaction(
 			new Transaction(
-				customer,
-				customer.getAccountByType(actions[2]),
-				null,
-				null,
+				Optional.of(customer),
+				Optional.of(customer.getAccountByType(actions[2])),
+				Optional.empty(),
+				Optional.empty(),
 				0,
-				"inquires"
-			)
-		);
+				"inquires"));
 	}
 	
 	private void withdraws(String[] actions){
@@ -111,14 +117,12 @@ public class ActionReader {
 			
 			bank.addTransaction(
 				new Transaction(
-					customer,
-					account,
-					null,
-					null,
+					Optional.of(customer),
+					Optional.of(account),
+					Optional.empty(),
+					Optional.empty(),
 					amount,
-					"withdraws"
-				)
-			);
+					"withdraws"));
 		}catch (NullPointerException e){
 			String log = "Failed Transaction: ";
 			for(int i = 0; i < actions.length; i++){
@@ -139,14 +143,12 @@ public class ActionReader {
 			
 			bank.addTransaction(
 				new Transaction(
-					customer,
-					account,
-					customer,
-					account,
+					Optional.of(customer),
+					Optional.of(account),
+					Optional.of(customer),
+					Optional.of(account),
 					amount,
-					"deposits"
-				)
-			);
+					"deposits"));
 			
 		} catch (NullPointerException e){
 			String log = e.getMessage() + " in transaction: " + String.join(", ", actions);
