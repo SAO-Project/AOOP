@@ -50,10 +50,8 @@ public class RunBank {
      * Runs main menu.
      *
      * @param bankCustomerData
-     * @return
      */
-    private static ArrayList<String> userOrBankManager(IBankDB bankCustomerData) {
-        ArrayList<String> logs = new ArrayList<String>();
+    private static void userOrBankManager(IBankDB bankCustomerData) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -69,20 +67,22 @@ public class RunBank {
             try {
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
-                        logs.addAll(accessCustomer(bankCustomerData));
+                        accessCustomer(bankCustomerData);
                         break;
                     case 2:
-                        logs.addAll(attemptToAddCustomerToSystem(bankCustomerData));
+                        attemptToAddCustomerToSystem(bankCustomerData);
                         break;
                     case 3:
                         bankManager(bankCustomerData);
                         break;
                     case 4:
-                        TransactionFileMenu transactionFileMenu = new TransactionFileMenu(bankCustomerData, scanner);
+                        TransactionFileMenu transactionFileMenu =
+                                new TransactionFileMenu(
+                                        bankCustomerData, scanner);
                         transactionFileMenu.askForFileName();
                         break;
                     case 5:
-                        return null;
+                        return;
                     default:
                         System.out.println("Please enter a valid number");
                 }
@@ -94,15 +94,14 @@ public class RunBank {
         }
     }
 
-    public static ArrayList<String> accessCustomer(
+    public static void accessCustomer(
         IBankDB bankCustomerData
     ) {
-        ArrayList<String> logs = new ArrayList<>();
         Optional<Customer> customer = getCustomer(bankCustomerData);
         Scanner scanner = new Scanner(System.in);
 
         if (customer.isEmpty()) {
-            return logs;
+            return;
         }
         
         while (true) {
@@ -116,7 +115,7 @@ public class RunBank {
 
                 // Exits if users asks
                 if (password.equals("-1")) {
-                    return logs;
+                    return;
                 }
 
                 // Return if empty.
@@ -125,18 +124,18 @@ public class RunBank {
                 }
 
                 // Perform customer actions
-                return customerMenu(customer.get(), bankCustomerData);
+                customerMenu(customer.get(), bankCustomerData);
             } catch (Exception e) {
                 System.out.println("Failed at accessingCustomer method");
             }
         }
     }
 
-    public static ArrayList<String> customerMenu(
+    public static void customerMenu(
         Customer customer,
         IBankDB bankCustomerData
     ) {
-        ArrayList<String> logs = new ArrayList<String>();
+        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
         Scanner scanner = new Scanner(System.in);
 
         // Asks user for option.
@@ -157,36 +156,42 @@ public class RunBank {
 
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
-                        inquireBalance(customer).ifPresent(logs::add);
+                        inquireBalance(customer).ifPresent(transactions::add);
                         break;
                     case 2:
-                        depositMoney(customer).ifPresent(logs::add); 
+                        depositMoney(customer).ifPresent(transactions::add);
                         break;
                     case 3:
-                        withdrawMoney(customer).ifPresent(logs::add);
+                        withdrawMoney(customer).ifPresent(transactions::add);
                         break;
                     case 4:
-                        transferMoney(customer).ifPresent(logs::add);
+                        transferMoney(customer).ifPresent(transactions::add);
                         break;
                     case 5:
-                        paySomeone(customer, bankCustomerData).ifPresent(logs::add);
+                        paySomeone(customer, bankCustomerData)
+                                .ifPresent(transactions::add);
                         break;
                     case 6:
-                        System.out.println("Printing logs of current session");
-                        logs.forEach(System.out::println);
+                        System.out.println("Logs for current session");
+                        transactions.forEach(
+                                transaction ->
+                                        System.out.println(
+                                                "\t" + transaction.getString()));
                         break;
                     case 7:
                         printBankAccount(customer);
                         break;
                     case 8:
-                        logs.addAll(activateAccounts(customer, bankCustomerData,
-                                false));
+                        activateAccounts(customer, bankCustomerData, false);
                         break;
                     case 9:
-                        return logs;
+                        transactions.forEach(
+                                transaction ->
+                                        bankCustomerData
+                                                .addTransaction(transaction));
+                        return;
                     default:
                         System.out.println("Please select a valid option");
-
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Please select a valid option");
@@ -432,14 +437,19 @@ public class RunBank {
      * @param customer Retrieves account from customer.
      * @return Logs of action.
      */
-    public static Optional<String> inquireBalance(Customer customer) {
+    public static Optional<Transaction> inquireBalance(Customer customer) {
         System.out.println("Select account to inquire\n");
         Optional<Account> account = getAccount(customer);
         if (account.isPresent()) {
             account.ifPresent(Account::print);
             return Optional.of(
-                customer.getFullName() + " inquires " + account.get().getAccountTypeStr() + " balance."
-            );
+                    new Transaction(
+                            Optional.of(customer),
+                            account,
+                            Optional.empty(),
+                            Optional.empty(),
+                            0,
+                            "inquires"));
         }
         System.out.println("Failed to locate");
         return Optional.empty();
@@ -450,7 +460,7 @@ public class RunBank {
      * @param customer Customer to deposit money into.
      * @return If empty failed to deposit, else successful.
      */
-    public static Optional<String> depositMoney(Customer customer) {
+    public static Optional<Transaction> depositMoney(Customer customer) {
         System.out.println("Select account deposit into\n");
         Optional<Account> account = getAccount(customer);
         if (account.isEmpty()) {
@@ -466,9 +476,14 @@ public class RunBank {
         try {
             account.get().deposit(amountOfMoneyToDeposit.get());
             System.out.println("Success!");
-            // TODO (Alex): Are you okay with this message
-            return Optional.of(customer.getFullName() + " deposits money into "
-                    + account.get().getAccountTypeStr());
+            return Optional.of(
+                    new Transaction(
+                            Optional.of(customer),
+                            account,
+                            Optional.of(customer),
+                            account,
+                            amountOfMoneyToDeposit.get(),
+                            "deposits"));
         } catch (Exception e) {
             // Prints out failure message.
             System.out.println(e.getMessage());
@@ -481,7 +496,7 @@ public class RunBank {
      * @param customer Customer to withdraw money from.
      * @return If empty failed to withdraw, else successful.
      */
-    public static Optional<String> withdrawMoney(Customer customer) {
+    public static Optional<Transaction> withdrawMoney(Customer customer) {
         System.out.println("Select account to withdraw from\n");
         Optional<Account> account = getAccount(customer);
         if (account.isEmpty()) {
@@ -497,15 +512,21 @@ public class RunBank {
         try {
             account.get().withdraw(amountToWithdraw.get());
             System.out.println("Success!");
-            return Optional.of(customer.getFullName() + " withdraws from "
-                    + account.get().getAccountTypeStr());
+            return Optional.of(
+                    new Transaction(
+                            Optional.of(customer),
+                            account,
+                            Optional.empty(),
+                            Optional.empty(),
+                            amountToWithdraw.get(),
+                            "withdraws"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return Optional.empty();
         }
     }
 
-    public static Optional<String> transferMoney(Customer customer) {
+    public static Optional<Transaction> transferMoney(Customer customer) {
         System.out.println("Select account to transfer from\n");
         Optional<Account> sourceAccount = getAccount(customer);
         if (sourceAccount.isEmpty()) {
@@ -532,9 +553,14 @@ public class RunBank {
             customer.transfer(sourceAccount.get(), destAccount.get(),
                     amountToTransfer.get());
             System.out.println("Success!");
-            return Optional.of(customer.getFullName() + " transfers from " +
-                    sourceAccount.get().getAccountTypeStr() + " to " +
-                    destAccount.get().getAccountTypeStr());
+            return Optional.of(
+                    new Transaction(
+                            Optional.of(customer),
+                            sourceAccount,
+                            Optional.empty(),
+                            destAccount,
+                            amountToTransfer.get(),
+                            "transfers"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return Optional.empty();
@@ -547,27 +573,33 @@ public class RunBank {
      * @param bankCustomerData Used to retrieve customer to pay money to.
      * @return If empty failed to pay.
      */
-    public static Optional<String> paySomeone(
+    public static Optional<Transaction> paySomeone(
         Customer customer,
         IBankDB bankCustomerData
     ) {
         System.out.println("Select customer to pay\n");
-        Optional<Customer> toCustomer = getCustomer(bankCustomerData);
-        if (toCustomer.isEmpty()) {
+        Optional<Customer> destCustomer = getCustomer(bankCustomerData);
+        if (destCustomer.isEmpty()) {
             return Optional.empty();
         }
 
         Optional<Double> amountToTransfer = getAmountOfMoney("Enter amount of" +
-                " money to transfer");
+                " money to pay!");
         if (amountToTransfer.isEmpty()) {
             return Optional.empty();
         }
 
         try {
-            customer.paySomeone(toCustomer.get(), amountToTransfer.get());
+            customer.paySomeone(destCustomer.get(), amountToTransfer.get());
             System.out.println("Success");
-            return Optional.of(customer.getFullName() + " paid " +
-                    toCustomer.get().getFullName());
+            return Optional.of(
+                    new Transaction(
+                            Optional.of(customer),
+                            Optional.of(customer.getChecking()),
+                            destCustomer,
+                            Optional.of(destCustomer.get().getChecking()),
+                            amountToTransfer.get(),
+                            "pays"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return Optional.empty();

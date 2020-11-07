@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
@@ -13,7 +14,6 @@ public class ActionReader {
 	
 	public void process(String fileLine){
 		String[] actions = fileLine.split(",");
-		
 		switch (actions[3]){
 			case "pays":
 				pays(actions);
@@ -80,7 +80,7 @@ public class ActionReader {
 						Optional.of(srcAccount),
 						Optional.of(destCustomer),
 						Optional.of(destAccount),
-						amount, "pays"));
+						amount, ""));
 			
 		}catch (NumberFormatException e){
 			System.out.println("Please enter a number");
