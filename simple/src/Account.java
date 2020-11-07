@@ -142,9 +142,12 @@ public abstract class Account implements Printable {
 	 */
 	@Override
 	public String getString(){
+		if (!isActive) {
+			return "";
+		}
 		return (this.getClass().getName() + "\n" +
 			"Account number: " + number + "\n" +
-			"Account balance: " + String.format("$%.2f", balance)
+			"Account balance: " + String.format("$%.2f", balance) + "\n"
 		);
 	}
 }

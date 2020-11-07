@@ -135,8 +135,8 @@ public class Transaction implements Printable {
 	 * @return returns formatted string
 	 */
 	private String inquiresString(){
-		return ( srcCustomer.orElseThrow().getFullName() + " inquired their " +
-			srcAccount.getClass().toString() + " account"
+		return (srcCustomer.orElseThrow().getFullName() + " inquired their " +
+			srcAccount.get().getClass().toString() + " account"
 		);
 	}
 	
@@ -147,7 +147,7 @@ public class Transaction implements Printable {
 	private String withdrawsString(){
 		return ( srcCustomer.orElseThrow().getFullName() + " withdrew " +
 			getBalanceString() + " from " +
-			srcAccount.getClass().toString() + " account"
+			srcAccount.get().getClass().toString() + " account"
 		);
 	}
 	
@@ -158,7 +158,7 @@ public class Transaction implements Printable {
 	private String depositsString(){
 		return ( destCustomer.orElseThrow().getFullName() + " deposited " +
 			getBalanceString() + " into their " +
-			destAccount.getClass().toString() + " account"
+			destAccount.get().getClass().toString() + " account"
 		);
 	}
 	

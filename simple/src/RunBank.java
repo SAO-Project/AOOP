@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 
 /**
  * @author Edd1e234
+ * @author Alex Avila
  * @version 1.0
  * @since 11/2/20
  *
@@ -49,7 +50,7 @@ public class RunBank {
     /**
      * Runs main menu.
      *
-     * @param bankCustomerData
+     * @param bankCustomerData Contains all customer data.
      */
     private static void userOrBankManager(IBankDB bankCustomerData) {
         Scanner scanner = new Scanner(System.in);
@@ -125,6 +126,7 @@ public class RunBank {
 
                 // Perform customer actions
                 customerMenu(customer.get(), bankCustomerData);
+                return;
             } catch (Exception e) {
                 System.out.println("Failed at accessingCustomer method");
             }
@@ -135,7 +137,7 @@ public class RunBank {
         Customer customer,
         IBankDB bankCustomerData
     ) {
-        ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+        ArrayList<Transaction> transactions = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
         // Asks user for option.
@@ -185,10 +187,7 @@ public class RunBank {
                         activateAccounts(customer, bankCustomerData, false);
                         break;
                     case 9:
-                        transactions.forEach(
-                                transaction ->
-                                        bankCustomerData
-                                                .addTransaction(transaction));
+                        transactions.forEach(bankCustomerData::addTransaction);
                         return;
                     default:
                         System.out.println("Please select a valid option");
@@ -273,7 +272,11 @@ public class RunBank {
                         getAccount(customer).ifPresent(Account::print);
                         break;
                     case 2:
-                        // Create BankStatement
+                        // Creates a bankStatement
+                        bankDB.getBankStatement(customer)
+                                .ifPresent(
+                                        bankStatement -> bankStatement
+                                                .createBankStatement(bankDB));
                         break;
                     case 3:
                         return;
@@ -575,8 +578,12 @@ public class RunBank {
      */
     public static Optional<Transaction> paySomeone(
         Customer customer,
-        IBankDB bankCustomerData
-    ) {
+        IBankDB bankCustomerData) {
+        if (!customer.getChecking().getIsActive()) {
+            System.out.println("Please activate checking account");
+            return Optional.empty();
+        }
+
         System.out.println("Select customer to pay\n");
         Optional<Customer> destCustomer = getCustomer(bankCustomerData);
         if (destCustomer.isEmpty()) {
@@ -677,7 +684,7 @@ public class RunBank {
                 "\t1. Checking Account",
                 "\t2. Saving Account",
                 "\t3. Credit Account",
-                "\t4. Type -1 to EXIT\n"
+                "\t4. EXIT\n"
             });
 
             try {
@@ -686,21 +693,24 @@ public class RunBank {
                         if (customer.getChecking().getIsActive()) {
                             return Optional.of(customer.getChecking());
                         }
-                        System.out.println("You do not have an active Checking Account");
+                        System.out.println("You do not have an" +
+                                " active Checking Account");
                         break;
                     case 2:
                         if (customer.getSavings().getIsActive()) {
                             return Optional.of(customer.getSavings());
                         }
-                        System.out.println("You do not have an active Savings Account");
+                        System.out.println("You do not have an" +
+                                " active Savings Account");
                         break;
                     case 3:
                         if (customer.getCredit().getIsActive()) {
                             return Optional.of(customer.getCredit());
                         }
-                        System.out.println("You do not have an active Credit Account");
+                        System.out.println("You do not have an" +
+                                " active Credit Account");
                         break;
-                    case -1:
+                    case 4:
                         return Optional.empty();
                     default:
                         System.out.println("Please select a valid option. ");
@@ -780,15 +790,14 @@ public class RunBank {
      *                                             account.
      * @param bankCustomerData                     Contains customer data used
      *                                             to create a new account.
-     * @param activateAtLeastOneAccountIsNecessary If this is activate at least
+     * @param activateAtLeastSavingsAccount         If this is activate at least
      *                                             one account. Will not allow
      *                                             the user to exit.
      * @return Returns logs containing all actions.
      */
     public static ArrayList<String> activateAccounts(
         Customer customer, IBankDB bankCustomerData,
-        boolean activateAtLeastOneAccountIsNecessary //TODO: Activate at least one savings account
-    ) {
+        boolean activateAtLeastSavingsAccount) {
         ArrayList<String> logs = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String alreadyActive = "Already Active";
@@ -803,7 +812,6 @@ public class RunBank {
             try {
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
-                        // TODO(Edd1e234): Check this funtionality
                         if (customer.getChecking().getIsActive()) {
                             System.out.println(alreadyActive);
                             break;
@@ -838,10 +846,8 @@ public class RunBank {
                         break;
                     case 4:
                         // In the case that at least one account
-                        if (activateAtLeastOneAccountIsNecessary) {
-                            if (customer.getChecking().getIsActive() ||
-                                    customer.getSavings().getIsActive() ||
-                                    customer.getCredit().getIsActive()) {
+                        if (activateAtLeastSavingsAccount) {
+                            if (customer.getSavings().getIsActive()) {
                                 return logs;
                             }
                             System.out.println("Need to activate at least one account!");

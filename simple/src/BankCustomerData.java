@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * @author Edd1e234
+ * @author Alex Avila
  * @version 1.0
  * @since 11/1/20
  *
@@ -18,6 +19,7 @@ public class BankCustomerData implements IBankDB{
     private HashMap<Integer, Account> accountNumberToAccount;
     private ArrayList<Transaction> transactions;
     private HashMap<Customer, ArrayList<Transaction>> customerToTransactions;
+    private HashMap<Customer, BankStatement> customerToBankStatement;
 
     /**
      * Creates a object to contain all bank data.
@@ -28,9 +30,7 @@ public class BankCustomerData implements IBankDB{
         this.idToCustomer = new HashMap<>();
         this.transactions = new ArrayList<>();
         this.customerToTransactions = new HashMap<>();
-    
-        
-        
+        this.customerToBankStatement = new HashMap<>();
         createAccountNumberToCustomerHashMap(this.nameToCustomer);
     }
 
@@ -40,16 +40,14 @@ public class BankCustomerData implements IBankDB{
      * Will not add.
      */
     public void addCustomer(Customer customer) {
-        // TODO(Eddie): Remove this.
         if (containsCustomer(customer.getFullName())) {
-            // TODO(Alex): Should we throw here if we try to add a customer
-            //  that's already present. Its an edge case...
             System.out.println("Customer already active!");
             return;
         }
         this.nameToCustomer.put(customer.getFullName(), customer);
         this.idToCustomer.put(customer.getId(), customer);
         this.customerToTransactions.put(customer, new ArrayList<>());
+        this.customerToBankStatement.put(customer, new BankStatement(customer));
         addCustomerToAccountNumberToCustomerMap(customer);
     }
 
@@ -132,8 +130,11 @@ public class BankCustomerData implements IBankDB{
     }
 
     @Override
-    public BankStatement getBankStatement(Customer customer) {
-        return null;
+    public Optional<BankStatement> getBankStatement(Customer customer) {
+        if (customerToBankStatement.containsKey(customer)) {
+            return Optional.of(customerToBankStatement.get(customer));
+        }
+        return Optional.empty();
     }
 
     /**

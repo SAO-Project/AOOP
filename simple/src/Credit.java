@@ -67,6 +67,16 @@ public class Credit extends Account{
 		throw new RuntimeException("No withdraw allowed from credit account");
 	}
 
+	@Override
+	public String toString() {
+		if (isActive) return "";
+		return (this.getClass().getName() + "\n" +
+				"Account number: " + number + "\n" +
+				"Credit Max: " + maxCredit + "\n" +
+				"Account balance: " + String.format("$%.2f", balance) + "\n"
+		);
+	}
+
 	public void setCreditMax(int maxCredit) {
 		this.maxCredit = maxCredit;
 	}

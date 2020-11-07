@@ -101,10 +101,10 @@ public interface IBankDB {
 	
 	/**
 	 * get the bank statement of an specific customer
-	 * @param customer the bankStatemet's customer
+	 * @param customer the bankStatement's customer
 	 * @return return the bank statement of the user.
 	 */
-	BankStatement getBankStatement(Customer customer);
+	Optional<BankStatement> getBankStatement(Customer customer);
 
 	/**
 	 * Get next available ID.
