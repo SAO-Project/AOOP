@@ -1,5 +1,5 @@
 
-public abstract class Account {
+public abstract class Account implements Printable {
 	protected int number;
 	protected double balance;
 	protected Customer customer;
@@ -130,15 +130,21 @@ public abstract class Account {
 			throw e;
 		}
 	}
-
+	
+	@Override
+	public void print(){
+		System.out.println(getString());
+	}
+	
 	/**
 	 * Retrieves account info.
-	 *
 	 * @return account info in string.
 	 */
-	public String accountStr() {
-		return "\n" + getAccountTypeStr() + ": \n" +
-				"Account number: " + number + "\n" +
-				"Account balance: " + balance + "\n";
+	@Override
+	public String getString(){
+		return (this.getClass().getName() + "\n" +
+			"Account number: " + number + "\n" +
+			"Account balance: " + String.format("$%.2f", balance)
+		);
 	}
 }
