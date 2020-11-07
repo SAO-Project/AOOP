@@ -72,8 +72,7 @@ public class RunBank {
                         logs.addAll(accessCustomer(bankCustomerData));
                         break;
                     case 2:
-                        logs.addAll(
-                                attemptToAddCustomerToSystem(bankCustomerData));
+                        logs.addAll(attemptToAddCustomerToSystem(bankCustomerData));
                         break;
                     case 3:
                         bankManager(bankCustomerData);
@@ -96,7 +95,8 @@ public class RunBank {
     }
 
     public static ArrayList<String> accessCustomer(
-            IBankDB bankCustomerData) {
+        IBankDB bankCustomerData
+    ) {
         ArrayList<String> logs = new ArrayList<>();
         Optional<Customer> customer = getCustomer(bankCustomerData);
         Scanner scanner = new Scanner(System.in);
@@ -288,7 +288,8 @@ public class RunBank {
      * @return
      */
     private static ArrayList<String> attemptToAddCustomerToSystem(
-            IBankDB bankCustomerData) {
+        IBankDB bankCustomerData
+    ) {
         ArrayList<String> logs = new ArrayList<String>();
         Scanner scanner = new Scanner(System.in);
         String firstName;
@@ -297,7 +298,7 @@ public class RunBank {
         String address;
         String phoneNumber;
         String email;
-
+        
         // Get first name.
         do {
             System.out.println("Enter First Name");
@@ -522,8 +523,7 @@ public class RunBank {
             return Optional.empty();
         }
 
-        Optional<Double> amountToTransfer = getAmountOfMoney("Enter amount to" +
-                " transfer");
+        Optional<Double> amountToTransfer = getAmountOfMoney("Enter amount to transfer");
         if (amountToTransfer.isEmpty()) {
             return Optional.empty();
         }
@@ -576,7 +576,6 @@ public class RunBank {
 
     /**
      * Prompts user about getting customer info.
-     *
      * @param bankCustomerData Contains all bank data.
      * @return If empty user did not wish to select customer account, else
      * contains customer.
@@ -756,18 +755,18 @@ public class RunBank {
      */
     public static ArrayList<String> activateAccounts(
         Customer customer, IBankDB bankCustomerData,
-        boolean activateAtLeastOneAccountIsNecessary
+        boolean activateAtLeastOneAccountIsNecessary //TODO: Activate at least one savings account
     ) {
         ArrayList<String> logs = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         String alreadyActive = "Already Active";
         while (true) {
             displayMenuNewLine(new String[]{
-                    "Activate accounts",
-                    "1. Checking",
-                    "2. Saving",
-                    "3. Credit",
-                    "4. Exit"
+                "Activate accounts\n",
+                "\t1. Checking",
+                "\t2. Saving",
+                "\t3. Credit",
+                "\t4. Exit\n"
             });
             try {
                 switch (Integer.parseInt(scanner.nextLine())) {
