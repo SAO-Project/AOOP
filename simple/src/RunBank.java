@@ -376,7 +376,6 @@ public class RunBank {
                 if (answer == 1) {
                     break;
                 }
-                // TODO(Edd1e234) Check this at some point!
                 if (answer != 2) {
                     System.out.println(INVALID_INPUT);
                 }
@@ -880,8 +879,6 @@ public class RunBank {
         int accountNumber = generateAccountNumber(
                 bankCustomerData, accountNumberType);
 
-        // Set starting balance!
-        // TODO(Edd1e234): Make sure this works properly
         Optional<Double> startingBalance;
         while (true) {
             try {

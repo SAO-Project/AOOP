@@ -1,0 +1,42 @@
+Minor Bank
+
+Costumer Information:
+Full Name: Yamel Garcia
+Date of birth: 26/09/1999
+Address: (915) 472-2861
+Phone: yamel@me.com
+ID: 104
+
+Date accessed: 07/11/20
+
+Starting accounts: 
+
+Checking
+Account number: 1104
+Account balance: $522.00
+
+Savings
+Account number: 2104
+Account balance: $5000.00
+
+
+
+All Transactions during session: 
+
+Yamel Garcia paid $500.00 to Eduardo Garcia
+Yamel Garcia paid $500.00 to Eduardo Garcia
+Yamel Garcia inquired their class Savings account
+Yamel Garcia inquired their class Savings account
+Yamel Garcia inquired their class Checking account
+Yamel Garcia inquired their class Checking account
+
+
+Checking
+Account number: 1104
+Account balance: $22.00
+
+Savings
+Account number: 2104
+Account balance: $5000.00
+
+

@@ -150,35 +150,38 @@ public class FileUtil {
      * Customer object intact.
      */
     public static Optional<Customer> parseLine(String[] splitLine) {
-        // TODO(Edd1e234): Make this look cleaner.
         try {
             return Optional.of(
                     new Customer(
-                            splitLine[FIRST_NAME],              /* =firstName */
-                            splitLine[LAST_NAME],               /* =lastName */
-                            splitLine[DOB],                     /* =DOB */
-                            parseIdNum(splitLine[ID]).orElseThrow(), /* =id */
-                            removeQuotes(splitLine[ADDRESS]),   /* =address */
-                            splitLine[PHONE_NUMBER],            /* =phoneNumber */
-                            splitLine[EMAIL],                   /* =email */
-                            splitLine[PASSWORD],                /* =password*/
+                            splitLine[FIRST_NAME]/* =firstName */,
+                            splitLine[LAST_NAME] /* =lastName */,
+                            splitLine[DOB] /* =DOB */,
+                            parseIdNum(splitLine[ID]).orElseThrow() /* =id */,
+                            removeQuotes(splitLine[ADDRESS]) /* =address */,
+                            splitLine[PHONE_NUMBER] /* =phoneNumber */,
+                            splitLine[EMAIL] /* =email */,
+                            splitLine[PASSWORD] /* =password*/,
                             parseCheckingAccount(
-                                    splitLine[CHECKING_ACCOUNT_NUMBER] /* =accountNumStr */,
-                                    splitLine[CHECKING_STARTING_BALANCE] /* =accountBalanceStr */)
+                                        /* =accountNumStr */
+                                        splitLine[CHECKING_ACCOUNT_NUMBER],
+                                        /* =accountBalanceStr */
+                                        splitLine[CHECKING_STARTING_BALANCE])
                                     .orElseThrow(), /* =checking */
                             parseCreditAccount(
-                                    splitLine[CREDIT_ACCOUNT_NUMBER], /* =accountNumStr */
-                                    splitLine[CREDIT_STATING_BALANCE], /* =accountBalanceStr */
-                                    splitLine[CREDIT_MAX] /* =creditMax*/)
-                                    .orElseThrow(),    /* =creditAccount */
+                                        /* =accountNumStr */
+                                        splitLine[CREDIT_ACCOUNT_NUMBER],
+                                        /* =accountBalanceStr */
+                                        splitLine[CREDIT_STATING_BALANCE],
+                                        splitLine[CREDIT_MAX] /* =creditMax*/)
+                                    .orElseThrow()/* =creditAccount */,
                             parseSavingAccount(
-                                    splitLine[SAVING_ACCOUNT_NUMBER], /* =accountNumStr */
-                                    splitLine[SAVING_STARTING_BALANCE] /* =accountBalanceStr */)
-                                    .orElseThrow()   /* =savingAccount */
-                    ));
+                                        /* =accountNumStr */
+                                        splitLine[SAVING_ACCOUNT_NUMBER],
+                                        /* =accountBalanceStr */
+                                        splitLine[SAVING_STARTING_BALANCE])
+                                    .orElseThrow()   /* =savingAccount */));
         } catch (Exception exception) {
-
-            // If we return optional empty, something has gone wrong.
+            System.out.println("Failed to create customer check file!");
             return Optional.empty();
         }
     }
