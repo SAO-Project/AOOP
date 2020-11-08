@@ -1,3 +1,5 @@
+import java.util.Optional;
+
 /**
  * @author Alex
  * @since 11/05/2020
@@ -8,10 +10,10 @@
  * <p/>
  */
 public class Transaction implements Printable {
-	private Customer srcCustomer;
-	private Account srcAccount;
-	private Customer destCustomer;
-	private Account destAccount;
+	private Optional<Customer> srcCustomer;
+	private Optional<Account> srcAccount;
+	private Optional<Customer> destCustomer;
+	private Optional<Account> destAccount;
 	private double amount;
 	private String action;
 	private String date;
@@ -26,10 +28,10 @@ public class Transaction implements Printable {
 	 * @param action what type of transaction occurred
 	 */
 	public Transaction(
-		Customer srcCustomer,
-		Account srcAccount,
-		Customer destCustomer,
-		Account destAccount,
+		Optional<Customer> srcCustomer,
+		Optional<Account> srcAccount,
+		Optional<Customer> destCustomer,
+		Optional<Account> destAccount,
 		double amount,
 		String action
 	){
@@ -45,19 +47,19 @@ public class Transaction implements Printable {
 	                                            Getters
 	 ----------------------------------------------------------------------------------------------------------------*/
 	
-	public Account getDestAccount() {
+	public Optional<Account> getDestAccount() {
 		return destAccount;
 	}
 	
-	public Account getSrcAccount() {
+	public Optional<Account> getSrcAccount() {
 		return srcAccount;
 	}
 	
-	public Customer getSrcCustomer() {
+	public Optional<Customer> getSrcCustomer() {
 		return srcCustomer;
 	}
 	
-	public Customer getDestCustomer() {
+	public Optional<Customer> getDestCustomer() {
 		return destCustomer;
 	}
 	
@@ -110,9 +112,9 @@ public class Transaction implements Printable {
 	 * @return returns formatted string
 	 */
 	private String paysString(){
-		return (srcCustomer.getFullName() + " paid " +
+		return (srcCustomer.orElseThrow().getFullName() + " paid " +
 			getBalanceString() + " to " +
-			destCustomer.getFullName()
+			destCustomer.orElseThrow().getFullName()
 		);
 	}
 	
@@ -121,10 +123,10 @@ public class Transaction implements Printable {
 	 * @return returns formatted string
 	 */
 	private String transfersString(){
-		return ( srcCustomer.getFullName() + " transferred " +
+		return ( srcCustomer.orElseThrow().getFullName() + " transferred " +
 			getBalanceString() + " from " +
-			srcAccount.getClass().toString() + " to" +
-			destAccount.getClass().toString()
+			srcAccount.orElseThrow().getClass().toString() + " to" +
+			destAccount.orElseThrow().getClass().toString()
 		);
 	}
 	
@@ -133,8 +135,8 @@ public class Transaction implements Printable {
 	 * @return returns formatted string
 	 */
 	private String inquiresString(){
-		return ( srcCustomer.getFullName() + " inquired their " +
-			srcAccount.getClass().toString() + " account"
+		return (srcCustomer.orElseThrow().getFullName() + " inquired their " +
+			srcAccount.get().getClass().toString() + " account"
 		);
 	}
 	
@@ -143,9 +145,9 @@ public class Transaction implements Printable {
 	 * @return returns formatted string
 	 */
 	private String withdrawsString(){
-		return ( srcCustomer.getFullName() + " withdrew " +
+		return ( srcCustomer.orElseThrow().getFullName() + " withdrew " +
 			getBalanceString() + " from " +
-			srcAccount.getClass().toString() + " account"
+			srcAccount.get().getClass().toString() + " account"
 		);
 	}
 	
@@ -154,9 +156,9 @@ public class Transaction implements Printable {
 	 * @return returns formatted string
 	 */
 	private String depositsString(){
-		return ( destCustomer.getFullName() + " deposited " +
+		return ( destCustomer.orElseThrow().getFullName() + " deposited " +
 			getBalanceString() + " into their " +
-			destAccount.getClass().toString() + " account"
+			destAccount.get().getClass().toString() + " account"
 		);
 	}
 	

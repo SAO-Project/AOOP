@@ -215,6 +215,15 @@ public class Customer extends Person{
 			creditNumber + "," + checkingBalance + "," + savingsBalance + "," +
 			creditBalance;
 	}
+
+	public String customerInfoString() {
+		return  "Costumer Information:\n" +
+				"Full Name: " + firstName + " " + lastName + "\n" +
+				"Date of birth: " + dob + "\n" +
+				"Address: " + address + "\n" +
+				"Phone: " + phone + "\n" +
+				"ID: " + id + "\n";
+	}
 	
 	/**
 	 * converts information of the Customer into a formatted String
@@ -251,14 +260,8 @@ public class Customer extends Person{
 		}catch(NullPointerException e){
 			creditString = "";
 		}
-		
-		
-		return "Costumer Information:\n" +
-			"Full Name: " + firstName + " " + lastName + "\n" +
-			"Date of birth: " + dob + "\n" +
-			"Address: " + address + "\n" +
-			"Phone: " + phone + "\n" +
-			"ID: " + id + "\n" +
+
+		return customerInfoString() +
 			checkingString +
 			savingsString +
 			creditString;
