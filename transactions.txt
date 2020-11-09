@@ -1,0 +1,163 @@
+Disney Bank transaction file
+Mickey Mouse paid $100.00 to Donald Duck
+ is not a valid action
+Mickey Mouse inquired their class Savings account
+Mickey Mouse withdrew $100.00 from class Checking account
+Mickey Mouse deposited $500.00 into their Savings account
+ is not a valid action
+Alberto Miranda deposited $5000.00 into their Checking account
+Alex Avila deposited $5000.00 into their Checking account
+Alfonso Beltran deposited $5000.00 into their Checking account
+Alfredo Rodriguez deposited $5000.00 into their Checking account
+Alyssandra Cordero deposited $5000.00 into their Checking account
+Anthony Jasso deposited $5000.00 into their Checking account
+Arae Zarzosa deposited $5000.00 into their Checking account
+Brandon Bustamante deposited $5000.00 into their Checking account
+Cesar Cabrera deposited $5000.00 into their Checking account
+Christopher Reyes deposited $5000.00 into their Checking account
+Dafne Bencomo deposited $5000.00 into their Checking account
+David Baptiste deposited $5000.00 into their Checking account
+Derek Aguirre deposited $5000.00 into their Checking account
+Eduardo Garcia deposited $5000.00 into their Checking account
+Ervey Montes deposited $5000.00 into their Checking account
+Estevan Ramos deposited $5000.00 into their Checking account
+Federico Marin deposited $5000.00 into their Checking account
+Gavin Baechle deposited $5000.00 into their Checking account
+Gildardo Orea deposited $5000.00 into their Checking account
+Grecia Navarrete deposited $5000.00 into their Checking account
+Hernan Garcia deposited $5000.00 into their Checking account
+Isaiah Landin deposited $5000.00 into their Checking account
+Jose Rodriguez Ortega deposited $5000.00 into their Checking account
+Joseph Medina - Sandoval deposited $5000.00 into their Checking account
+Juan Gutierrez deposited $5000.00 into their Checking account
+Juan Rabelo deposited $5000.00 into their Checking account
+Judith Garcia deposited $5000.00 into their Checking account
+Laura Blanco deposited $5000.00 into their Checking account
+Laurence Labayen deposited $5000.00 into their Checking account
+Lidice Castro Jimenez deposited $5000.00 into their Checking account
+Manuel Melendez Lujan deposited $5000.00 into their Checking account
+Manuel Ruvalcaba deposited $5000.00 into their Checking account
+Mauricio Ornelas-Gutierrez deposited $5000.00 into their Checking account
+Minh Dang deposited $5000.00 into their Checking account
+Oscar Decena deposited $5000.00 into their Checking account
+Robert Evans deposited $5000.00 into their Checking account
+Roberto Carrasco deposited $5000.00 into their Checking account
+Sofia Hernandez deposited $5000.00 into their Checking account
+Yulianna Torres deposited $5000.00 into their Checking account
+Alberto Miranda paid $1000.00 to Daniel Mejia
+Alex Avila paid $1000.00 to Daniel Mejia
+Alfonso Beltran paid $1000.00 to Daniel Mejia
+Alfredo Rodriguez paid $1000.00 to Daniel Mejia
+Alyssandra Cordero paid $1000.00 to Daniel Mejia
+Anthony Jasso paid $1000.00 to Daniel Mejia
+Arae Zarzosa paid $1000.00 to Daniel Mejia
+Brandon Bustamante paid $1000.00 to Daniel Mejia
+Cesar Cabrera paid $1000.00 to Daniel Mejia
+Christopher Reyes paid $1000.00 to Daniel Mejia
+Dafne Bencomo paid $1000.00 to Daniel Mejia
+David Baptiste paid $1000.00 to Daniel Mejia
+Derek Aguirre paid $1000.00 to Daniel Mejia
+Eduardo Garcia paid $1000.00 to Daniel Mejia
+Ervey Montes paid $1000.00 to Daniel Mejia
+Estevan Ramos paid $1000.00 to Daniel Mejia
+Federico Marin paid $1000.00 to Daniel Mejia
+Gavin Baechle paid $1000.00 to Daniel Mejia
+Gildardo Orea paid $1000.00 to Daniel Mejia
+Grecia Navarrete paid $1000.00 to Daniel Mejia
+Hernan Garcia paid $1000.00 to Daniel Mejia
+Isaiah Landin paid $1000.00 to Daniel Mejia
+Jose Rodriguez Ortega paid $1000.00 to Daniel Mejia
+Joseph Medina - Sandoval paid $1000.00 to Daniel Mejia
+Juan Gutierrez paid $1000.00 to Daniel Mejia
+Juan Rabelo paid $1000.00 to Daniel Mejia
+Judith Garcia paid $1000.00 to Daniel Mejia
+Laura Blanco paid $1000.00 to Daniel Mejia
+Laurence Labayen paid $1000.00 to Daniel Mejia
+Lidice Castro Jimenez paid $1000.00 to Daniel Mejia
+Manuel Melendez Lujan paid $1000.00 to Daniel Mejia
+Manuel Ruvalcaba paid $1000.00 to Daniel Mejia
+Mauricio Ornelas-Gutierrez paid $1000.00 to Daniel Mejia
+Minh Dang paid $1000.00 to Daniel Mejia
+Oscar Decena paid $1000.00 to Daniel Mejia
+Robert Evans paid $1000.00 to Daniel Mejia
+Roberto Carrasco paid $1000.00 to Daniel Mejia
+Sofia Hernandez paid $1000.00 to Daniel Mejia
+Yulianna Torres paid $1000.00 to Daniel Mejia
+Daniel Mejia inquired their class Checking account
+Mickey Mouse withdrew $100.00 from class Savings account
+Donald Duck paid $48.46 to Alberto Miranda
+Goofy Disney paid $15.63 to Alfonso Beltran
+Pluto Disney withdrew $77.00 from class Savings account
+Chip Disney paid $50.99 to Alyssandra Cordero
+Dale Disney withdrew $54.00 from class Savings account
+Cinderella Disney paid $28.81 to Arae Zarzosa
+Ariel Disney withdrew $57.00 from class Savings account
+Jasmine Disney paid $28.89 to Cesar Cabrera
+Aladdin Disney withdrew $94.00 from class Savings account
+Simba Disney paid $39.29 to Dafne Bencomo
+Mufassa Disney withdrew $67.00 from class Savings account
+Aurora Disney paid $34.47 to Derek Aguirre
+Peter Pan withdrew $100.00 from class Savings account
+Woody Disney paid $34.04 to Ervey Montes
+Buzz Lightyear withdrew $90.00 from class Savings account
+Jafar Aladdin paid $12.36 to Federico Marin
+Ursela Mermaid withdrew $56.00 from class Savings account
+Beast Disney paid $26.84 to Gildardo Orea
+Belle Disney withdrew $88.00 from class Savings account
+Cruella De Vil paid $34.70 to Hernan Garcia
+Scar Lion withdrew $65.00 from class Savings account
+Simba King paid $11.31 to Jose Rodriguez Ortega
+Gaston Disney withdrew $78.00 from class Savings account
+Shere Khan paid $41.20 to Juan Gutierrez
+Captaiin Hook withdrew $86.00 from class Savings account
+Kaa Disney paid $11.83 to Judith Garcia
+Evil Queen withdrew $86.00 from class Savings account
+Pinocchio Disney paid $34.11 to Laurence Labayen
+Prince Eric withdrew $57.00 from class Savings account
+Quasimodo Disney paid $25.58 to Manuel Melendez Lujan
+Hercules Disney withdrew $85.00 from class Savings account
+Mulan Disney paid $36.48 to Mauricio Ornelas-Gutierrez
+Lilo Disney withdrew $59.00 from class Savings account
+Stitch Disney paid $29.25 to Oscar Decena
+Gaston Disney withdrew $74.00 from class Savings account
+Mickey Mouse paid $17.97 to Roberto Carrasco
+Donald Duck withdrew $91.00 from class Savings account
+Minnie Mouse paid $29.50 to Yulianna Torres
+Goofy Disney withdrew $81.00 from class Savings account
+Pluto Disney paid $39.92 to Alex Avila
+Chip Disney withdrew $75.00 from class Savings account
+Dale Disney paid $50.39 to Alfredo Rodriguez
+Cinderella Disney withdrew $79.00 from class Savings account
+Ariel Disney paid $46.88 to Anthony Jasso
+Jasmine Disney withdrew $59.00 from class Savings account
+Aladdin Disney paid $25.16 to Brandon Bustamante
+Simba Disney withdrew $100.00 from class Savings account
+Mufassa Disney paid $33.54 to Christopher Reyes
+Mickey Mouse paid $48.46 to David Baptiste
+Donald Duck withdrew $79.00 from class Checking account
+Minnie Mouse paid $15.63 to Eduardo Garcia
+Goofy Disney withdrew $77.00 from class Checking account
+Pluto Disney paid $50.99 to Estevan Ramos
+Chip Disney withdrew $54.00 from class Checking account
+Dale Disney paid $28.81 to Gavin Baechle
+Cinderella Disney withdrew $57.00 from class Checking account
+Ariel Disney paid $28.89 to Grecia Navarrete
+Jasmine Disney withdrew $94.00 from class Checking account
+Aladdin Disney paid $39.29 to Isaiah Landin
+Simba Disney withdrew $67.00 from class Checking account
+Mufassa Disney paid $34.47 to Joseph Medina - Sandoval
+Aurora Disney withdrew $100.00 from class Checking account
+Peter Pan paid $34.04 to Juan Rabelo
+Woody Disney withdrew $90.00 from class Checking account
+Buzz Lightyear paid $12.36 to Laura Blanco
+Jafar Aladdin withdrew $56.00 from class Checking account
+Ursela Mermaid paid $26.84 to Lidice Castro Jimenez
+Beast Disney withdrew $88.00 from class Checking account
+Belle Disney paid $34.70 to Manuel Ruvalcaba
+Cruella De Vil withdrew $65.00 from class Checking account
+Scar Lion paid $11.31 to Minh Dang
+Simba King withdrew $78.00 from class Checking account
+Gaston Disney paid $41.20 to Robert Evans
+Shere Khan withdrew $86.00 from class Checking account
+Captaiin Hook paid $11.83 to Sofia Hernandez
+Kaa Disney withdrew $86.00 from class Checking account

@@ -90,7 +90,7 @@ public class Transaction implements Printable {
 	 * @throws RuntimeException
 	 */
 	@Override
-	public String getString() throws RuntimeException{
+	public String getString(){
 		switch (action){
 			case "pays":
 				return paysString();
@@ -103,7 +103,7 @@ public class Transaction implements Printable {
 			case "deposits":
 				return depositsString();
 			default:
-				throw new RuntimeException(action + " is not a valid action");
+				return action + " is not a valid action";
 		}
 	}
 	
@@ -136,7 +136,7 @@ public class Transaction implements Printable {
 	 */
 	private String inquiresString(){
 		return (srcCustomer.orElseThrow().getFullName() + " inquired their " +
-			srcAccount.get().getClass().toString() + " account"
+			srcAccount.orElseThrow().getClass().toString() + " account"
 		);
 	}
 	
@@ -147,7 +147,7 @@ public class Transaction implements Printable {
 	private String withdrawsString(){
 		return ( srcCustomer.orElseThrow().getFullName() + " withdrew " +
 			getBalanceString() + " from " +
-			srcAccount.get().getClass().toString() + " account"
+			srcAccount.orElseThrow().getClass().toString() + " account"
 		);
 	}
 	
@@ -158,7 +158,7 @@ public class Transaction implements Printable {
 	private String depositsString(){
 		return ( destCustomer.orElseThrow().getFullName() + " deposited " +
 			getBalanceString() + " into their " +
-			destAccount.get().getClass().toString() + " account"
+			destAccount.orElseThrow().getClass().getName() + " account"
 		);
 	}
 	
