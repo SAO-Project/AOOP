@@ -414,6 +414,7 @@ public class RunBank {
                 new Checking(),
                 new Credit(),
                 new Savings());
+        activateAccounts(customer, bankCustomerData, true);
         if (bankCustomerData.containsCustomer(customer.getFirstName())) {
             System.out.println("Customer already in system... EXISTING");
             return;
