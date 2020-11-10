@@ -83,6 +83,8 @@ public class RunBank {
                         transactionFileMenu.askForFileName();
                         break;
                     case 5:
+                        CSVFile csvFile = new CSVFile(bankCustomerData);
+                        csvFile.writeCSV();
                         return;
                     default:
                         System.out.println("Please enter a valid number");
@@ -412,6 +414,7 @@ public class RunBank {
                 new Checking(),
                 new Credit(),
                 new Savings());
+        activateAccounts(customer, bankCustomerData, true);
         if (bankCustomerData.containsCustomer(customer.getFirstName())) {
             System.out.println("Customer already in system... EXISTING");
             return;
@@ -785,6 +788,11 @@ public class RunBank {
     public static void activateAccounts(
         Customer customer, IBankDB bankCustomerData,
         boolean activateAtLeastSavingsAccount) {
+
+        if (activateAtLeastSavingsAccount) {
+            System.out.println("Please activate at least savings account");
+        }
+
         Scanner scanner = new Scanner(System.in);
         String alreadyActive = "Already Active";
         while (true) {
@@ -833,7 +841,8 @@ public class RunBank {
                             if (customer.getSavings().getIsActive()) {
                                 return;
                             }
-                            System.out.println("Need to activate at least one account!");
+                            System.out.println("Need to activate savings " +
+                                    "account");
                             break;
                         }
                         return;
@@ -1015,6 +1024,7 @@ public class RunBank {
     private static String askForFileName() {
         Scanner scanner = new Scanner(System.in);
         displayMenuNewLine(new String[] {
+                "\n\n",
                 "If file is " + PATH_TO_FILE + " please type 1",
                 "Else type in file name"
         });
