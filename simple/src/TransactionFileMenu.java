@@ -12,8 +12,17 @@ public class TransactionFileMenu {
 	}
 	
 	public void askForFileName(){
+		System.out.println("Type -1 to exit");
 		System.out.print("Enter file name: ");
-		File transactionFile = new File(System.getProperty("user.dir") + "\\" + scanner.nextLine());
+
+		String fileName = scanner.nextLine();
+
+		if (fileName.equals("-1")) {
+			return;
+		}
+
+		File transactionFile =
+				new File(System.getProperty("user.dir") + "\\" + fileName);
 		Scanner fileScanner;
 		try{
 			fileScanner = new Scanner(transactionFile);

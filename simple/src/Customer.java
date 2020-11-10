@@ -121,6 +121,8 @@ public class Customer extends Person{
 		return password;
 	}
 
+	public String getEmail() { return email; }
+
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}

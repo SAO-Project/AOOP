@@ -80,4 +80,6 @@ public class Credit extends Account{
 	public void setCreditMax(int maxCredit) {
 		this.maxCredit = maxCredit;
 	}
+
+	public int getMax() {return maxCredit;}
 }
