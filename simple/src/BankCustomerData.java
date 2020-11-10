@@ -112,11 +112,9 @@ public class BankCustomerData implements IBankDB{
     public void addTransaction(Transaction transaction) {
         transactions.add(transaction);
         transaction.getSrcCustomer()
-                .ifPresent(customer ->
-                        customerToTransactions.get(customer).add(transaction));
-        transaction.getSrcCustomer()
-                .ifPresent(customer ->
-                        customerToTransactions.get(customer).add(transaction));
+            .ifPresent(customer -> customerToTransactions.get(customer).add(transaction));
+        transaction.getDestCustomer()
+            .ifPresent(customer -> customerToTransactions.get(customer).add(transaction));
     }
 
     @Override
