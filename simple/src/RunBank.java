@@ -16,7 +16,7 @@ import java.util.regex.Matcher;
  * @version 1.0
  * @since 11/2/20
  *
- * Runs Bank
+ * Runs Bank. Controller and View of the program.
  */
 public class RunBank {
     private final static String EXIT = "exit";
@@ -24,6 +24,9 @@ public class RunBank {
     final private static String SELECT_ONE = "Please select one";
     final private static String PATH_TO_FILE = "simple/Bank_4_users.csv";
 
+    /**
+     * Start of the program.
+     */
     public static void main(String[] args) {
         IBankDB bankCustomerData = FileUtil.readFile(askForFileName());
         userOrBankManager(bankCustomerData);
@@ -97,9 +100,14 @@ public class RunBank {
         }
     }
 
+    /**
+     * Retrieves customer, has customer enter password and move onto the
+     * customer menu.
+     *
+     * @param bankCustomerData Contains all customer data.
+     */
     public static void accessCustomer(
-        IBankDB bankCustomerData
-    ) {
+        IBankDB bankCustomerData) {
         Optional<Customer> customer = getCustomer(bankCustomerData);
         Scanner scanner = new Scanner(System.in);
 
@@ -135,10 +143,15 @@ public class RunBank {
         }
     }
 
+    /**
+     * Allows the customer to perform all actions related to a customer.
+     *
+     * @param customer Logged in customer.
+     * @param bankCustomerData Contains all customer info.
+     */
     public static void customerMenu(
         Customer customer,
-        IBankDB bankCustomerData
-    ) {
+        IBankDB bankCustomerData) {
         ArrayList<Transaction> transactions = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
@@ -520,6 +533,12 @@ public class RunBank {
         }
     }
 
+    /**
+     * Transfer money between customer accounts.
+     *
+     * @param customer Logged in customer.
+     * @return If operation was successful, transaction was logged.
+     */
     public static Optional<Transaction> transferMoney(Customer customer) {
         System.out.println("Select account to transfer from\n");
         Optional<Account> sourceAccount = getAccount(customer);
@@ -1010,6 +1029,15 @@ public class RunBank {
         return matcher.find();
     }
 
+    /**
+     * Method to create a generic password for every new customer.
+     *
+     * Password will always be "lastName*firstName!987"
+     *
+     * @param firstName Last word of password.
+     * @param lastName First word of password.
+     * @return Full password.
+     */
     private static String generatePassword(String firstName, String lastName) {
         return lastName + "*" + firstName + "!987";
     }
