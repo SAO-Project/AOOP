@@ -44,7 +44,7 @@ public class CSVFile {
                         + customer.getLastName() + ","
                         + customer.getDob() + ","
                         + customer.getId() + ","
-                        + customer.getAddress() + ","
+                        + "\"" + customer.getAddress() + "\","
                         + customer.getPhone() + ","
                         + customer.getEmail() + ","
                         + customer.getPassword() + ","
