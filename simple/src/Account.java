@@ -1,4 +1,15 @@
+import java.io.IOException;
+import java.io.Writer;
 
+/**
+ * @author Alex
+ * @since 11/9
+ * @version 1
+ * <p>
+ * This class is the abstract class for account storing the common components of Credit Savings and Checking
+ * accounts.
+ * <p/>
+ */
 public abstract class Account implements Printable {
 	protected int number;
 	protected double balance;
@@ -47,7 +58,12 @@ public abstract class Account implements Printable {
 	public Boolean  getIsActive() {return isActive;}
 
 	public AccountType getAccountType() {return accountType;}
-
+	
+	/**
+	 * @author Alex
+	 * gets a specific String depending on what type of account this instance is
+	 * @return a string describing the account
+	 */
 	public String getAccountTypeStr() {
 		switch (accountType) {
 			case CHECKING:
@@ -117,6 +133,13 @@ public abstract class Account implements Printable {
 		balance -= amount;
 	}
 	
+	/**
+	 * Transfers money from this account to a selected account
+	 * @author Alex
+	 * @param account the account where the money is going to
+	 * @param amount the amount of money that is being transfer
+	 * @throws RuntimeException throws if transfer was not successful.
+	 */
 	public void transfer(Account account, double amount) throws RuntimeException{
 		//Grab money from this account
 		this.withdraw(amount);
@@ -131,6 +154,9 @@ public abstract class Account implements Printable {
 		}
 	}
 	
+	/**
+	 * Prints formatted string into the console whenever it is needed to be print
+	 */
 	@Override
 	public void print(){
 		System.out.println(getString());
@@ -149,5 +175,15 @@ public abstract class Account implements Printable {
 			"Account number: " + number + "\n" +
 			"Account balance: " + String.format("$%.2f", balance) + "\n"
 		);
+	}
+	
+	/**
+	 * Writes the formatted string into the Writer
+	 * @param writer writes the file into any subclass of a writer such as files
+	 * @throws IOException throws if file or output source is not found or has a problem.
+	 */
+	@Override
+	public void write(Writer writer)throws IOException {
+		writer.write(getString() + "\n");
 	}
 }

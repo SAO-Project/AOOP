@@ -1,3 +1,4 @@
+import java.io.Writer;
 import java.text.DateFormat;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -33,7 +34,7 @@ public class BankStatement {
         String fileName = customer.getFullName() + " BankStatement.txt";
 
         try {
-            FileWriter bankStatementWriter = new FileWriter(fileName);
+            Writer bankStatementWriter = new FileWriter(fileName);
             bankStatementWriter.write("Minor Bank\n\n");
             bankStatementWriter.write(customer.customerInfoString() + "\n");
             bankStatementWriter.write(
@@ -48,7 +49,7 @@ public class BankStatement {
             bankStatementWriter.write("All Transactions during " +
                     "session: \n\n");
             for (Transaction transaction : bankDB.getTransactions(customer)) {
-                bankStatementWriter.write(transaction.getString() + "\n");
+                transaction.write(bankStatementWriter);
             }
             bankStatementWriter.write("\n\n" +
                     customer.getChecking().getString() + "\n");

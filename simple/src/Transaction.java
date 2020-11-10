@@ -1,3 +1,5 @@
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Optional;
 
 /**
@@ -75,37 +77,6 @@ public class Transaction implements Printable {
 		return date;
 	}
 	
-	/**
-	 * prints the transaction converted into a String
-	 * @throws RuntimeException if actions is not valid then throw an exception
-	 */
-	@Override
-	public void print() throws RuntimeException{
-		System.out.println(getString());
-	}
-	
-	/**
-	 * Formats the information of the String and makes it a readable sentence
-	 * @return a String that gets the transaction information into a readable sentence
-	 * @throws RuntimeException
-	 */
-	@Override
-	public String getString(){
-		switch (action){
-			case "pays":
-				return paysString();
-			case "transfers":
-				return transfersString();
-			case "inquires":
-				return inquiresString();
-			case "withdraws":
-				return withdrawsString();
-			case "deposits":
-				return depositsString();
-			default:
-				return action + " is not a valid action";
-		}
-	}
 	
 	/**
 	 * formats string into pay to person styled
@@ -168,5 +139,46 @@ public class Transaction implements Printable {
 	 */
 	private String getBalanceString(){
 		return String.format("$%.2f", amount);
+	}
+	
+	/**
+	 * prints the transaction converted into a String
+	 * @throws RuntimeException if actions is not valid then throw an exception
+	 */
+	@Override
+	public void print() throws RuntimeException{
+		System.out.println(getString());
+	}
+	
+	/**
+	 * Formats the information of the String and makes it a readable sentence
+	 * @return a String that gets the transaction information into a readable sentence
+	 */
+	@Override
+	public String getString(){
+		switch (action){
+			case "pays":
+				return paysString();
+			case "transfers":
+				return transfersString();
+			case "inquires":
+				return inquiresString();
+			case "withdraws":
+				return withdrawsString();
+			case "deposits":
+				return depositsString();
+			default:
+				return action + " is not a valid action";
+		}
+	}
+	
+	/**
+	 * Writes formatted string into the given writer
+	 * @param writer the writer in which the string is going to
+	 * @throws IOException throws an exception if there is a problem where is going to be written.
+	 */
+	@Override
+	public void write(Writer writer) throws IOException {
+		writer.write(getString() + "\n");
 	}
 }

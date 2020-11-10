@@ -26,11 +26,12 @@ Account balance: $-1811.46
 
 All Transactions during session: 
 
+Mario Bros paid $89.99 to Alex Avila
 
 
 Checking
 Account number: 1037
-Account balance: $1501.93
+Account balance: $1561.93
 
 Savings
 Account number: 2037
