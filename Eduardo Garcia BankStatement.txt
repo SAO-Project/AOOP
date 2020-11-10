@@ -1,0 +1,43 @@
+Minor Bank
+
+Costumer Information:
+Full Name: Eduardo Garcia
+Date of birth: "September 25, 1954"
+Address: 500 W. University Ave, El Paso, TX 79968
+Phone: (915) 747-5013
+ID: 50
+
+Date accessed: 09/11/20
+
+Starting accounts: 
+
+Checking
+Account number: 1049
+Account balance: $1659.23
+
+Savings
+Account number: 2049
+Account balance: $3148.33
+
+Credit
+Account number: 3049
+Account balance: $-1846.05
+
+
+All Transactions during session: 
+
+Mario Bros paid $700.00 to Eduardo Garcia
+
+
+Checking
+Account number: 1049
+Account balance: $2359.23
+
+Savings
+Account number: 2049
+Account balance: $3148.33
+
+Credit
+Account number: 3049
+Account balance: $-1846.05
+

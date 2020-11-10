@@ -1,0 +1,43 @@
+Minor Bank
+
+Costumer Information:
+Full Name: Alex Avila
+Date of birth: "January 15, 2010"
+Address: 500 W. University Ave, El Paso, TX 79968
+Phone: (915) 747-5001
+ID: 38
+
+Date accessed: 09/11/20
+
+Starting accounts: 
+
+Checking
+Account number: 1037
+Account balance: $1471.94
+
+Savings
+Account number: 2037
+Account balance: $4690.72
+
+Credit
+Account number: 3037
+Account balance: $-1811.46
+
+
+All Transactions during session: 
+
+Mario Bros paid $89.99 to Alex Avila
+
+
+Checking
+Account number: 1037
+Account balance: $1561.93
+
+Savings
+Account number: 2037
+Account balance: $4690.72
+
+Credit
+Account number: 3037
+Account balance: $-1811.46
+

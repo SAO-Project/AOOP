@@ -38,7 +38,7 @@ public class RunBank {
             //gets transaction from iterable
         
             for(Transaction transaction : bankCustomerData.getTransactions()){
-                myWriter.write(transaction.getString() + "\n");
+                transaction.write(myWriter);
             }
         
             myWriter.close();
