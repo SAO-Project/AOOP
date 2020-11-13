@@ -17,6 +17,10 @@ public class BankStatement {
     final private String savingsStartingStr;
     final private String creditStartingStr;
 
+    /**
+     * Default constructor.
+     * @param customer Customer in which the bank statement will be based on.
+     */
     public BankStatement(Customer customer) {
         this.customer = customer;
         this.checkingStartingStr = customer.getChecking().getString();

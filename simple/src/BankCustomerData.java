@@ -180,6 +180,11 @@ public class BankCustomerData implements IBankDB{
         }
     }
 
+    /**
+     * Retrieves available ID. Based on current customer account.
+     *
+     * @return Next available customer ID.
+     */
     public int getNextId() {
         return idToCustomer.values().size() +1;
     }
