@@ -4,6 +4,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author Alex
+ * @since 10/10/20
+ * @version 1
+ */
 public class CustomerTest {
 	private Customer customer1;
 	private Customer customer2;

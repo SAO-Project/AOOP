@@ -143,7 +143,6 @@ public class FileUtil {
     }
 
     /**
-     * Parses line and retrieves customer object from {@param splitLine}.
      *
      * @param splitLine array split by commas.
      * @return Optional.empty if something goes wrong. Else return Optional with
@@ -276,7 +275,7 @@ public class FileUtil {
      *
      * @param line    int number to be parsed. Currently supports "1234" and
      *                "1-2-3-4".
-     * @param message If {@param line} fails to parse, print message and fail
+     * @param message If  fails to parse, print message and fail
      *                quietly
      * @return Returns Optional.empty() if fails to parse. Else return parsed
      * value.
@@ -313,8 +312,6 @@ public class FileUtil {
 
     /**
      * Remove quotation marks.
-     * <p>
-     * Expecting "str" -> str.
      *
      * @param str Expecting "str"
      * @return Str with removed quotation values.
