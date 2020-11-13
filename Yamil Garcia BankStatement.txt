@@ -1,0 +1,41 @@
+Minor Bank
+
+Costumer Information:
+Full Name: Yamil Garcia
+Date of birth: 2/1/2000
+Address: (915) 999-9999
+Phone: yamil@gmail.com
+ID: 104
+
+Date accessed: 09/11/20
+
+Starting accounts: 
+
+Checking
+Account number: 1104
+Account balance: $3456.00
+
+Savings
+Account number: 2104
+Account balance: $123.00
+
+
+
+All Transactions during session: 
+
+Yamil Garcia deposited $130.00 into their Checking account
+Yamil Garcia deposited $130.00 into their Checking account
+Yamil Garcia withdrew $58.00 from Savings account
+Yamil Garcia paid $10.00 to Alex Avila
+Yamil Garcia transferred $50.00 from Checking toSavings
+
+
+Checking
+Account number: 1104
+Account balance: $3526.00
+
+Savings
+Account number: 2104
+Account balance: $115.00
+
+

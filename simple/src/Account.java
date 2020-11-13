@@ -4,11 +4,9 @@ import java.io.Writer;
 /**
  * @author Alex
  * @since 11/9
- * @version 1
- * <p>
+ * @versAccoutn
  * This class is the abstract class for account storing the common components of Credit Savings and Checking
  * accounts.
- * <p/>
  */
 public abstract class Account implements Printable {
 	protected int number;

@@ -6,7 +6,12 @@ import java.util.Optional;
 import java.util.Scanner;
 
 /**
- * TODO(Alex): Fill this out
+ * @author Aler
+ * @since 11/09
+ * @version 1
+ * This class handles the Transaction actions csv file
+ * the actions are handle here and this uses depency
+ * inversion by only depending on an abstract interface database
  */
 public class ActionReader {
 	private IBankDB bank;

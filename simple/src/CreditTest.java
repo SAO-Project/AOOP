@@ -4,6 +4,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * @author Alex Avila
+ * @since 10/10/20
+ * @version 1
+ */
 public class CreditTest {
 	private Credit credit1;
 	
