@@ -18,6 +18,7 @@ import java.io.IOException;
  * @since 11/14/20
  *
  * Customer menu.
+ * TODO(Edd1e234): impl text box that can display a string.
  */
 public class CustomerMenuController extends RunBankController {
     private Customer customer;
@@ -36,7 +37,13 @@ public class CustomerMenuController extends RunBankController {
         this.customer = customer;
     }
 
-    public void inquireBalance(ActionEvent actionEvent) {
+    public void inquireBalance(ActionEvent actionEvent) throws IOException {
+        Optional<Account> account = getAccount();
+
+        if (account.isPresent()) {
+            System.out.println("Account retrieved... display");
+        }
+
         System.out.println("inquire balance");
     }
 
@@ -58,7 +65,7 @@ public class CustomerMenuController extends RunBankController {
             AlertBox.display(ERROR, "Please activate checking account");
         }
 
-        // TODO(Edd1e234): Translate this to its own method. 
+        // TODO(Edd1e234): Translate this to its own method.
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(CUSTOMER_LOGIN));
         Parent root = loader.load();
@@ -94,6 +101,7 @@ public class CustomerMenuController extends RunBankController {
                             Optional.of(destCustomer.get().getChecking()),
                             amount.get(),
                             "pays"));
+            AlertBox.display(SUCCESS, OPERATION_SUCCESS);
         } catch (Exception e) {
             AlertBox.display(ERROR, e.getMessage());
         }

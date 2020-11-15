@@ -21,7 +21,6 @@ import java.util.Optional;
  * Can be created in two ways
  */
 public class CustomerLoginController extends RunBankController {
-    private Optional<Customer> customer = Optional.empty();
     private boolean needsPassword;
 
     @FXML VBox passwordVbox;
@@ -89,7 +88,7 @@ public class CustomerLoginController extends RunBankController {
     public void back(ActionEvent actionEvent) throws IOException {
         if (needsPassword) {
             // Moves scene and closes window. Goes back to main menu
-            moveScene(MAIN_MENU, new MainMenuController(), "Main Menu");
+            moveScene(MAIN_MENU, this.customer);
         } else {
             // Just closes scene
             exit(backButton);

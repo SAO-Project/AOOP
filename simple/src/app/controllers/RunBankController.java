@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.IBankDB;
+import app.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -20,17 +20,18 @@ import java.io.IOException;
  */
 abstract class RunBankController {
     protected final static String ERROR = "ERROR";
+    protected final static String SUCCESS = "Success";
+    protected final static String OPERATION_SUCCESS = "Operation was " +
+            "successful";
     protected final static String MAIN_MENU = "fxml/MainMenu.fxml";
     protected final static String CUSTOMER_LOGIN = "fxml/CustomerLogin.fxml";
     protected final static String CUSTOMER_MENU = "fxml/CustomerMenu.fxml";
     protected final static String GET_AMOUNT = "fxml/GetAmount.fxml";
+    protected final static String ACCOUNT = "fxml/GetAccount.fxml";
 
     // Model
-    IBankDB bankDB;
-
-    public void enterData(IBankDB bankDB) {
-        this.bankDB = bankDB;
-    }
+    protected IBankDB bankDB;
+    protected Optional<Customer> customer = Optional.empty();
 
     /**
      * Moves from scene to scene.
@@ -41,14 +42,13 @@ abstract class RunBankController {
      * for it.
      */
     private Parent createRoot(
-            String fxmlFile,
-            RunBankController controller,
-            String title) throws IOException {
+            String fxmlFile, Optional<Customer> customer) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
 
-        controller = loader.getController();
+        RunBankController controller = loader.getController();
         controller.enterData(bankDB);
+        controller.setCustomer(customer);
         return root;
     }
 
@@ -62,10 +62,9 @@ abstract class RunBankController {
      * @throws IOException If thrown something has gone wrong. Do not catch
      * for it.
      */
-    public void moveScene(String fxmlFile,
-                          RunBankController con,
-                          String title) throws IOException {
-        moveScene(createRoot(fxmlFile, con, title));
+    public void moveScene(
+            String fxmlFile, Optional<Customer> customer) throws IOException {
+        moveScene(createRoot(fxmlFile, customer));
     }
 
     public void moveScene(Parent root) {
@@ -74,9 +73,23 @@ abstract class RunBankController {
         stage.show();
     }
 
-    // Exits from scene.
-    protected void exit(Button button) {
-        ((Stage) button.getScene().getWindow()).close();
+    protected void setCustomer(Optional<Customer> customer) {
+        this.customer = customer;
+    }
+
+    protected Optional<Customer> getCustomer() {
+        return getCustomer();
+    }
+
+    protected boolean containsCustomer() throws IOException {
+        if (customer.isPresent()) {
+            return true;
+        }
+        throw new IOException("Customer was not set before hand");
+    }
+
+    public void enterData(IBankDB bankDB) {
+        this.bankDB = bankDB;
     }
 
     protected Optional<Double> getAmount(String message) throws IOException {
@@ -91,5 +104,26 @@ abstract class RunBankController {
         stage.showAndWait();
 
         return getAmountController.getAmount();
+    }
+
+    protected Optional<Account> getAccount() throws IOException {
+        // TODO(Edd1e234): Add message feature
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(getClass().getResource(ACCOUNT));
+        Parent root = fxmlLoader.load();
+
+        GetAccountController getAccountController = fxmlLoader.load();
+        getAccountController.setCustomer(customer);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+
+        return getAccountController.getAccount();
+    }
+
+    // Exits from scene.
+    protected void exit(Button button) {
+        ((Stage) button.getScene().getWindow()).close();
     }
 }

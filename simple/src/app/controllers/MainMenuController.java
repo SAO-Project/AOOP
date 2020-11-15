@@ -49,20 +49,8 @@ public class MainMenuController extends RunBankController {
             return;
         }
 
-        // Move on to customer menu.
-        FXMLLoader customerMenuLoader =
-                new FXMLLoader(getClass().getResource(CUSTOMER_MENU));
-        Parent customerMenuRoot = customerMenuLoader.load();
-
-        CustomerMenuController
-                customerMenuController = customerMenuLoader.getController();
-        customerMenuController.enterData(bankDB);
-        customerMenuController.setCustomer(customer.get());
-
-        Stage customerMenuStage = new Stage();
-        customerMenuStage.setScene(new Scene(customerMenuRoot));
-        customerMenuStage.show();
-        System.out.println("Customer has been logged in");
+        // Generic move.
+        moveScene(CUSTOMER_MENU, customer);
     }
 
     public void CreateCustomer(ActionEvent actionEvent) {

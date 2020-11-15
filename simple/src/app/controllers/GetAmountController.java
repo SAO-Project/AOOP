@@ -43,6 +43,8 @@ public class GetAmountController extends RunBankController {
             }
 
             this.amount = Optional.of(amount);
+            System.out.println("Amount of money is " + amount);
+            exit(backButton);
         } catch (Exception e) {
             AlertBox.display(ERROR, "Invalid");
         }
