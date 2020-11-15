@@ -1,3 +1,5 @@
+package app;
+
 import java.util.Collection;
 import java.util.Optional;
 
@@ -33,8 +35,8 @@ public interface IBankDB {
 	
 	/**
 	 * get a customer using their respective full name if the name is in the bank
-	 * @param fullName the name of the Customer
-	 * @return returns the Customer of the name fullName
+	 * @param fullName the name of the app.Customer
+	 * @return returns the app.Customer of the name fullName
 	 */
 	Optional<Customer> getCustomer(String fullName);
 
@@ -60,7 +62,7 @@ public interface IBankDB {
 	boolean containsSavings(int accountNumber);
 	
 	/**
-	 * checks if the bank contains a Credit account
+	 * checks if the bank contains a app.Credit account
 	 * @param accountNumber uses account number to query account
 	 * @return returns the account of certain account number
 	 */
@@ -82,7 +84,7 @@ public interface IBankDB {
 	
 	/**
 	 * adds a transactions that was made when the users does a transaction
-	 * @param transaction the transaction information message of the Customer to be added
+	 * @param transaction the transaction information message of the app.Customer to be added
 	 */
 	void addTransaction(Transaction transaction);
 	

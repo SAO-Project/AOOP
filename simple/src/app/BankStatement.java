@@ -1,3 +1,5 @@
+package app;
+
 import java.io.Writer;
 import java.text.DateFormat;
 import java.util.Date;
@@ -19,7 +21,7 @@ public class BankStatement {
 
     /**
      * Default constructor.
-     * @param customer Customer in which the bank statement will be based on.
+     * @param customer app.Customer in which the bank statement will be based on.
      */
     public BankStatement(Customer customer) {
         this.customer = customer;
@@ -29,13 +31,13 @@ public class BankStatement {
     }
 
     /**
-     * Writes all Customer data to a file.
+     * Writes all app.Customer data to a file.
      * Writes starting balance of every account.
      * @param bankDB
      */
     public void createBankStatement(IBankDB bankDB) {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
-        String fileName = customer.getFullName() + " BankStatement.txt";
+        String fileName = customer.getFullName() + " app.BankStatement.txt";
 
         try {
             Writer bankStatementWriter = new FileWriter(fileName);

@@ -1,11 +1,6 @@
-import java.io.BufferedReader;
+package app;
+
 import java.io.FileWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Optional;
 
 /**
  * @author Edd1e234
@@ -30,9 +25,9 @@ public class CSVFile {
     public void writeCSV() {
         String firstLine = "First Name,Last Name,Date of Birth," +
                 "IdentificationNumber,Address,Phone Number,Email, Password," +
-                "Checking Account Number,Savings Account Number,Credit " +
-                "Account Number,Checking Balance,Savings Balance, Credit " +
-                "Balance, Credit Max";
+                "app.Checking app.Account Number,app.Savings app.Account Number,app.Credit " +
+                "app.Account Number,app.Checking Balance,app.Savings Balance, app.Credit " +
+                "Balance, app.Credit Max";
 
         try {
             FileWriter writer = new FileWriter("New_balance.csv");

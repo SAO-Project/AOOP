@@ -1,9 +1,6 @@
+package app;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Scanner;
 
 /**
  * TODO(Alex): Fill this out
@@ -112,7 +109,7 @@ public class ActionReader {
 	
 	private void withdraws(String[] actions){
 		try{
-			//Find account and Customer
+			//Find account and app.Customer
 			Customer customer = bank.getCustomer(actions[0] + " " + actions[1]).orElseThrow();
 			Account account = customer.getAccountByType(actions[2]);
 			double amount = Double.parseDouble(actions[7]);
@@ -127,7 +124,7 @@ public class ActionReader {
 					amount,
 					"withdraws"));
 		}catch (NullPointerException e){
-			String log = "Failed Transaction: ";
+			String log = "Failed app.Transaction: ";
 			for(int i = 0; i < actions.length; i++){
 				log += actions[i];
 			}

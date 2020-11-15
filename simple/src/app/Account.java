@@ -1,3 +1,5 @@
+package app;
+
 import java.io.IOException;
 import java.io.Writer;
 
@@ -6,7 +8,7 @@ import java.io.Writer;
  * @since 11/9
  * @version 1
  * <p>
- * This class is the abstract class for account storing the common components of Credit Savings and Checking
+ * This class is the abstract class for account storing the common components of app.Credit app.Savings and app.Checking
  * accounts.
  * <p/>
  */
@@ -67,11 +69,11 @@ public abstract class Account implements Printable {
 	public String getAccountTypeStr() {
 		switch (accountType) {
 			case CHECKING:
-				return "Checking account";
+				return "app.Checking account";
 			case SAVINGS:
-				return "Savings account";
+				return "app.Savings account";
 			case CREDIT:
-				return "Credit account";
+				return "app.Credit account";
 		}
 		return "FAIL FAIL";
 	}
@@ -172,8 +174,8 @@ public abstract class Account implements Printable {
 			return "";
 		}
 		return (this.getClass().getName() + "\n" +
-			"Account number: " + number + "\n" +
-			"Account balance: " + String.format("$%.2f", balance) + "\n"
+			"app.Account number: " + number + "\n" +
+			"app.Account balance: " + String.format("$%.2f", balance) + "\n"
 		);
 	}
 	

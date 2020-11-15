@@ -1,3 +1,5 @@
+package app;
+
 /**
  * @author Alex Avila
  * @version 1.0
@@ -17,8 +19,8 @@ public class Credit extends Account{
 	}
 	
 	/**
-	 * Credit constructor with Account parameters
-	 * @param number Account number of the credit card. Always starts with digit 3
+	 * app.Credit constructor with app.Account parameters
+	 * @param number app.Account number of the credit card. Always starts with digit 3
 	 * @param balance current balance of the credit card which is negative because it is dept
 	 */
 	public Credit(int number, double balance){
@@ -28,7 +30,7 @@ public class Credit extends Account{
 	
 	/**
 	 * This constructor accepts all the attributes used in PA3
-	 * @param number Account number of the credit card. Always starts with digit 3
+	 * @param number app.Account number of the credit card. Always starts with digit 3
 	 * @param balance current balance of the credit card which is negative because it is dept
 	 * @param maxCredit the limit of money that the user can borrow.
 	 */
@@ -71,9 +73,9 @@ public class Credit extends Account{
 	public String toString() {
 		if (isActive) return "";
 		return (this.getClass().getName() + "\n" +
-				"Account number: " + number + "\n" +
-				"Credit Max: " + maxCredit + "\n" +
-				"Account balance: " + String.format("$%.2f", balance) + "\n"
+				"app.Account number: " + number + "\n" +
+				"app.Credit Max: " + maxCredit + "\n" +
+				"app.Account balance: " + String.format("$%.2f", balance) + "\n"
 		);
 	}
 
