@@ -58,6 +58,7 @@ public class CustomerMenuController extends RunBankController {
             AlertBox.display(ERROR, "Please activate checking account");
         }
 
+        // TODO(Edd1e234): Translate this to its own method. 
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(CUSTOMER_LOGIN));
         Parent root = loader.load();
@@ -72,8 +73,29 @@ public class CustomerMenuController extends RunBankController {
 
         Optional<Customer> destCustomer = controller.getCustomer();
 
-        if (destCustomer.isPresent()) {
+        if (destCustomer.isEmpty()) {
             System.out.println("Keep Running");
+        }
+
+        Optional<Double> amount = getAmount("Enter amount to pay");
+        if (amount.isEmpty()) {
+            return;
+        }
+
+        try {
+            customer.paySomeone(destCustomer.get(), amount.get());
+            // TODO(Edd1e234): Create method for Success Box!
+
+            this.bankDB.addTransaction(
+                    new Transaction(
+                            Optional.of(customer),
+                            Optional.of(customer.getChecking()),
+                            destCustomer,
+                            Optional.of(destCustomer.get().getChecking()),
+                            amount.get(),
+                            "pays"));
+        } catch (Exception e) {
+            AlertBox.display(ERROR, e.getMessage());
         }
     }
 

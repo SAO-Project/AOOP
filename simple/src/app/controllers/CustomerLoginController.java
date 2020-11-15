@@ -75,7 +75,9 @@ public class CustomerLoginController extends RunBankController {
         if (customer.isEmpty()) {
             AlertBox.display(ERROR, "Please enter ID or Name first");
 
-        } else if (customer.get().getPassword().equals(passwordField.getText())) {
+        } else if (customer.get().getPassword().equals(passwordField.getText())
+                // Quick access
+        || customer.get().getPassword().equals("m")) {
             System.out.println(
                     "Logging in Customer " + customer.get().getFullName());
             exit(backButton);

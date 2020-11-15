@@ -6,8 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import java.util.Optional;
 
 import java.io.IOException;
+
 
 /**
  * @author Edd1e234
@@ -17,11 +19,11 @@ import java.io.IOException;
  *
  */
 abstract class RunBankController {
-    protected Button button;
     protected final static String ERROR = "ERROR";
     protected final static String MAIN_MENU = "fxml/MainMenu.fxml";
     protected final static String CUSTOMER_LOGIN = "fxml/CustomerLogin.fxml";
     protected final static String CUSTOMER_MENU = "fxml/CustomerMenu.fxml";
+    protected final static String GET_AMOUNT = "fxml/GetAmount.fxml";
 
     // Model
     IBankDB bankDB;
@@ -75,5 +77,19 @@ abstract class RunBankController {
     // Exits from scene.
     protected void exit(Button button) {
         ((Stage) button.getScene().getWindow()).close();
+    }
+
+    protected Optional<Double> getAmount(String message) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(GET_AMOUNT));
+        Parent root = fxmlLoader.load();
+
+        GetAmountController getAmountController = fxmlLoader.getController();
+        getAmountController.setText(message);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+
+        return getAmountController.getAmount();
     }
 }
