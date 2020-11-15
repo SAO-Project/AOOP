@@ -62,12 +62,10 @@ public class FileUtil {
             // Open file.
             BufferedReader  cvsReader =
                     new BufferedReader(new java.io.FileReader(pathToFile));
-            String line;
-
-            setEachIndex(cvsReader.readLine().split(","));
+            String line = cvsReader.readLine();
+            setEachIndex(line.split(","));
             while ((line = cvsReader.readLine()) != null) {
                 Customer customer = parseLine(line.split(REGEX)).orElseThrow();
-                
                 bankCustomerData.addCustomer(customer);
             }
         } catch (Exception e) {
@@ -110,25 +108,25 @@ public class FileUtil {
                 case "Phone Number":
                     PHONE_NUMBER = i;
                     break;
-                case "app.Savings app.Account Number":
+                case "Savings Account Number":
                     SAVING_ACCOUNT_NUMBER = i;
                     break;
-                case "app.Savings Starting Balance":
+                case "Savings Starting Balance":
                     SAVING_STARTING_BALANCE = i;
                     break;
-                case "app.Checking app.Account Number":
+                case "Checking Account Number":
                     CHECKING_ACCOUNT_NUMBER = i;
                     break;
-                case "app.Checking Starting Balance":
+                case "Checking Starting Balance":
                     CHECKING_STARTING_BALANCE = i;
                     break;
-                case "app.Credit app.Account Number":
+                case "Credit Account Number":
                     CREDIT_ACCOUNT_NUMBER = i;
                     break;
-                case "app.Credit Starting Balance":
+                case "Credit Starting Balance":
                     CREDIT_STATING_BALANCE = i;
                     break;
-                case "app.Credit Max":
+                case "Credit Max":
                     CREDIT_MAX = i;
                     break;
                 default:
@@ -139,7 +137,6 @@ public class FileUtil {
     }
 
     /**
-     * Parses line and retrieves customer object from {@param splitLine}.
      *
      * @param splitLine array split by commas.
      * @return Optional.empty if something goes wrong. Else return Optional with
@@ -272,7 +269,7 @@ public class FileUtil {
      *
      * @param line    int number to be parsed. Currently supports "1234" and
      *                "1-2-3-4".
-     * @param message If {@param line} fails to parse, print message and fail
+     * @param message If  fails to parse, print message and fail
      *                quietly
      * @return Returns Optional.empty() if fails to parse. Else return parsed
      * value.
@@ -309,8 +306,6 @@ public class FileUtil {
 
     /**
      * Remove quotation marks.
-     * <p>
-     * Expecting "str" -> str.
      *
      * @param str Expecting "str"
      * @return Str with removed quotation values.

@@ -8,10 +8,8 @@ import java.util.Optional;
  * @author Alex
  * @since 11/05/2020
  *
- * <p>
  * This class stores a transaction and it will return the transaction in a printable format for the user and
  * for the transaction
- * <p/>
  */
 public class Transaction implements Printable {
 	private Optional<Customer> srcCustomer;

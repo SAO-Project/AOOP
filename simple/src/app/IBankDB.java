@@ -7,10 +7,8 @@ import java.util.Optional;
  * @author Alex Avila
  * @version 1.0
  * @since 10/10/20
- * <p>
  * This interface was mostly implemented to be able to abstract the storage implementation and only cares
  * about getting the right information and being able to update and create this information.
- * <p/>
  */
 public interface IBankDB {
 	

@@ -4,15 +4,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * @author Alex Avila
+ * @since 11/01/20
+ * @version 1
+ * This class is the menu of when the user ask to read a file.
+ */
 public class TransactionFileMenu {
 	private Scanner scanner;
 	private ActionReader actionReader;
 	
+	/**
+	 * Constructor.
+	 * @param bank bank interface dependency
+	 * @param scanner Scanner to read from dependency
+	 */
 	public TransactionFileMenu(IBankDB bank, Scanner scanner){
 		this.scanner = scanner;
 		actionReader = new ActionReader(bank);
 	}
 	
+	/**
+	 * Ask for the file name
+	 */
 	public void askForFileName(){
 		System.out.println("Type -1 to exit");
 		System.out.print("Enter file name: ");
