@@ -34,11 +34,12 @@ public class BankCustomerData implements IBankDB{
         createAccountNumberToCustomerHashMap(this.nameToCustomer);
     }
 
-    @Override
+    
     /**
      * Assumes customer is valid.
      * Will not add.
      */
+    @Override
     public void addCustomer(Customer customer) {
         if (containsCustomer(customer.getFullName())) {
             System.out.println("Customer already active!");
@@ -141,7 +142,7 @@ public class BankCustomerData implements IBankDB{
      * Adds all customers to upon object initialization.
      * @param idToCustomer Uses data to populate map.
      */
-    public void createAccountNumberToCustomerHashMap(
+    private void createAccountNumberToCustomerHashMap(
             HashMap<String, Customer> idToCustomer) {
         this.accountNumberToCustomer = new HashMap<>();
         this.accountNumberToAccount = new HashMap<>();
@@ -179,7 +180,8 @@ public class BankCustomerData implements IBankDB{
                     customer.getCredit().getNumber(), customer.getCredit());
         }
     }
-
+    
+    @Override
     public int getNextId() {
         return idToCustomer.values().size() +1;
     }

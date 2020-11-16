@@ -148,7 +148,7 @@ public class FileUtil {
      * @return Optional.empty if something goes wrong. Else return Optional with
      * Customer object intact.
      */
-    public static Optional<Customer> parseLine(String[] splitLine) {
+    private static Optional<Customer> parseLine(String[] splitLine) {
         try {
             return Optional.of(
                     new Customer(
@@ -194,7 +194,7 @@ public class FileUtil {
      * @return Optional.empty() if something goes wrong removing "-". Else
      * returns int value.
      */
-    public static Optional<Integer> parseIdNum(String idStr) {
+    private static Optional<Integer> parseIdNum(String idStr) {
         return parseInt(idStr, FAILURE_PARSE_MESSAGE + "Id.");
     }
 
@@ -206,8 +206,11 @@ public class FileUtil {
      * @param accountBalanceStr Starting balance.
      * @return Optional containing checking account.
      */
-    public static Optional<Checking> parseCheckingAccount(
-            String accountNumStr, String accountBalanceStr) {
+    private static Optional<Checking> parseCheckingAccount
+    (
+        String accountNumStr,
+        String accountBalanceStr
+    ) {
         return Optional.of(new Checking(
                 parseInt(
                         accountNumStr,
@@ -229,9 +232,11 @@ public class FileUtil {
      * @param accountBalanceStr Starting balance.
      * @return Optional containing credit account.
      */
-    public static Optional<Credit>
-    parseCreditAccount(String accountNumStr, String accountBalanceStr,
-                       String creditMaxStr) {
+    private static Optional<Credit> parseCreditAccount(
+        String accountNumStr,
+        String accountBalanceStr,
+        String creditMaxStr
+    ){
         return Optional.of(new Credit(
                 parseInt(
                         accountNumStr,
@@ -255,9 +260,10 @@ public class FileUtil {
      * @param accountBalanceStr Starting balance.
      * @return Optional containing credit account.
      */
-    public static Optional<Savings> parseSavingAccount(
-            String accountNumStr, String accountBalanceStr) {
-
+    private static Optional<Savings> parseSavingAccount(
+        String accountNumStr,
+        String accountBalanceStr
+    ) {
         return Optional.of(new Savings(
                 parseInt(
                         accountNumStr,
@@ -280,7 +286,7 @@ public class FileUtil {
      * @return Returns Optional.empty() if fails to parse. Else return parsed
      * value.
      */
-    public static Optional<Integer> parseInt(String line, String message) {
+    private static Optional<Integer> parseInt(String line, String message) {
         StringBuilder value = new StringBuilder();
         try {
             // Split line, combine nums
@@ -301,7 +307,7 @@ public class FileUtil {
      * @return Returns Optional.empty() if fails to parse. Else return parsed
      * value.
      */
-    public static Optional<Double> parseDouble(String line, String message) {
+    private static Optional<Double> parseDouble(String line, String message) {
         try {
             return Optional.of(Double.valueOf(line));
         } catch (Exception exception) {

@@ -97,7 +97,7 @@ public class RunBank {
         }
     }
 
-    public static void accessCustomer(
+    private static void accessCustomer(
         IBankDB bankCustomerData
     ) {
         Optional<Customer> customer = getCustomer(bankCustomerData);
@@ -135,7 +135,7 @@ public class RunBank {
         }
     }
 
-    public static void customerMenu(
+    private static void customerMenu(
         Customer customer,
         IBankDB bankCustomerData
     ) {
@@ -210,7 +210,7 @@ public class RunBank {
      *
      * @param bankDB Contains all customer accounts
      */
-    public static void bankManager(IBankDB bankDB) {
+    private static void bankManager(IBankDB bankDB) {
         System.out.println("Welcome Manager!");
         Scanner scanner = new Scanner(System.in);
 
@@ -258,8 +258,10 @@ public class RunBank {
      * @param bankDB Contains all customer data. Used to retrieve all
      *                         bank statements.
      */
-    public static void bankManagerCustomerMenu(
-            Customer customer, IBankDB bankDB) {
+    private static void bankManagerCustomerMenu(
+        Customer customer,
+        IBankDB bankDB
+    ) {
         Scanner scanner = new Scanner(System.in);
         System.out.println(customer.getFullName() + " customer account");
         while (true) {
@@ -431,7 +433,7 @@ public class RunBank {
      * @param customer Retrieves account from customer.
      * @return Logs of action.
      */
-    public static Optional<Transaction> inquireBalance(Customer customer) {
+    private static Optional<Transaction> inquireBalance(Customer customer) {
         System.out.println("Select account to inquire\n");
         Optional<Account> account = getAccount(customer);
         if (account.isPresent()) {
@@ -454,7 +456,7 @@ public class RunBank {
      * @param customer Customer to deposit money into.
      * @return If empty failed to deposit, else successful.
      */
-    public static Optional<Transaction> depositMoney(Customer customer) {
+    private static Optional<Transaction> depositMoney(Customer customer) {
         System.out.println("Select account deposit into\n");
         Optional<Account> account = getAccount(customer);
         if (account.isEmpty()) {
@@ -490,7 +492,7 @@ public class RunBank {
      * @param customer Customer to withdraw money from.
      * @return If empty failed to withdraw, else successful.
      */
-    public static Optional<Transaction> withdrawMoney(Customer customer) {
+    private static Optional<Transaction> withdrawMoney(Customer customer) {
         System.out.println("Select account to withdraw from\n");
         Optional<Account> account = getAccount(customer);
         if (account.isEmpty()) {
@@ -567,9 +569,10 @@ public class RunBank {
      * @param bankCustomerData Used to retrieve customer to pay money to.
      * @return If empty failed to pay.
      */
-    public static Optional<Transaction> paySomeone(
+    private static Optional<Transaction> paySomeone(
         Customer customer,
-        IBankDB bankCustomerData) {
+        IBankDB bankCustomerData
+    ) {
         if (!customer.getChecking().getIsActive()) {
             System.out.println("Please activate checking account");
             return Optional.empty();
@@ -668,7 +671,7 @@ public class RunBank {
      * @param customer Contains account to access.
      * @return Account user asks or any empty optional object.
      */
-    public static Optional<Account> getAccount(Customer customer) {
+    private static Optional<Account> getAccount(Customer customer) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             displayMenuNewLine(new String[]{
@@ -720,7 +723,7 @@ public class RunBank {
      * @param message if failure to parse print this.
      * @return Optional empty if user prefers to exit. Else return amount.
      */
-    public static Optional<Double> getAmountOfMoney(String message) {
+    private static Optional<Double> getAmountOfMoney(String message) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             displayMenuNewLine(new String[]{
@@ -748,7 +751,7 @@ public class RunBank {
     }
 
     // Util methods
-    public static void displayMenuNewLine(String[] prompts) {
+    private static void displayMenuNewLine(String[] prompts) {
         Arrays.stream(prompts).forEach(System.out::println);
     }
 
@@ -785,9 +788,11 @@ public class RunBank {
      *                                             one account. Will not allow
      *                                             the user to exit.
      */
-    public static void activateAccounts(
-        Customer customer, IBankDB bankCustomerData,
-        boolean activateAtLeastSavingsAccount) {
+    private static void activateAccounts(
+        Customer customer,
+        IBankDB bankCustomerData,
+        boolean activateAtLeastSavingsAccount
+    ) {
 
         if (activateAtLeastSavingsAccount) {
             System.out.println("Please activate at least savings account");
@@ -862,8 +867,10 @@ public class RunBank {
      * @param account          Needs to be Savings or Checking account.
      * @param bankCustomerData Used to validate the account number setting.
      */
-    public static Optional<String> setAccountInfo(
-            Account account, IBankDB bankCustomerData) {
+    private static Optional<String> setAccountInfo(
+        Account account,
+        IBankDB bankCustomerData
+    ) {
         int accountNumberType = 1000;
         if (account.getAccountType() == AccountType.SAVINGS) {
             accountNumberType = 2000;
@@ -904,9 +911,10 @@ public class RunBank {
      * @param bankCustomerData Contains all customer data necessary.
      * @return Logging info.
      */
-    public static Optional<String> setCreditAccount(
-            Credit creditAccount, IBankDB
-            bankCustomerData) {
+    private static Optional<String> setCreditAccount(
+        Credit creditAccount,
+        IBankDB bankCustomerData
+    ) {
         Scanner scanner = new Scanner(System.in);
 
         // Generates an account number necessary.
@@ -947,9 +955,10 @@ public class RunBank {
      *                         already set.
      * @return New account number.
      */
-    public static int generateAccountNumber(
-            IBankDB bankCustomerData,
-            int accountNumberType) {
+    private static int generateAccountNumber(
+        IBankDB bankCustomerData,
+        int accountNumberType
+    ) {
         int accountNumber = accountNumberType + bankCustomerData.getNextId();
         if (bankCustomerData.containsAccountNumber(accountNumber)) {
             System.out.println("Something has gone wrong. Account logic" +
@@ -965,7 +974,7 @@ public class RunBank {
      * @param name Name to validate.
      * @return If valid.
      */
-    public static boolean nameValidator(String name) {
+    private static boolean nameValidator(String name) {
         return Pattern.matches("[a-zA-Z]+", name);
     }
 
