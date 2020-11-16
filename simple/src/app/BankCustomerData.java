@@ -43,7 +43,7 @@ public class BankCustomerData implements IBankDB{
      */
     public void addCustomer(Customer customer) {
         if (containsCustomer(customer.getFullName())) {
-            System.out.println("app.Customer already active!");
+            System.out.println("Customer already active!");
             return;
         }
         this.nameToCustomer.put(customer.getFullName(), customer);
@@ -157,7 +157,7 @@ public class BankCustomerData implements IBankDB{
     /**
      * Used to add customer to accountNumberToCustomerMap class attribute.
      *
-     * @param customer app.Customer to add.
+     * @param customer Customer to add.
      */
     private void addCustomerToAccountNumberToCustomerMap(Customer customer) {
         if (customer.getChecking().getIsActive()) {

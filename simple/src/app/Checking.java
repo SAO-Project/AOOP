@@ -21,7 +21,7 @@ public class Checking extends Account {
 	/**
 	 * Constructor that uses the number and balance as parameter because they are the only information about
 	 * checking accounts in the csv file
-	 * @param number app.Account number unique for each account and starts with digit 1 when is checking
+	 * @param number Account number unique for each account and starts with digit 1 when is checking
 	 * @param balance the current amount of money that the account has
 	 */
 	public Checking(int number, double balance){
@@ -32,7 +32,7 @@ public class Checking extends Account {
 	/**
 	 * Constructor that takes interest rate as a parameter but it is never use because the interest rate is
 	 * not in the csv file.
-	 * @param number app.Account number unique for each account and starts with digit 1 when is checking
+	 * @param number Account number unique for each account and starts with digit 1 when is checking
 	 * @param balance the current amount of money that the account has
 	 * @param interestRate the interest rate of the account
 	 */

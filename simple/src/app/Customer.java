@@ -20,15 +20,15 @@ public class Customer extends Person{
 	}
 	
 	/**
-	 * @param firstName app.Customer's first name inherited from app.Person class
-	 * @param lastName app.Customer's last name inherited from app.Person class
-	 * @param dob app.Customer's date of birth as a String inherited from app.Person class
-	 * @param address app.Customer's address inherited from app.Person class
-	 * @param phone app.Customer's phone number inherited from app.Person class
-	 * @param id app.Customer's identification number
-	 * @param checking app.Customer's checkings account which is a app.Checking instance
-	 * @param savings app.Customer's savings account which is a app.Savings instance
-	 * @param credit app.Customer's credit account which is a app.Credit instance
+	 * @param firstName Customer's first name inherited from Person class
+	 * @param lastName Customer's last name inherited from Person class
+	 * @param dob Customer's date of birth as a String inherited from Person class
+	 * @param address Customer's address inherited from Person class
+	 * @param phone Customer's phone number inherited from Person class
+	 * @param id Customer's identification number
+	 * @param checking Customer's checkings account which is a Checking instance
+	 * @param savings Customer's savings account which is a Savings instance
+	 * @param credit Customer's credit account which is a Credit instance
 	 */
 	public Customer(
 		String firstName,
@@ -155,8 +155,8 @@ public class Customer extends Person{
 	
 	/**
 	 * Transfers money determined by amount from source to dest account
-	 * @param source app.Account where money is coming from to pay the destination account
-	 * @param dest app.Account where money if going to from the source account
+	 * @param source Account where money is coming from to pay the destination account
+	 * @param dest Account where money if going to from the source account
 	 * @param amount the amount of money that is being transfer between both accounts
 	 */
 	public void transfer(Account source, Account dest, double amount) throws RuntimeException{
@@ -176,11 +176,11 @@ public class Customer extends Person{
 	
 	Account getAccountByType(String type) throws RuntimeException{
 		switch(type){
-			case "app.Savings":
+			case "Savings":
 				return savings;
-			case "app.Checking":
+			case "Checking":
 				return checking;
-			case "app.Credit":
+			case "Credit":
 				return credit;
 			default:
 				throw new RuntimeException("not a valid account type");
@@ -230,36 +230,36 @@ public class Customer extends Person{
 	}
 	
 	/**
-	 * converts information of the app.Customer into a formatted String
-	 * @return returns a String with all the app.Customer's information
+	 * converts information of the Customer into a formatted String
+	 * @return returns a String with all the Customer's information
 	 */
 	@Override
 	public String toString() {
-		//Convert app.Checking to String
+		//Convert Checking to String
 		String checkingString;
 		try{
-			checkingString = "app.Checking:\n" +
-				"\tapp.Account Number: " + checking.getNumber() + "\n" +
+			checkingString = "Checking:\n" +
+				"\tAccount Number: " + checking.getNumber() + "\n" +
 				"\tBalance: $" + String.format("%.2f", checking.getBalance()) + "\n";
 		}catch(NullPointerException e){
 			checkingString = "";
 		}
 		
-		//Convert app.Savings to String
+		//Convert Savings to String
 		String savingsString;
 		try{
-			savingsString = "app.Savings:\n" +
-				"\tapp.Account Number: " + savings.getNumber() + "\n" +
+			savingsString = "Savings:\n" +
+				"\tAccount Number: " + savings.getNumber() + "\n" +
 				"\tBalance: $" + String.format("%.2f", savings.getBalance()) + "\n";
 		}catch(NullPointerException e){
 			savingsString = "";
 		}
 		
-		//Convert app.Checking to String
+		//Convert Checking to String
 		String creditString;
 		try{
-			creditString = "app.Credit:\n" +
-				"\tapp.Account Number: " + credit.getNumber() + "\n" +
+			creditString = "Credit:\n" +
+				"\tAccount Number: " + credit.getNumber() + "\n" +
 				"\tBalance: $" + String.format("%.2f", credit.getBalance()) + "\n";
 		}catch(NullPointerException e){
 			creditString = "";

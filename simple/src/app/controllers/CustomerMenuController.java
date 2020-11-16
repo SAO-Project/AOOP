@@ -21,7 +21,6 @@ import java.io.IOException;
  * TODO(Edd1e234): impl text box that can display a string.
  */
 public class CustomerMenuController extends RunBankController {
-    private Customer customer;
 
     @FXML Button inquireBalanceButton;
     @FXML Button depositMoneyButton;
@@ -33,17 +32,22 @@ public class CustomerMenuController extends RunBankController {
     @FXML Button activateAccountButton;
     @FXML Button exitButton;
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public void inquireBalance(ActionEvent actionEvent) throws IOException {
         Optional<Account> account = getAccount();
 
-        if (account.isPresent()) {
-            System.out.println("Account retrieved... display");
+        if (account.isEmpty()) {
+            System.out.println("Failed to retrieve account.");
+            return;
         }
 
+        displayMessage(account.get().getString());
+        bankDB.addTransaction(new Transaction(
+                this.customer,
+                account,
+                Optional.empty(),
+                Optional.empty(),
+                0,
+                "inquires"));
         System.out.println("inquire balance");
     }
 
@@ -61,7 +65,7 @@ public class CustomerMenuController extends RunBankController {
 
     public void pay(ActionEvent actionEvent) throws IOException {
         System.out.println("pay");
-        if (!customer.getChecking().getIsActive()) {
+        if (!customer.get().getChecking().getIsActive()) {
             AlertBox.display(ERROR, "Please activate checking account");
         }
 
@@ -90,13 +94,13 @@ public class CustomerMenuController extends RunBankController {
         }
 
         try {
-            customer.paySomeone(destCustomer.get(), amount.get());
+            customer.get().paySomeone(destCustomer.get(), amount.get());
             // TODO(Edd1e234): Create method for Success Box!
 
             this.bankDB.addTransaction(
                     new Transaction(
-                            Optional.of(customer),
-                            Optional.of(customer.getChecking()),
+                            customer,
+                            Optional.of(customer.get().getChecking()),
                             destCustomer,
                             Optional.of(destCustomer.get().getChecking()),
                             amount.get(),
