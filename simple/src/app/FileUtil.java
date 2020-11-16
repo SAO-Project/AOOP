@@ -1,10 +1,6 @@
-
+package app;
 
 import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -48,7 +44,7 @@ public class FileUtil {
 
     /**
      * Goes through each line of customers.cvs. Each line is parsed, which
-     * creates a Customer object. Customer class is stored in two separate hash
+     * creates a app.Customer object. app.Customer class is stored in two separate hash
      * maps. These hash maps are returned via array.
      * <p>
      * If fails to parse error message will be thrown to the screen.
@@ -56,7 +52,7 @@ public class FileUtil {
      * @param pathToFile opens file according to this.
      * @return Object containing two hashmaps. One hash map is customer name to
      * customer object. The other is customer ID to customer object.
-     * BankCustomerData object also contains the next ID available.
+     * app.BankCustomerData object also contains the next ID available.
      */
     public static IBankDB readFile(String pathToFile) {
         HashMap<String, Customer> nameToCustomer = new HashMap<>();
@@ -66,12 +62,10 @@ public class FileUtil {
             // Open file.
             BufferedReader  cvsReader =
                     new BufferedReader(new java.io.FileReader(pathToFile));
-            String line;
-
-            setEachIndex(cvsReader.readLine().split(","));
+            String line = cvsReader.readLine();
+            setEachIndex(line.split(","));
             while ((line = cvsReader.readLine()) != null) {
                 Customer customer = parseLine(line.split(REGEX)).orElseThrow();
-                
                 bankCustomerData.addCustomer(customer);
             }
         } catch (Exception e) {
@@ -146,7 +140,7 @@ public class FileUtil {
      *
      * @param splitLine array split by commas.
      * @return Optional.empty if something goes wrong. Else return Optional with
-     * Customer object intact.
+     * app.Customer object intact.
      */
     public static Optional<Customer> parseLine(String[] splitLine) {
         try {
@@ -202,7 +196,7 @@ public class FileUtil {
      * Build customer checking account using account number and starting
      * balance. Will throw if anything goes wrong
      *
-     * @param accountNumStr     Account number for checking account.
+     * @param accountNumStr     app.Account number for checking account.
      * @param accountBalanceStr Starting balance.
      * @return Optional containing checking account.
      */
@@ -212,11 +206,11 @@ public class FileUtil {
                 parseInt(
                         accountNumStr,
                         FAILURE_PARSE_MESSAGE
-                                .concat("Checking account number."))
+                                .concat("app.Checking account number."))
                         .orElseThrow(), /* =accountNumber*/
                 parseDouble(
                         accountBalanceStr,
-                        FAILURE_PARSE_MESSAGE.concat("Checking balance."))
+                        FAILURE_PARSE_MESSAGE.concat("app.Checking balance."))
                         .orElseThrow()  /* =accountBalance*/
         ));
     }
@@ -225,7 +219,7 @@ public class FileUtil {
      * Build customer credit account using account number and starting balance.
      * Will throw if anything goes wrong
      *
-     * @param accountNumStr     Account number for credit account.
+     * @param accountNumStr     app.Account number for credit account.
      * @param accountBalanceStr Starting balance.
      * @return Optional containing credit account.
      */
@@ -235,14 +229,14 @@ public class FileUtil {
         return Optional.of(new Credit(
                 parseInt(
                         accountNumStr,
-                        FAILURE_PARSE_MESSAGE.concat("Credit account number"))
+                        FAILURE_PARSE_MESSAGE.concat("app.Credit account number"))
                         .orElseThrow(), /* =accountBalance*/
                 parseDouble(
                         accountBalanceStr,
-                        FAILURE_PARSE_MESSAGE.concat("Credit balance"))
+                        FAILURE_PARSE_MESSAGE.concat("app.Credit balance"))
                         .orElseThrow(), /* =accountBalance*/
                 parseInt(creditMaxStr,
-                        FAILURE_PARSE_MESSAGE.concat("Credit max"))
+                        FAILURE_PARSE_MESSAGE.concat("app.Credit max"))
                         .orElseThrow()
         ));
     }
@@ -251,7 +245,7 @@ public class FileUtil {
      * Build customer saving account using account number and starting balance.
      * Will throw if anything goes wrong
      *
-     * @param accountNumStr     Account number for saving account.
+     * @param accountNumStr     app.Account number for saving account.
      * @param accountBalanceStr Starting balance.
      * @return Optional containing credit account.
      */
@@ -265,7 +259,7 @@ public class FileUtil {
                         .orElseThrow(), /* =accountBalance */
                 parseDouble(
                         accountBalanceStr,
-                        FAILURE_PARSE_MESSAGE.concat("Savings balance"))
+                        FAILURE_PARSE_MESSAGE.concat("app.Savings balance"))
                         .orElseThrow() /* =accountBalance */
         ));
     }

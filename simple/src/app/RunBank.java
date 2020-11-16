@@ -1,3 +1,5 @@
+package app;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -61,10 +63,10 @@ public class RunBank {
         while (true) {
             displayMenuNewLine(new String[]{
                 "What would you like to do today?\n",
-                "\t1. Sign in as Customer",
-                "\t2. Create Customer",
+                "\t1. Sign in as app.Customer",
+                "\t2. Create app.Customer",
                 "\t3. Sign in as Bank Manager",
-                "\t4. Read Transaction File",
+                "\t4. Read app.Transaction File",
                 "\t5. Exit\n"
             });
 
@@ -230,7 +232,7 @@ public class RunBank {
         while(true) {
             displayMenuNewLine(new String[] {
                     "Bank Manager Menu",
-                    "1. View Customer",
+                    "1. View app.Customer",
                     "2. Inquire account by number",
                     "3. Print all customers",
                     "4. Exit"
@@ -279,7 +281,7 @@ public class RunBank {
             try {
                 displayMenuNewLine(new String[] {
                         "1. View Accounts",
-                        "2. Execute BankStatement",
+                        "2. Execute app.BankStatement",
                         "3. Exit"
                 });
                 switch (Integer.parseInt(scanner.nextLine())) {
@@ -429,7 +431,7 @@ public class RunBank {
                 new Savings());
         activateAccounts(customer, bankCustomerData, true);
         if (bankCustomerData.containsCustomer(customer.getFirstName())) {
-            System.out.println("Customer already in system... EXISTING");
+            System.out.println("app.Customer already in system... EXISTING");
             return;
         }
 
@@ -464,7 +466,7 @@ public class RunBank {
 
     /**
      * Deposits money into desired account.
-     * @param customer Customer to deposit money into.
+     * @param customer app.Customer to deposit money into.
      * @return If empty failed to deposit, else successful.
      */
     public static Optional<Transaction> depositMoney(Customer customer) {
@@ -500,7 +502,7 @@ public class RunBank {
 
     /**
      * Withdraws money from account
-     * @param customer Customer to withdraw money from.
+     * @param customer app.Customer to withdraw money from.
      * @return If empty failed to withdraw, else successful.
      */
     public static Optional<Transaction> withdrawMoney(Customer customer) {
@@ -582,7 +584,7 @@ public class RunBank {
 
     /**
      * Transfers money
-     * @param customer Customer to pay money from.
+     * @param customer app.Customer to pay money from.
      * @param bankCustomerData Used to retrieve customer to pay money to.
      * @return If empty failed to pay.
      */
@@ -635,7 +637,7 @@ public class RunBank {
         while (true) {
             displayMenuNewLine(new String[]{
                 "Select sign in option\n",
-                "\t1. Enter Customer Id",
+                "\t1. Enter app.Customer Id",
                 "\t2. Enter Full Name",
                 "\t3. Exit\n"
             });
@@ -681,19 +683,19 @@ public class RunBank {
     }
 
     /**
-     * Finds and returns either Checking, Savings, or Credit account. Loops till
+     * Finds and returns either app.Checking, app.Savings, or app.Credit account. Loops till
      * user finds the correct account or exits upon user request.
      *
      * @param customer Contains account to access.
-     * @return Account user asks or any empty optional object.
+     * @return app.Account user asks or any empty optional object.
      */
     public static Optional<Account> getAccount(Customer customer) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             displayMenuNewLine(new String[]{
-                "\t1. Checking Account",
-                "\t2. Saving Account",
-                "\t3. Credit Account",
+                "\t1. app.Checking app.Account",
+                "\t2. Saving app.Account",
+                "\t3. app.Credit app.Account",
                 "\t4. EXIT\n"
             });
 
@@ -704,21 +706,21 @@ public class RunBank {
                             return Optional.of(customer.getChecking());
                         }
                         System.out.println("You do not have an" +
-                                " active Checking Account");
+                                " active app.Checking app.Account");
                         break;
                     case 2:
                         if (customer.getSavings().getIsActive()) {
                             return Optional.of(customer.getSavings());
                         }
                         System.out.println("You do not have an" +
-                                " active Savings Account");
+                                " active app.Savings app.Account");
                         break;
                     case 3:
                         if (customer.getCredit().getIsActive()) {
                             return Optional.of(customer.getCredit());
                         }
                         System.out.println("You do not have an" +
-                                " active Credit Account");
+                                " active app.Credit app.Account");
                         break;
                     case 4:
                         return Optional.empty();
@@ -817,9 +819,9 @@ public class RunBank {
         while (true) {
             displayMenuNewLine(new String[]{
                 "Activate accounts\n",
-                "\t1. Checking",
+                "\t1. app.Checking",
                 "\t2. Saving",
-                "\t3. Credit",
+                "\t3. app.Credit",
                 "\t4. Exit\n"
             });
             try {
@@ -876,9 +878,9 @@ public class RunBank {
     /**
      * Meant to only be used for checking and savings account.
      * <p>
-     * Credit accounts are set separately.
+     * app.Credit accounts are set separately.
      *
-     * @param account          Needs to be Savings or Checking account.
+     * @param account          Needs to be app.Savings or app.Checking account.
      * @param bankCustomerData Used to validate the account number setting.
      */
     public static Optional<String> setAccountInfo(
@@ -899,7 +901,7 @@ public class RunBank {
                     startingBalance = getAmountOfMoney("Enter starting " +
                             "balance");
                 } else {
-                    startingBalance = getAmountOfMoney("Enter Checking " +
+                    startingBalance = getAmountOfMoney("Enter app.Checking " +
                             "balance");
                 }
                 if (startingBalance.isEmpty()) {
@@ -913,11 +915,11 @@ public class RunBank {
         account.setBalance(startingBalance.get());
         account.setNumber(accountNumber);
         account.setIsActive(true);
-        return Optional.of("Account activated\n");
+        return Optional.of("app.Account activated\n");
     }
 
     /**
-     * Credit is unique, needs to be settled differently.
+     * app.Credit is unique, needs to be settled differently.
      *
      * @param creditAccount    The actual credit account.
      * @param bankCustomerData Contains all customer data necessary.
@@ -955,7 +957,7 @@ public class RunBank {
         creditAccount.setNumber(accountNumber);
         creditAccount.setBalance(startingBalance.get() * -1);
         creditAccount.setIsActive(true);
-        return Optional.of("Account activated\n");
+        return Optional.of("app.Account activated\n");
     }
 
     /**
@@ -971,7 +973,7 @@ public class RunBank {
             int accountNumberType) {
         int accountNumber = accountNumberType + bankCustomerData.getNextId();
         if (bankCustomerData.containsAccountNumber(accountNumber)) {
-            System.out.println("Something has gone wrong. Account logic" +
+            System.out.println("Something has gone wrong. app.Account logic" +
                     " has failed");
         }
         return accountNumber;
@@ -1049,7 +1051,7 @@ public class RunBank {
      * will fail gracefully.
      * @return Path to customer data.
      */
-    private static String askForFileName() {
+    public static String askForFileName() {
         Scanner scanner = new Scanner(System.in);
         displayMenuNewLine(new String[] {
                 "\n\n",

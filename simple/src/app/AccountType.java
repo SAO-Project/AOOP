@@ -1,3 +1,5 @@
+package app;
+
 /**
  * Contains to the type of account.
  */

@@ -1,3 +1,5 @@
+package app;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Optional;
@@ -20,10 +22,10 @@ public class Transaction implements Printable {
 	
 	/**
 	 * Constructor with all the information for any kind of transaction
-	 * @param srcCustomer Customer where money is coming from
-	 * @param srcAccount Account where money is coming from
-	 * @param destCustomer Customer where money is going to
-	 * @param destAccount Account where money is going to
+	 * @param srcCustomer app.Customer where money is coming from
+	 * @param srcAccount app.Account where money is coming from
+	 * @param destCustomer app.Customer where money is going to
+	 * @param destAccount app.Account where money is going to
 	 * @param amount amount of money that was transferred
 	 * @param action what type of transaction occurred
 	 */

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <?import java.lang.*?>
+    <?import java.util.*?>
+    <?import javafx.scene.*?>
+    <?import javafx.scene.control.*?>
+    <?import javafx.scene.layout.*?>
+
+
+    <AnchorPane prefHeight="504.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.MainMenuController">
+       <children>
+          <GridPane layoutY="-1.0" prefHeight="504.0" prefWidth="781.0">
+            <columnConstraints>
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="313.0" minWidth="0.0" prefWidth="0.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="664.0" minWidth="10.0" prefWidth="267.0" />
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="664.0" minWidth="10.0" prefWidth="369.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="664.0" minWidth="0.0" prefWidth="208.0" />
+            </columnConstraints>
+            <rowConstraints>
+              <RowConstraints maxHeight="181.0" minHeight="10.0" prefHeight="86.0" vgrow="SOMETIMES" />
+              <RowConstraints maxHeight="428.0" minHeight="10.0" prefHeight="418.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+             <children>
+                <VBox prefHeight="379.0" prefWidth="348.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                   <children>
+                      <Button fx:id="customerLoginButton" mnemonicParsing="false" onAction="#CustomerLogin" prefHeight="31.0" prefWidth="348.0" text="Customer Login" />
+                      <Button fx:id="createCustomerButton"
+                              mnemonicParsing="false" onAction="#CreateCustomer" prefHeight="27.0" prefWidth="400.0" text="Create Customer" />
+                      <Button fx:id="bankManagerButton" mnemonicParsing="false" onAction="#bankManagers" prefHeight="27.0" prefWidth="399.0" text="Bank Manager" />
+                      <Button fx:id="transactionButton" layoutX="10.0" layoutY="64.0" mnemonicParsing="false" onAction="#transaction" prefHeight="27.0" prefWidth="399.0" text="Transactions" />
+                      <Button fx:id="exitButton" layoutX="10.0" layoutY="91.0" mnemonicParsing="false" onAction="#exit" prefHeight="27.0" prefWidth="399.0" text="Exit" />
+                   </children>
+                </VBox>
+             </children>
+          </GridPane>
+       </children>
+    </AnchorPane>
