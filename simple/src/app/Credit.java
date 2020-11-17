@@ -84,4 +84,10 @@ public class Credit extends Account{
 	}
 
 	public int getMax() {return maxCredit;}
+
+	public void activateAccount(double amount, int number, int maxCredit) {
+		setBalance(amount);
+		setNumber(number);
+		setCreditMax(maxCredit);
+	}
 }

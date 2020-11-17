@@ -35,7 +35,6 @@ public class CustomerLoginController extends RunBankController {
 
     @FXML Button backButton;
 
-    // Do work before.
     public void setNeedsPassword(boolean needsPassword) {
         System.out.println(needsPassword);
         this.needsPassword = needsPassword;

@@ -140,13 +140,25 @@ public class Customer extends Person{
 	public void setChecking(Checking cheking) {
 		this.checking = cheking;
 	}
+
+	public void setChecking(double amount) {
+		this.checking.activateAccount(amount, 1000+getId());
+	}
 	
 	public void setSavings(Savings savings) {
 		this.savings = savings;
 	}
+
+	public void setSavings(double amount) {
+		this.savings.activateAccount(amount, 2000+getId());
+	}
 	
 	public void setCredit(Credit credit) {
 		this.credit = credit;
+	}
+
+	public void setCredit(double amount, int maxCredit) {
+		this.credit.activateAccount(amount, 3000+getId(), maxCredit);
 	}
 	
 	/*-----------------------------------------------------------------------------------------------------------------

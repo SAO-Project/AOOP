@@ -96,6 +96,7 @@ abstract class RunBankController {
         return customer;
     }
 
+    // TODO(Edd1e): Make this void.
     protected boolean containsCustomer() throws IOException {
         if (customer.isPresent()) {
             return true;
@@ -135,7 +136,8 @@ abstract class RunBankController {
      * @return If account is empty, customer did not want to get an account.
      * @throws IOException Something has gone wrong.
      */
-    protected Optional<Account> getAccount() throws IOException {
+    protected Optional<Account> getAccount(String message) throws IOException {
+        containsCustomer();
         // TODO(Edd1e234): Add message feature
         FXMLLoader fxmlLoader =
                 new FXMLLoader(getClass().getResource(ACCOUNT));
@@ -143,6 +145,7 @@ abstract class RunBankController {
 
         GetAccountController getAccountController = fxmlLoader.getController();
         getAccountController.setCustomer(customer);
+        getAccountController.setMessage(message);
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));

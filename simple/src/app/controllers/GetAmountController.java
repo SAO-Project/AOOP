@@ -29,6 +29,12 @@ public class GetAmountController extends RunBankController {
     }
 
     public Optional<Double> getAmount() {
+        if (amount.isPresent()) {
+            if (amount.get() <= 0) {
+                return Optional.empty();
+            }
+            return amount;
+        }
         return amount;
     }
 

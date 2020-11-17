@@ -98,6 +98,12 @@ public abstract class Account implements Printable {
 		this.isActive  = isActive;
 	}
 
+	public void activateAccount(double amount, int number) {
+		setBalance(amount);
+		setNumber(number);
+		setIsActive(true);
+	}
+
 	
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Actuators
