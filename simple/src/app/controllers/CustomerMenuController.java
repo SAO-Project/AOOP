@@ -22,7 +22,6 @@ import java.util.Collections;
  * TODO(Edd1e234): impl text box that can display a string.
  */
 public class CustomerMenuController extends RunBankController {
-
     @FXML Button inquireBalanceButton;
     @FXML Button depositMoneyButton;
     @FXML Button withdrawButton;
@@ -31,6 +30,7 @@ public class CustomerMenuController extends RunBankController {
     @FXML Button showLogsButton;
     @FXML Button viewBankAccountButton;
     @FXML Button activateAccountButton;
+    @FXML Button backButton;
     @FXML Button exitButton;
 
     public void inquireBalance(ActionEvent actionEvent) throws IOException {
@@ -40,7 +40,6 @@ public class CustomerMenuController extends RunBankController {
             System.out.println("Failed to retrieve account.");
             return;
         }
-
         displayMessage(account.get().getString());
         bankDB.addTransaction(new Transaction(
                 this.customer,
@@ -216,16 +215,16 @@ public class CustomerMenuController extends RunBankController {
             AlertBox.display(ERROR, "No logs");
             return;
         }
-        String transactionsStr = "";
+        StringBuilder transactionsStr = new StringBuilder();
 
         // Gather all the strings.
         // TODO(Edd1e): Make this more efficient.
         for (Transaction transaction : bankDB.getTransactions(customer.get())) {
             System.out.println(transaction.getString());
-            transactionsStr += transaction.getString() + "\n";
+            transactionsStr.append(transaction.getString()).append("\n");
         }
 
-        displayMessage(transactionsStr);
+        displayMessage(transactionsStr.toString());
         System.out.println("show logs");
     }
 
@@ -253,5 +252,10 @@ public class CustomerMenuController extends RunBankController {
 
     public void exit(ActionEvent actionEvent) {
         System.exit(0);
+    }
+
+    public void back(ActionEvent actionEvent) throws IOException {
+        exit(backButton);
+        moveScene(MAIN_MENU, Optional.empty());
     }
 }

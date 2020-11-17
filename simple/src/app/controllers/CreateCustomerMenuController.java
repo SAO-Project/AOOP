@@ -209,6 +209,7 @@ public class CreateCustomerMenuController extends RunBankController {
      * @throws IOException If thrown something has gone wrong.
      */
     public void back(ActionEvent actionEvent) throws IOException {
+        exit(backButton);
         moveScene(MAIN_MENU, Optional.empty());
     }
 
