@@ -201,23 +201,27 @@ public class CustomerMenuController extends RunBankController {
     }
 
     /**
+     * Shows all events in customer session.
      *
      * @param actionEvent
      * @throws IOException
      */
     public void showLogs(ActionEvent actionEvent) throws IOException {
         containsCustomer();
-        Collection<Transaction> transactions =
-                bankDB.getTransactions(customer.get());
-        if (transactions.size() == 0) {
+        if (bankDB.getTransactions(customer.get()).isEmpty()) {
             AlertBox.display(ERROR, "No logs");
+            return;
         }
-        String logs = "";
-        // Get all string logs
-        transactions.forEach(
-                transaction -> logs.concat(transaction.getString()));
-        displayMessage(logs);
-        System.out.println("Amount of transactions " + transactions.size());
+        String transactionsStr = "";
+
+        // Gather all the strings.
+        // TODO(Edd1e): Make this more efficient.
+        for (Transaction transaction : bankDB.getTransactions(customer.get())) {
+            System.out.println(transaction.getString());
+            transactionsStr += transaction.getString() + "\n";
+        }
+
+        displayMessage(transactionsStr);
         System.out.println("show logs");
     }
 

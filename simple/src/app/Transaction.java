@@ -8,6 +8,9 @@ import java.util.Optional;
  * @author Alex
  * @since 11/05/2020
  *
+ *
+ * // TODO(Alex): Can you remove the getClass() call, replace it with a more
+ * getAccount type call?
  * This class stores a transaction and it will return the transaction in a printable format for the user and
  * for the transaction
  */

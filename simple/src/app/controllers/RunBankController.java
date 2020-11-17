@@ -160,6 +160,8 @@ abstract class RunBankController {
         Parent root = fxmlLoader.load();
 
         DisplayController displayController = fxmlLoader.getController();
+        System.out.println("Messages: ");
+        System.out.println(message + "\n");
         displayController.setText(message);
 
         Stage stage = new Stage();
