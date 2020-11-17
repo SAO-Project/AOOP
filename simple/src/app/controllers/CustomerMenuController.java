@@ -34,6 +34,7 @@ public class CustomerMenuController extends RunBankController {
     @FXML Button exitButton;
 
     public void inquireBalance(ActionEvent actionEvent) throws IOException {
+        containsCustomer();
         Optional<Account> account = getAccount("Get account to display");
 
         if (account.isEmpty()) {
@@ -52,6 +53,7 @@ public class CustomerMenuController extends RunBankController {
     }
 
     public void depositMoney(ActionEvent actionEvent) throws IOException{
+        containsCustomer();
         System.out.println("deposit money");
 
         Optional<Account> account = getAccount("Get account to deposit into");
@@ -83,6 +85,7 @@ public class CustomerMenuController extends RunBankController {
     }
 
     public void withdraw(ActionEvent actionEvent) throws IOException {
+        containsCustomer();
         System.out.println("withdraw");
         Optional<Account> account = getAccount("Get account to withdraw from");
         if (account.isEmpty()) {
