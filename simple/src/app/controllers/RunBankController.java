@@ -66,11 +66,15 @@ abstract class RunBankController {
      */
     public void moveScene(
             String fxmlFile, Optional<Customer> customer) throws IOException {
+        if (fxmlFile.equals(MAIN_MENU)) {
+            if (customer.isPresent()) {
+                throw new IOException("Customer is empty");
+            }
+        }
         if (customer.isEmpty()) {
             throw new IOException("while attempting to move to " + fxmlFile +
                     "Customer was empty!!!!");
         }
-
         moveScene(createRoot(fxmlFile, customer));
     }
 

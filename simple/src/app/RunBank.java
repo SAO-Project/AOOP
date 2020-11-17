@@ -57,7 +57,7 @@ public class RunBank {
      *
      * @param bankCustomerData Contains all customer data.
      */
-    private static void userOrBankManager(IBankDB bankCustomerData) {
+    public static void userOrBankManager(IBankDB bankCustomerData) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -311,7 +311,7 @@ public class RunBank {
      *
      * @param bankCustomerData Contains customer data.
      */
-    private static void attemptToAddCustomerToSystem(
+    public static void attemptToAddCustomerToSystem(
         IBankDB bankCustomerData
     ) {
         Scanner scanner = new Scanner(System.in);
@@ -777,7 +777,7 @@ public class RunBank {
      * Prints out Bank info for customer
      * @param customer Contains bank info for user.
      */
-    private static void printBankAccount(Customer customer) {
+    public static void printBankAccount(Customer customer) {
         System.out.println(customer.getFullName());
         System.out.println(customer.getId());
 
@@ -1013,7 +1013,7 @@ public class RunBank {
      * @param phoneNumber Number to validate.
      * @return If phone number is valid.
      */
-    private static boolean phoneNumberValidator(String phoneNumber) {
+    public static boolean phoneNumberValidator(String phoneNumber) {
         return phoneNumber.charAt(0) == '9' && phoneNumber.length() == 10
                 && Pattern.matches("[0-9]+", phoneNumber);
     }
@@ -1024,7 +1024,7 @@ public class RunBank {
      * @param email email to validate.
      * @return If email is valid.
      */
-    private static boolean emailValidator(String email) {
+    public static boolean emailValidator(String email) {
         String emailRegex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
         Pattern emailPattern = Pattern.compile(emailRegex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = emailPattern.matcher(email);
@@ -1040,7 +1040,7 @@ public class RunBank {
      * @param lastName First word of password.
      * @return Full password.
      */
-    private static String generatePassword(String firstName, String lastName) {
+    public static String generatePassword(String firstName, String lastName) {
         return lastName + "*" + firstName + "!987";
     }
 
