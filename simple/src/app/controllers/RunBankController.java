@@ -26,6 +26,8 @@ abstract class RunBankController {
     protected final static String GET_AMOUNT = "fxml/GetAmount.fxml";
     protected final static String ACCOUNT = "fxml/GetAccount.fxml";
     protected final static String DISPLAY = "fxml/Display.fxml";
+    protected final static String CREATE_CUSTOMER = "fxml/CreateCustomerMenu" +
+            ".fxml";
 
     // Messages
     protected final static String ERROR = "ERROR";
@@ -66,12 +68,15 @@ abstract class RunBankController {
      */
     public void moveScene(
             String fxmlFile, Optional<Customer> customer) throws IOException {
+
+        // TODO(Edd1e) Extract these if statements out, to another util class.
         if (fxmlFile.equals(MAIN_MENU)) {
             if (customer.isPresent()) {
                 throw new IOException("Customer is empty");
             }
         }
-        if (customer.isEmpty()) {
+
+        if (customer.isEmpty() && fxmlFile.equals(CUSTOMER_LOGIN)) {
             throw new IOException("while attempting to move to " + fxmlFile +
                     "Customer was empty!!!!");
         }

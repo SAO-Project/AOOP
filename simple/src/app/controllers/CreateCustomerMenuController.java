@@ -100,7 +100,7 @@ public class CreateCustomerMenuController extends RunBankController {
     public void setDOB(ActionEvent actionEvent) {
         String dob =
                 dobTextField.getValue().format(DateTimeFormatter.ofPattern(
-                        "dd/mm/yyyy"));
+                        "dd/MM/yyyy"));
         if (dob.length() == 0) {
             AlertBox.display(ERROR, "Empty ");
             return;
@@ -181,7 +181,8 @@ public class CreateCustomerMenuController extends RunBankController {
 
             GetAccountController getAccountController = loader.getController();
             getAccountController.setCustomer(Optional.of(customer));
-            getAccountController.setMessage("Please activate account");
+            getAccountController.setMessage("Please activate at least " +
+                    "the savings account account");
             getAccountController.setActivateAccount(true);
 
             Stage stage = new Stage();
@@ -236,6 +237,11 @@ public class CreateCustomerMenuController extends RunBankController {
      * @return If empty() string is not valid.
      */
     public static Optional<String> validateStr(String str) {
+        if (str == null) {
+            return Optional.empty();
+        }
+
+
         if (str.length() == 0) {
             return Optional.empty();
         }

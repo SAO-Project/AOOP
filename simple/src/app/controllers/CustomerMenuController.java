@@ -69,13 +69,14 @@ public class CustomerMenuController extends RunBankController {
 
         try {
             account.get().deposit(amountToDeposit.get());
-            bankDB.addTransaction(new Transaction(
-                    customer,
-                    account,
-                    customer,
-                    account,
-                    amountToDeposit.get(),
-                    "deposits"));
+            bankDB.addTransaction(
+                    new Transaction(
+                            Optional.empty(),
+                            Optional.empty(),
+                            customer,
+                            account,
+                            amountToDeposit.get(),
+                            "deposits"));
             AlertBox.display(SUCCESS, OPERATION_SUCCESS);
         } catch (Exception e) {
             AlertBox.display(ERROR, e.getMessage());
@@ -93,6 +94,7 @@ public class CustomerMenuController extends RunBankController {
         Optional<Double> amountToWithdraw = getAmount("Amount to withdraw");
         if (amountToWithdraw.isEmpty()) {
             System.out.println("Failed to retrieve amount");
+            return;
         }
         try {
             account.get().withdraw(amountToWithdraw.get());
@@ -110,6 +112,7 @@ public class CustomerMenuController extends RunBankController {
     }
 
     public void transfer(ActionEvent actionEvent) throws IOException{
+        containsCustomer();
         System.out.println("transfer");
         Optional<Account> sourceAccount = getAccount("Get account to transfer" +
                 " from");
@@ -153,6 +156,7 @@ public class CustomerMenuController extends RunBankController {
     }
 
     public void pay(ActionEvent actionEvent) throws IOException {
+        containsCustomer();
         System.out.println("pay");
         if (!customer.get().getChecking().getIsActive()) {
             AlertBox.display(ERROR, "Please activate checking account");

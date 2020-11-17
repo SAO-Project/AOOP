@@ -55,7 +55,8 @@ public class MainMenuController extends RunBankController {
         moveScene(CUSTOMER_MENU, customer);
     }
 
-    public void CreateCustomer(ActionEvent actionEvent) {
+    public void CreateCustomer(ActionEvent actionEvent) throws IOException {
+        moveScene(CREATE_CUSTOMER, Optional.empty());
         System.out.println("CreateCustomerButton");
     }
 
