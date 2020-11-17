@@ -85,14 +85,7 @@ public class CustomerLoginController extends RunBankController {
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
-        if (needsPassword) {
-            // Moves scene and closes window. Goes back to main menu
-            moveScene(MAIN_MENU, this.customer);
-        } else {
-            // Just closes scene
-            exit(backButton);
-        }
-        System.out.println("Back");
+        exit(backButton);
     }
 
     public void exitButton(ActionEvent actionEvent) {

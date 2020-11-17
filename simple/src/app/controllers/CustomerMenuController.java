@@ -8,7 +8,6 @@ import app.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-
 import java.util.Collection;
 import java.util.Optional;
 import java.io.IOException;

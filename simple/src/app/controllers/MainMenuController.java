@@ -27,7 +27,8 @@ public class MainMenuController extends RunBankController {
     @FXML Button exitButton;
 
     public void CustomerLogin(ActionEvent actionEvent) throws IOException {
-        exit(customerLoginButton);
+        // exit(customerLoginButton);
+        customerLoginButton.getScene().getWindow().hide();
 
         // Move on to Login Customer menu.
         FXMLLoader loginLoader =
@@ -46,6 +47,7 @@ public class MainMenuController extends RunBankController {
 
         Optional<Customer> customer = customerLoginController.getCustomer();
         if (customer.isEmpty()) {
+            ((Stage) customerLoginButton.getScene().getWindow()).show();
             return;
         }
 
