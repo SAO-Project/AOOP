@@ -13,9 +13,9 @@
               <children>
                   <Button fx:id="inquireBalanceButton" mnemonicParsing="false" onAction="#inquireBalance" prefHeight="31.0" prefWidth="348.0" text="Inquire Balance" />
                   <Button fx:id="depositMoneyButton" mnemonicParsing="false" onAction="#depositMoney" prefHeight="27.0" prefWidth="400.0" text="Deposit Money" />
-                  <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#withdraw" prefHeight="27.0" prefWidth="399.0" text="Withdraw" />
-                  <Button fx:id="transferButton" layoutX="10.0" layoutY="64.0" mnemonicParsing="false" onAction="#transfer" prefHeight="27.0" prefWidth="399.0" text="Transfer" />
-                  <Button fx:id="paySomeoneButton" layoutX="10.0" layoutY="91.0" mnemonicParsing="false" onAction="#pay" prefHeight="27.0" prefWidth="399.0" text="Pay Someone" />
+                  <Button fx:id="withdrawButton" mnemonicParsing="false" onAction="#withdrawMoney" prefHeight="27.0" prefWidth="399.0" text="Withdraw" />
+                  <Button fx:id="transferButton" layoutX="10.0" layoutY="64.0" mnemonicParsing="false" onAction="#transferMoney" prefHeight="27.0" prefWidth="399.0" text="Transfer" />
+                  <Button fx:id="paySomeoneButton" layoutX="10.0" layoutY="91.0" mnemonicParsing="false" onAction="#payMoney" prefHeight="27.0" prefWidth="399.0" text="Pay Someone" />
             <Button fx:id="showLogsButton" layoutX="10.0" layoutY="122.0" mnemonicParsing="false" onAction="#showLogs" prefHeight="27.0" prefWidth="399.0" text="Show Logs" />
             <Button fx:id="viewBankAccountButton" layoutX="10.0" layoutY="122.0" mnemonicParsing="false" onAction="#viewBankAccount" prefHeight="27.0" prefWidth="399.0" text="View Bank Account" />
             <Button fx:id="activateAccountButton" layoutX="10.0" layoutY="176.0" mnemonicParsing="false" onAction="#activateAccount" prefHeight="27.0" prefWidth="399.0" text="Activate Account" />

@@ -169,6 +169,12 @@ abstract class RunBankController {
         return getAccountController.getAccount();
     }
 
+    /**
+     * Displays a large message.
+     *
+     * @param message Message to display.
+     * @throws IOException If program fails, should throws.
+     */
     protected void displayMessage(String message) throws IOException {
         FXMLLoader fxmlLoader =
                 new FXMLLoader(getClass().getResource(DISPLAY));
@@ -187,5 +193,13 @@ abstract class RunBankController {
     // Exits from scene.
     protected void exit(Button button) {
         ((Stage) button.getScene().getWindow()).close();
+    }
+
+    /**
+     * Upon program termination. Writes new balance.
+     */
+    protected void exit() {
+        (new CSVFile(bankDB)).writeCSV();
+        System.exit(0);
     }
 }

@@ -161,6 +161,12 @@ public class CreateCustomerMenuController extends RunBankController {
         this.address = address;
     }
 
+    /**
+     * Attempts to add customer to system. Customer must activate account
+     * before being added.
+     *
+     * @param actionEvent Not Used
+     */
     public void addToSystem(ActionEvent actionEvent) {
         try {
             Customer customer =
@@ -241,8 +247,6 @@ public class CreateCustomerMenuController extends RunBankController {
         if (str == null) {
             return Optional.empty();
         }
-
-
         if (str.length() == 0) {
             return Optional.empty();
         }

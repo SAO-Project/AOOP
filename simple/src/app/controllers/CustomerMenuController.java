@@ -8,18 +8,15 @@ import app.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import java.util.Collection;
 import java.util.Optional;
 import java.io.IOException;
-import java.util.Collections;
 
 /**
  * @author Edd1e234
  * @version 1.0
  * @since 11/14/20
  *
- * Customer menu.
- * TODO(Edd1e234): impl text box that can display a string.
+ * Displays the customer menu.
  */
 public class CustomerMenuController extends RunBankController {
     @FXML Button inquireBalanceButton;
@@ -33,6 +30,12 @@ public class CustomerMenuController extends RunBankController {
     @FXML Button backButton;
     @FXML Button exitButton;
 
+    /**
+     * Shows account based on user preference.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical error in code.
+     */
     public void inquireBalance(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         Optional<Account> account = getAccount("Get account to display");
@@ -52,6 +55,12 @@ public class CustomerMenuController extends RunBankController {
         System.out.println("inquire balance");
     }
 
+    /**
+     * Deposits money. User chooses account.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical error in code.
+     */
     public void depositMoney(ActionEvent actionEvent) throws IOException{
         containsCustomer();
         System.out.println("deposit money");
@@ -67,7 +76,6 @@ public class CustomerMenuController extends RunBankController {
             System.out.println("Failed to amount");
             return;
         }
-
         try {
             account.get().deposit(amountToDeposit.get());
             bankDB.addTransaction(
@@ -84,7 +92,13 @@ public class CustomerMenuController extends RunBankController {
         }
     }
 
-    public void withdraw(ActionEvent actionEvent) throws IOException {
+    /**
+     * Withdraws money. User chooses account to withdraw from.
+     *
+     * @param actionEvent Not Used.
+     * @throws IOException If thrown logical error in code.
+     */
+    public void withdrawMoney(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         System.out.println("withdraw");
         Optional<Account> account = getAccount("Get account to withdraw from");
@@ -113,7 +127,14 @@ public class CustomerMenuController extends RunBankController {
         }
     }
 
-    public void transfer(ActionEvent actionEvent) throws IOException{
+    /**
+     * Transfers money from account to account.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown something has gone wrong. Logical error
+     * in code.
+     */
+    public void transferMoney(ActionEvent actionEvent) throws IOException{
         containsCustomer();
         System.out.println("transfer");
         Optional<Account> sourceAccount = getAccount("Get account to transfer" +
@@ -157,7 +178,14 @@ public class CustomerMenuController extends RunBankController {
         }
     }
 
-    public void pay(ActionEvent actionEvent) throws IOException {
+    /**
+     * User selects another user to pay.
+     * User pays from checking account into other users checking account.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical error in code.
+     */
+    public void payMoney(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         System.out.println("pay");
         if (!customer.get().getChecking().getIsActive()) {
@@ -209,8 +237,8 @@ public class CustomerMenuController extends RunBankController {
     /**
      * Shows all events in customer session.
      *
-     * @param actionEvent
-     * @throws IOException
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical error in code.
      */
     public void showLogs(ActionEvent actionEvent) throws IOException {
         containsCustomer();
@@ -231,12 +259,27 @@ public class CustomerMenuController extends RunBankController {
         System.out.println("show logs");
     }
 
+    /**
+     * Shows user their bank info.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical error in code.
+     */
     public void viewBankAccount(ActionEvent actionEvent) throws IOException {
         containsCustomer();
-        displayMessage(customer.get().customerInfoString());
+        displayMessage(customer.get().customerInfoString() +
+                customer.get().getChecking().getString() + "\n" +
+                customer.get().getSavings().getString() + "\n" +
+                customer.get().getCredit().getString() + "\n");
         System.out.println("view bank account");
     }
 
+    /**
+     * Runs window for user to activate an account.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical error in code.
+     */
     public void activateAccount(ActionEvent actionEvent) throws IOException {
         System.out.println("activate account");
 
@@ -253,12 +296,23 @@ public class CustomerMenuController extends RunBankController {
         stage.showAndWait();
     }
 
-    public void exit(ActionEvent actionEvent) {
-        System.exit(0);
-    }
-
+    /**
+     * Goes back to the main menu.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical error in code.
+     */
     public void back(ActionEvent actionEvent) throws IOException {
         exit(backButton);
         moveScene(MAIN_MENU, Optional.empty());
+    }
+
+    /**
+     * Exits program.
+     *
+     * @param actionEvent Not used.
+     */
+    public void exit(ActionEvent actionEvent) {
+        exit();
     }
 }
