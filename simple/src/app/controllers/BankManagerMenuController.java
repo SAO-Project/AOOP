@@ -1,16 +1,17 @@
 package app.controllers;
 
-import app.controllers.fxml.CustomerWrapperFX;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+
+import java.io.IOException;
+import java.util.Optional;
 
 /**
  * @author Edd1e234
@@ -18,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
  * @since 11/17/20
  */
 public class BankManagerMenuController extends RunBankController {
+    @FXML Button backButton;
     @FXML TextField search; 
     @FXML TableView<CustomerWrapperFX> table;
     @FXML TableColumn<CustomerWrapperFX, Integer> idColumn;
@@ -25,6 +27,7 @@ public class BankManagerMenuController extends RunBankController {
     @FXML TableColumn<CustomerWrapperFX, Integer> creditColumn;
     @FXML TableColumn<CustomerWrapperFX, Integer> savingsColumn;
     @FXML TableColumn<CustomerWrapperFX, String> nameColumn;
+    @FXML TableColumn<CustomerWrapperFX, String> viewColumn;
 
     // Contains all the data.
     private final ObservableList<CustomerWrapperFX> customerList =
@@ -43,6 +46,7 @@ public class BankManagerMenuController extends RunBankController {
                 "savingsNumber"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>(
                 "fullName"));
+        viewColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
         bankDB.getCustomers().forEach(
                 customer -> customerList.add(new CustomerWrapperFX(customer)));
         
@@ -57,15 +61,21 @@ public class BankManagerMenuController extends RunBankController {
                 
                 String lowerCaseFilter = newValues.toLowerCase();
                 
-                if (customer.getFullName().toLowerCase().contains(lowerCaseFilter)) {
+                if (customer
+                        .getFullName().toLowerCase()
+                        .contains(lowerCaseFilter)) {
                     return true;
-                } else if (String.valueOf(customer.getId()).contains(lowerCaseFilter)) {
+                } else if (String.valueOf(
+                        customer.getId()).contains(lowerCaseFilter)) {
                     return true;
-                } else if (String.valueOf(customer.getChecking()).contains(lowerCaseFilter)) {
+                } else if (String.valueOf(
+                        customer.getChecking()).contains(lowerCaseFilter)) {
                     return true;
-                } else if (String.valueOf(customer.getSavings()).contains(lowerCaseFilter)) {
+                } else if (String.valueOf(
+                        customer.getSavings()).contains(lowerCaseFilter)) {
                     return true;
-                } else return String.valueOf(customer.getChecking()).contains(lowerCaseFilter);
+                } else return String.valueOf(
+                        customer.getChecking()).contains(lowerCaseFilter);
             });
         });
         SortedList<CustomerWrapperFX> sortedList =
@@ -74,6 +84,8 @@ public class BankManagerMenuController extends RunBankController {
         table.setItems(sortedList);
     }
 
-    public void back(ActionEvent actionEvent) {
+    public void back(ActionEvent actionEvent) throws IOException {
+        exit(backButton);
+        moveScene(MAIN_MENU, Optional.empty());
     }
 }

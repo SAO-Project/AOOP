@@ -1,8 +1,10 @@
-package app.controllers.fxml;
+package app.controllers;
 
 import app.Customer;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Button;
+import java.io.IOException;
 
 /**
  * @author Edd1e234
@@ -12,15 +14,14 @@ import javafx.beans.property.SimpleStringProperty;
  * Wrapper Class of customer. So it can be viewed in Javafx application.
  */
 public class CustomerWrapperFX {
-    private final Customer customer;
     private final SimpleIntegerProperty id;
     private final SimpleIntegerProperty checkingNumber;
     private final SimpleIntegerProperty savingsNumber;
     private final SimpleIntegerProperty creditNumber;
     private final SimpleStringProperty fullName;
+    private final Button button;
 
     public CustomerWrapperFX(Customer customer) {
-        this.customer = customer;
         id = new SimpleIntegerProperty(customer.getId());
         checkingNumber =
                 new SimpleIntegerProperty(customer.getChecking().getNumber());
@@ -29,14 +30,46 @@ public class CustomerWrapperFX {
         creditNumber =
                 new SimpleIntegerProperty(customer.getCredit().getNumber());
         fullName = new SimpleStringProperty(customer.getFullName());
-    }
-
-    public Customer getCustomer() {
-        return customer;
+        button = new Button("View Customer");
+        button.setOnAction(e -> {
+            System.out.println("Here bro");
+        });
     }
 
     public int getId() {
         return id.get();
+    }
+
+    public SimpleIntegerProperty idProperty() {
+        return id;
+    }
+
+    public int getCheckingNumber() {
+        return checkingNumber.get();
+    }
+
+    public SimpleIntegerProperty checkingNumberProperty() {
+        return checkingNumber;
+    }
+
+    public int getSavingsNumber() {
+        return savingsNumber.get();
+    }
+
+    public SimpleIntegerProperty savingsNumberProperty() {
+        return savingsNumber;
+    }
+
+    public int getCreditNumber() {
+        return creditNumber.get();
+    }
+
+    public SimpleIntegerProperty creditNumberProperty() {
+        return creditNumber;
+    }
+
+    public SimpleStringProperty fullNameProperty() {
+        return fullName;
     }
 
     public int getChecking() {
@@ -47,9 +80,12 @@ public class CustomerWrapperFX {
         return savingsNumber.get();
     }
 
-
     public int getCredit() {
         return creditNumber.get();
+    }
+
+    public Button getButton() {
+        return button;
     }
 
     public String getFullName() {

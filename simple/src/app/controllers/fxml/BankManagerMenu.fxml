@@ -6,28 +6,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.BankManagerMenuController">
+<AnchorPane prefHeight="483.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.BankManagerMenuController">
    <children>
-      <ScrollPane layoutY="59.0" prefHeight="341.0" prefWidth="600.0">
+      <ScrollPane layoutY="59.0" prefHeight="422.0" prefWidth="670.0">
          <content>
-            <TableView fx:id="table" prefHeight="340.0" prefWidth="598.0">
+            <TableView fx:id="table" prefHeight="421.0" prefWidth="669.0">
               <columns>
-                <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="nameColumn" prefWidth="165.0"
-                             text="Full Name" />
-                  <TableColumn fx:id="checkingColumn" prefWidth="112.0" text="Checking Number" />
-                  <TableColumn fx:id="creditColumn" prefWidth="108.0"
-                               text="Credit Number" />
-                  <TableColumn fx:id="savingsColumn" prefWidth="125.0" text="Savings Number" />
+                <TableColumn fx:id="idColumn" prefWidth="42.0" text="ID" />
+                <TableColumn fx:id="nameColumn" prefWidth="112.0" text="Full Name" />
+                  <TableColumn fx:id="checkingColumn" prefWidth="118.0" text="Checking Number" />
+                  <TableColumn fx:id="creditColumn" prefWidth="104.0" text="Credit Number" />
+                  <TableColumn fx:id="savingsColumn" prefWidth="100.0" text="Savings Number" />
+                  <TableColumn fx:id="viewColumn" prefWidth="182.0" text="View" />
               </columns>
             </TableView>
          </content>
       </ScrollPane>
-      <TextField fx:id="search" layoutX="110.0" layoutY="14.0"
-                 prefHeight="27.0"
-                  prefWidth="476.0" promptText="Account Number, ID, or Name" />
+      <TextField fx:id="search" layoutX="110.0" layoutY="14.0" prefHeight="27.0" prefWidth="476.0" promptText="Account Number, ID, or Name" />
       <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" text="Back" />
    </children>
 </AnchorPane>
