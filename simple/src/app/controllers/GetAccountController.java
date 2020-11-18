@@ -1,14 +1,10 @@
 package app.controllers;
 
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.fxml.FXML;
+import app.Account;
 import javafx.event.ActionEvent;
-import app.*;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.util.Optional;

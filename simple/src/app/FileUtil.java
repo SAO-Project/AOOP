@@ -1,6 +1,7 @@
 package app;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -72,6 +73,22 @@ public class FileUtil {
             // Uncomment if debugging
             e.printStackTrace();
             System.out.println("Failed to read line");
+        }
+        return bankCustomerData;
+    }
+
+    public static IBankDB readFileV2(String pathToFile) throws IOException {
+        IBankDB bankCustomerData = new BankCustomerData();
+        BufferedReader csvReader =
+                new BufferedReader(new java.io.FileReader(pathToFile));
+
+        String line = csvReader.readLine();
+        setEachIndex(line.split(","));
+
+        // Reads line
+        while ((line = csvReader.readLine()) != null) {
+            Customer customer = parseLine(line.split(REGEX)).orElseThrow();
+            bankCustomerData.addCustomer(customer);
         }
         return bankCustomerData;
     }

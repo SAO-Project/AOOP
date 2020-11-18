@@ -15,12 +15,12 @@ import java.util.Optional;
  * for the transaction
  */
 public class Transaction implements Printable {
-	private Optional<Customer> srcCustomer;
-	private Optional<Account> srcAccount;
-	private Optional<Customer> destCustomer;
-	private Optional<Account> destAccount;
-	private double amount;
-	private String action;
+	private final Optional<Customer> srcCustomer;
+	private final Optional<Account> srcAccount;
+	private final Optional<Customer> destCustomer;
+	private final Optional<Account> destAccount;
+	private final double amount;
+	private final String action;
 	private String date;
 	
 	/**

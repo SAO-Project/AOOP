@@ -1,24 +1,20 @@
 package app.controllers;
 
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import app.*;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-import javax.swing.text.DateFormatter;
-import java.text.DateFormat;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.io.IOException;
-import java.util.Collections;
 
 /**
  * @author Edd1e234

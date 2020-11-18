@@ -1,10 +1,10 @@
 package app;
 
+import java.io.FileWriter;
 import java.io.Writer;
 import java.text.DateFormat;
-import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.io.FileWriter;
+import java.util.Date;
 
 /**
  * @author Eddie Garcia
