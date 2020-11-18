@@ -8,8 +8,8 @@ import java.io.Writer;
  * @since 11/9
  * @version 1
  * <p>
- * This class is the abstract class for account storing the common components of app.Credit app.Savings and app.Checking
- * accounts.
+ * This class is the abstract class for account storing
+ * the common components of Credit Savings and Checking accounts.
  * <p/>
  */
 public abstract class Account implements Printable {
@@ -69,11 +69,11 @@ public abstract class Account implements Printable {
 	public String getAccountTypeStr() {
 		switch (accountType) {
 			case CHECKING:
-				return "app.Checking account";
+				return "Checking account";
 			case SAVINGS:
-				return "app.Savings account";
+				return "Savings account";
 			case CREDIT:
-				return "app.Credit account";
+				return "Credit account";
 		}
 		return "FAIL FAIL";
 	}
@@ -96,6 +96,12 @@ public abstract class Account implements Printable {
 
 	public void setIsActive(Boolean isActive) {
 		this.isActive  = isActive;
+	}
+
+	public void activateAccount(double amount, int number) {
+		setBalance(amount);
+		setNumber(number);
+		setIsActive(true);
 	}
 
 	
@@ -174,8 +180,8 @@ public abstract class Account implements Printable {
 			return "";
 		}
 		return (this.getClass().getName() + "\n" +
-			"app.Account number: " + number + "\n" +
-			"app.Account balance: " + String.format("$%.2f", balance) + "\n"
+			"Account number: " + number + "\n" +
+			"Account balance: " + String.format("$%.2f", balance) + "\n"
 		);
 	}
 	

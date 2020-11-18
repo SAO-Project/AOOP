@@ -19,15 +19,27 @@ import java.io.IOException;
  *
  */
 abstract class RunBankController {
-    protected final static String ERROR = "ERROR";
-    protected final static String SUCCESS = "Success";
-    protected final static String OPERATION_SUCCESS = "Operation was " +
-            "successful";
+    // fxml files
     protected final static String MAIN_MENU = "fxml/MainMenu.fxml";
     protected final static String CUSTOMER_LOGIN = "fxml/CustomerLogin.fxml";
     protected final static String CUSTOMER_MENU = "fxml/CustomerMenu.fxml";
     protected final static String GET_AMOUNT = "fxml/GetAmount.fxml";
     protected final static String ACCOUNT = "fxml/GetAccount.fxml";
+    protected final static String DISPLAY = "fxml/Display.fxml";
+    protected final static String BANK_MANAGER_MENU = "fxml/BankManagerMenu" +
+            ".fxml";
+    protected final static String CREATE_CUSTOMER = "fxml/CreateCustomerMenu" +
+            ".fxml";
+    public final static String BANK_MANAGER_CUSTOMER_MENU = "fxml" +
+            "/BankManagerCustomerMenu.fxml";
+    protected final static String TRANSACTION_MENU = "fxml/TransactionMenu" +
+            ".fxml";
+
+    // Messages
+    protected final static String ERROR = "ERROR";
+    protected final static String SUCCESS = "Success";
+    protected final static String OPERATION_SUCCESS = "Operation was " +
+            "successful";
 
     // Model
     protected IBankDB bankDB;
@@ -37,7 +49,7 @@ abstract class RunBankController {
      * Moves from scene to scene.
      * @param fxmlFile Where the next scene is located. fxmlFile must have a
      *                 controller.
-     * @param title Title of window.
+     * @param customer Contains customer
      * @throws IOException If thrown something has gone wrong. Do not catch
      * for it.
      */
@@ -57,30 +69,49 @@ abstract class RunBankController {
      * when it comes to making a scene change
      * @param fxmlFile Where the next scene is located. fxmlFile must have a
      *                 controller.
-     * @param con Controller of @param fxmlFile.
-     * @param title Title of window.
      * @throws IOException If thrown something has gone wrong. Do not catch
      * for it.
      */
     public void moveScene(
             String fxmlFile, Optional<Customer> customer) throws IOException {
+
+        // TODO(Edd1e) Extract these if statements out, to another util class.
+        if (fxmlFile.equals(MAIN_MENU)) {
+            if (customer.isPresent()) {
+                throw new IOException("Customer is empty");
+            }
+        }
+
+        if (customer.isEmpty() && fxmlFile.equals(CUSTOMER_LOGIN)) {
+            throw new IOException("while attempting to move to " + fxmlFile +
+                    "Customer was empty!!!!");
+        }
         moveScene(createRoot(fxmlFile, customer));
     }
 
+    /**
+     * Move scene based on root.
+     * @param root contains the root of the scene.
+     */
     public void moveScene(Parent root) {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
     }
 
+    /**
+     * Set customer for the window.
+     * @param customer sets class customer.
+     */
     protected void setCustomer(Optional<Customer> customer) {
         this.customer = customer;
     }
 
     protected Optional<Customer> getCustomer() {
-        return getCustomer();
+        return customer;
     }
 
+    // TODO(Edd1e): Make this void.
     protected boolean containsCustomer() throws IOException {
         if (customer.isPresent()) {
             return true;
@@ -92,12 +123,19 @@ abstract class RunBankController {
         this.bankDB = bankDB;
     }
 
+    /**
+     * Opens an amount window.
+     *
+     * @param message Allows you to set a custom message.
+     * @return If empty, user did not want to set amount after all.
+     * @throws IOException Something has gone wrong if thrown.
+     */
     protected Optional<Double> getAmount(String message) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(GET_AMOUNT));
         Parent root = fxmlLoader.load();
 
         GetAmountController getAmountController = fxmlLoader.getController();
-        getAmountController.setText(message);
+        getAmountController.setMessage(message);
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
@@ -106,14 +144,23 @@ abstract class RunBankController {
         return getAmountController.getAmount();
     }
 
-    protected Optional<Account> getAccount() throws IOException {
+    /**
+     * Opens account retrieval window. Customer should have already been set
+     * prior.
+     *
+     * @return If account is empty, customer did not want to get an account.
+     * @throws IOException Something has gone wrong.
+     */
+    protected Optional<Account> getAccount(String message) throws IOException {
+        containsCustomer();
         // TODO(Edd1e234): Add message feature
         FXMLLoader fxmlLoader =
                 new FXMLLoader(getClass().getResource(ACCOUNT));
         Parent root = fxmlLoader.load();
 
-        GetAccountController getAccountController = fxmlLoader.load();
+        GetAccountController getAccountController = fxmlLoader.getController();
         getAccountController.setCustomer(customer);
+        getAccountController.setMessage(message);
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
@@ -122,8 +169,37 @@ abstract class RunBankController {
         return getAccountController.getAccount();
     }
 
+    /**
+     * Displays a large message.
+     *
+     * @param message Message to display.
+     * @throws IOException If program fails, should throws.
+     */
+    protected void displayMessage(String message) throws IOException {
+        FXMLLoader fxmlLoader =
+                new FXMLLoader(getClass().getResource(DISPLAY));
+        Parent root = fxmlLoader.load();
+
+        DisplayController displayController = fxmlLoader.getController();
+        System.out.println("Messages: ");
+        System.out.println(message + "\n");
+        displayController.setText(message);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
+
     // Exits from scene.
     protected void exit(Button button) {
         ((Stage) button.getScene().getWindow()).close();
+    }
+
+    /**
+     * Upon program termination. Writes new balance.
+     */
+    protected void exit() {
+        (new CSVFile(bankDB)).writeCSV();
+        System.exit(0);
     }
 }

@@ -17,7 +17,6 @@ import java.util.Optional;
  * @since 11/14/20
  *
  * IOExceptions should not be caught, we want to know when the program crashes.
- *
  */
 public class MainMenuController extends RunBankController {
     @FXML Button customerLoginButton;
@@ -26,8 +25,14 @@ public class MainMenuController extends RunBankController {
     @FXML Button transactionButton;
     @FXML Button exitButton;
 
+    /**
+     * Opens customer login and customer menu.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException Logical error in code.
+     */
     public void CustomerLogin(ActionEvent actionEvent) throws IOException {
-        exit(customerLoginButton);
+        customerLoginButton.getScene().getWindow().hide();
 
         // Move on to Login Customer menu.
         FXMLLoader loginLoader =
@@ -46,6 +51,7 @@ public class MainMenuController extends RunBankController {
 
         Optional<Customer> customer = customerLoginController.getCustomer();
         if (customer.isEmpty()) {
+            ((Stage) customerLoginButton.getScene().getWindow()).show();
             return;
         }
 
@@ -53,20 +59,58 @@ public class MainMenuController extends RunBankController {
         moveScene(CUSTOMER_MENU, customer);
     }
 
-    public void CreateCustomer(ActionEvent actionEvent) {
+    /**
+     * Opens create customer window.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException Logical errors in code if thrown.
+     */
+    public void CreateCustomer(ActionEvent actionEvent) throws IOException {
+        exit(exitButton);
+        moveScene(CREATE_CUSTOMER, Optional.empty());
         System.out.println("CreateCustomerButton");
     }
 
-    public void bankManagers(ActionEvent actionEvent) {
-        System.out.println("Bank Manager");
+    /**
+     * Opens bank manager window.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical errors in code.
+     */
+    public void bankManagers(ActionEvent actionEvent) throws IOException {
+        System.out.println("Bank manager");
+        exit(exitButton);
+        FXMLLoader loader =
+                new FXMLLoader(getClass().getResource(BANK_MANAGER_MENU));
+        Parent root = loader.load();
+
+        BankManagerMenuController bankManagerMenuController =
+                loader.getController();
+        bankManagerMenuController.enterData(this.bankDB);
+        bankManagerMenuController.start();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
-    public void transaction(ActionEvent actionEvent) {
-        System.out.println("Transaction Button");
+    /**
+     * Opens transaction window.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical errors in code.
+     */
+    public void transaction(ActionEvent actionEvent) throws IOException {
+        exit(exitButton);
+        moveScene(TRANSACTION_MENU, Optional.empty());
     }
 
+    /**
+     * Exits gracefully from process.
+     *
+     * @param actionEvent Not used.
+     */
     public void exit(ActionEvent actionEvent) {
-        System.out.println("Exit");
-        System.exit(0);
+        exit();
     }
 }

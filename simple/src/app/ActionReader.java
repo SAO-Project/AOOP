@@ -114,7 +114,7 @@ public class ActionReader {
 	
 	private void withdraws(String[] actions){
 		try{
-			//Find account and app.Customer
+			//Find account and Customer
 			Customer customer = bank.getCustomer(actions[0] + " " + actions[1]).orElseThrow();
 			Account account = customer.getAccountByType(actions[2]);
 			double amount = Double.parseDouble(actions[7]);
@@ -129,7 +129,7 @@ public class ActionReader {
 					amount,
 					"withdraws"));
 		}catch (NullPointerException e){
-			String log = "Failed app.Transaction: ";
+			String log = "Failed Transaction: ";
 			for(int i = 0; i < actions.length; i++){
 				log += actions[i];
 			}
