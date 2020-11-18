@@ -26,6 +26,8 @@ abstract class RunBankController {
     protected final static String GET_AMOUNT = "fxml/GetAmount.fxml";
     protected final static String ACCOUNT = "fxml/GetAccount.fxml";
     protected final static String DISPLAY = "fxml/Display.fxml";
+    protected final static String BANK_MANAGER_MENU = "fxml/BankManagerMenu" +
+            ".fxml";
     protected final static String CREATE_CUSTOMER = "fxml/CreateCustomerMenu" +
             ".fxml";
 

@@ -60,8 +60,21 @@ public class MainMenuController extends RunBankController {
         System.out.println("CreateCustomerButton");
     }
 
-    public void bankManagers(ActionEvent actionEvent) {
-        System.out.println("Bank Manager");
+    public void bankManagers(ActionEvent actionEvent) throws IOException {
+        System.out.println("Bank manager");
+        exit(exitButton);
+        FXMLLoader loader =
+                new FXMLLoader(getClass().getResource(BANK_MANAGER_MENU));
+        Parent root = loader.load();
+
+        BankManagerMenuController bankManagerMenuController =
+                loader.getController();
+        bankManagerMenuController.enterData(this.bankDB);
+        bankManagerMenuController.start();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public void transaction(ActionEvent actionEvent) {
