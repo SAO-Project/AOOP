@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-    <?import java.lang.*?>
-    <?import java.util.*?>
-    <?import javafx.scene.*?>
-    <?import javafx.scene.control.*?>
-    <?import javafx.scene.layout.*?>
 
-
-    <AnchorPane prefHeight="504.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.MainMenuController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="504.0" prefWidth="781.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.MainMenuController">
        <children>
           <GridPane layoutY="-1.0" prefHeight="504.0" prefWidth="781.0">
             <columnConstraints>
