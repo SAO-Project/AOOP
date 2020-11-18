@@ -1,12 +1,9 @@
 package app.controllers;
 
-import app.BankStatement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * @author Edd1e234
@@ -15,7 +12,8 @@ import java.util.Optional;
  *
  * Controller for the Bank Manager Customer Menu window.
  *
- * User
+ * TODO(Edd1e234): Make customer must have transactions to create bank
+ *      statement.
  */
 public class BankManagerCustomerMenuController extends RunBankController {
     @FXML Button backButton;
@@ -50,7 +48,11 @@ public class BankManagerCustomerMenuController extends RunBankController {
                 customer.get()).ifPresent(
                         bankStatement ->
                                 bankStatement.createBankStatement(bankDB));
-        AlertBox.display(SUCCESS, "File will create at end of session");
+        if (bankDB.getBankStatement(customer.get()).isPresent()) {
+            AlertBox.display(SUCCESS, "File will create at end of session");
+        } else {
+            AlertBox.display(ERROR, "No transactions were recorded") ;
+        }
     }
 
     /**

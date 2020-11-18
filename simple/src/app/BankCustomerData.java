@@ -132,6 +132,9 @@ public class BankCustomerData implements IBankDB{
     @Override
     public Optional<BankStatement> getBankStatement(Customer customer) {
         if (customerToBankStatement.containsKey(customer)) {
+            if (getTransactions(customer).isEmpty()) {
+                return Optional.empty();
+            }
             return Optional.of(customerToBankStatement.get(customer));
         }
         return Optional.empty();
