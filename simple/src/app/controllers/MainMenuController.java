@@ -77,8 +77,9 @@ public class MainMenuController extends RunBankController {
         stage.show();
     }
 
-    public void transaction(ActionEvent actionEvent) {
-        System.out.println("Transaction Button");
+    public void transaction(ActionEvent actionEvent) throws IOException {
+        exit(exitButton);
+        moveScene(TRANSACTION_MENU, Optional.empty());
     }
 
     public void exit(ActionEvent actionEvent) {
