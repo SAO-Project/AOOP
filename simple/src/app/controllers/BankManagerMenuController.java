@@ -48,7 +48,8 @@ public class BankManagerMenuController extends RunBankController {
                 "fullName"));
         viewColumn.setCellValueFactory(new PropertyValueFactory<>("button"));
         bankDB.getCustomers().forEach(
-                customer -> customerList.add(new CustomerWrapperFX(customer)));
+                customer -> customerList.add(
+                        new CustomerWrapperFX(customer, bankDB)));
         
         FilteredList<CustomerWrapperFX> filteredList =
                 new FilteredList<>(customerList, b -> true);

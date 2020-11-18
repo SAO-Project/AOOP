@@ -30,6 +30,8 @@ abstract class RunBankController {
             ".fxml";
     protected final static String CREATE_CUSTOMER = "fxml/CreateCustomerMenu" +
             ".fxml";
+    public final static String BANK_MANAGER_CUSTOMER_MENU = "fxml" +
+            "/BankManagerCustomerMenu.fxml";
 
     // Messages
     protected final static String ERROR = "ERROR";

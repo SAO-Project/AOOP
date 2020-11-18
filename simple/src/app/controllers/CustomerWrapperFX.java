@@ -1,10 +1,17 @@
 package app.controllers;
 
 import app.Customer;
+import app.IBankDB;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * @author Edd1e234
@@ -21,7 +28,7 @@ public class CustomerWrapperFX {
     private final SimpleStringProperty fullName;
     private final Button button;
 
-    public CustomerWrapperFX(Customer customer) {
+    public CustomerWrapperFX(Customer customer, IBankDB bankDB) {
         id = new SimpleIntegerProperty(customer.getId());
         checkingNumber =
                 new SimpleIntegerProperty(customer.getChecking().getNumber());
@@ -31,9 +38,7 @@ public class CustomerWrapperFX {
                 new SimpleIntegerProperty(customer.getCredit().getNumber());
         fullName = new SimpleStringProperty(customer.getFullName());
         button = new Button("View Customer");
-        button.setOnAction(e -> {
-            System.out.println("Here bro");
-        });
+        createButton(customer, bankDB);
     }
 
     public int getId() {
@@ -90,5 +95,31 @@ public class CustomerWrapperFX {
 
     public String getFullName() {
         return fullName.get();
+    }
+
+    /**
+     * Creates
+     * @param customer
+     * @param bankDB
+     */
+    public void createButton(Customer customer, IBankDB bankDB) {
+        this.button.setOnAction(e -> {
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource(RunBankController.BANK_MANAGER_CUSTOMER_MENU));
+            try {
+                Parent root = loader.load();
+
+                BankManagerCustomerMenuController
+                        bankManagerCustomerMenuController = loader.getController();
+                bankManagerCustomerMenuController.setCustomer(Optional.of(customer));
+                bankManagerCustomerMenuController.enterData(bankDB);
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.showAndWait();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
     }
 }

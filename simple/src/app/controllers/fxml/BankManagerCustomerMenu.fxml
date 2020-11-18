@@ -6,9 +6,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.controllers.fxml.BankManagerCustomer"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="app.controllers.BankManagerCustomerMenuController">
+   <children>
+      <ToolBar layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="529.0">
+        <items>
+          <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" text="Back" />
+            <Label prefHeight="31.0" prefWidth="259.0" text="Bank Manager Customer Menu" />
+        </items>
+      </ToolBar>
+      <Button fx:id="viewAccountButton" layoutX="237.0" layoutY="150.0" mnemonicParsing="false" onAction="#viewAccount" prefHeight="27.0" prefWidth="126.0" text="View Account" />
+      <Button fx:id="generateBankStatementButton" layoutX="191.0" layoutY="200.0" mnemonicParsing="false" onAction="#generateBankStatement" prefHeight="27.0" prefWidth="218.0" text="Generate Bank Statement " />
+   </children>
 </AnchorPane>
