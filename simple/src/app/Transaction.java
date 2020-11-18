@@ -99,8 +99,8 @@ public class Transaction implements Printable {
 	private String transfersString(){
 		return ( srcCustomer.orElseThrow().getFullName() + " transferred " +
 			getBalanceString() + " from " +
-			srcAccount.orElseThrow().getClass().getName() + " to" +
-			destAccount.orElseThrow().getClass().getName()
+			srcAccount.orElseThrow().getClass().getSimpleName() + " to" +
+			destAccount.orElseThrow().getClass().getSimpleName()
 		);
 	}
 	
@@ -110,7 +110,7 @@ public class Transaction implements Printable {
 	 */
 	private String inquiresString(){
 		return (srcCustomer.orElseThrow().getFullName() + " inquired their " +
-			srcAccount.orElseThrow().getClass().getName() + " account"
+			srcAccount.orElseThrow().getClass().getSimpleName() + " account"
 		);
 	}
 	
@@ -121,7 +121,7 @@ public class Transaction implements Printable {
 	private String withdrawsString(){
 		return ( srcCustomer.orElseThrow().getFullName() + " withdrew " +
 			getBalanceString() + " from " +
-			srcAccount.orElseThrow().getClass().getName() + " account"
+			srcAccount.orElseThrow().getClass().getSimpleName() + " account"
 		);
 	}
 	
@@ -132,7 +132,7 @@ public class Transaction implements Printable {
 	private String depositsString(){
 		return ( destCustomer.orElseThrow().getFullName() + " deposited " +
 			getBalanceString() + " into their " +
-			destAccount.orElseThrow().getClass().getName() + " account"
+			destAccount.orElseThrow().getClass().getSimpleName() + " account"
 		);
 	}
 	

@@ -171,7 +171,7 @@ public class CustomerMenuController extends RunBankController {
                     Optional.empty(),
                     destAccount,
                     amountToTransfer.get(),
-                    "transfer"));
+                    "transfers"));
             AlertBox.display(SUCCESS, OPERATION_SUCCESS);
         } catch (Exception e) {
             AlertBox.display(ERROR, e.getMessage());
