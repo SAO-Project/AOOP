@@ -34,7 +34,9 @@ public class BankManagerMenuController extends RunBankController {
             FXCollections.observableArrayList();
 
     /**
-     * Builds table view
+     * Builds table view.
+     *
+     * Creates functionality to change view based on sorted view.
      */
     public void start() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -57,11 +59,9 @@ public class BankManagerMenuController extends RunBankController {
             filteredList.setPredicate(customer -> {
                 // Searches for values here.
                 if (newValues == null || newValues.isEmpty()) {
-                    return true; 
+                    return true;
                 }
-                
                 String lowerCaseFilter = newValues.toLowerCase();
-                
                 if (customer
                         .getFullName().toLowerCase()
                         .contains(lowerCaseFilter)) {
@@ -85,6 +85,12 @@ public class BankManagerMenuController extends RunBankController {
         table.setItems(sortedList);
     }
 
+    /**
+     * Back to the main menu
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical error in code.
+     */
     public void back(ActionEvent actionEvent) throws IOException {
         exit(backButton);
         moveScene(MAIN_MENU, Optional.empty());

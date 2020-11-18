@@ -109,10 +109,6 @@ public class CustomerLoginController extends RunBankController {
         }
     }
 
-    public void back(ActionEvent actionEvent) throws IOException {
-        exit(backButton);
-    }
-
     private void determinePath() {
         if (needsPassword) {
             System.out.println("Needs password");
@@ -137,6 +133,15 @@ public class CustomerLoginController extends RunBankController {
         if (customer.isPresent()) {
             exit(backButton);
         }
+    }
+
+    /**
+     * Back to the main menu.
+     *
+     * @param actionEvent Not used.;
+     */
+    public void back(ActionEvent actionEvent) {
+        exit(backButton);
     }
 
     /**

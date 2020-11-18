@@ -22,11 +22,27 @@ public class BankManagerCustomerMenuController extends RunBankController {
     @FXML Button viewAccountButton;
     @FXML Button generateBankStatementButton;
 
+    /**
+     * Shows bank manager customers info.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical error in code.
+     */
     public void viewAccount(ActionEvent actionEvent) throws IOException {
         containsCustomer();
-        displayMessage(customer.get().customerInfoString());
+        displayMessage(customer.get().customerInfoString() +
+                customer.get().getChecking().getString() + "\n" +
+                customer.get().getSavings().getString() + "\n" +
+                customer.get().getCredit().getString() + "\n");
     }
 
+    /**
+     * Writes a bank statement.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If file not found, will display to user. Else if
+     * thrown logical in code.
+     */
     public void generateBankStatement(
             ActionEvent actionEvent) throws IOException {
         containsCustomer();
@@ -34,8 +50,14 @@ public class BankManagerCustomerMenuController extends RunBankController {
                 customer.get()).ifPresent(
                         bankStatement ->
                                 bankStatement.createBankStatement(bankDB));
+        AlertBox.display(SUCCESS, "File will create at end of session");
     }
 
+    /**
+     * Back to the main menu.
+     *
+     * @param actionEvent Not used.
+     */
     public void back(ActionEvent actionEvent) {
         exit(backButton);
     }

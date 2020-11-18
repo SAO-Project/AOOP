@@ -135,7 +135,7 @@ abstract class RunBankController {
         Parent root = fxmlLoader.load();
 
         GetAmountController getAmountController = fxmlLoader.getController();
-        getAmountController.setText(message);
+        getAmountController.setMessage(message);
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));

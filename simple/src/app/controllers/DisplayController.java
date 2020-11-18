@@ -1,22 +1,9 @@
 package app.controllers;
-import app.*;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import java.util.Optional;
-import app.*;
-import javafx.scene.Parent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.Scene;
-import java.io.IOException;
-import javafx.fxml.FXMLLoader;
-import javafx.stage.Stage;
-import java.util.Optional;
 
 /**
  * @author Edd1e234
@@ -31,6 +18,7 @@ public class DisplayController extends RunBankController {
 
     /**
      * Sets message to display to the user.
+     *
      * @param message Message to display to the user.
      */
     public void setText(String message) {
@@ -39,6 +27,8 @@ public class DisplayController extends RunBankController {
 
     /**
      * Exit from the window.
+     *
+     * @param actionEvent Not used.
      */
     public void back(ActionEvent actionEvent) {
         exit(backButton);

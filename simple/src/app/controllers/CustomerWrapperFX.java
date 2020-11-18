@@ -98,9 +98,10 @@ public class CustomerWrapperFX {
     }
 
     /**
-     * Creates
-     * @param customer
-     * @param bankDB
+     * Creates a button to display bank manager customer menu.
+     *
+     * @param customer Customer to display.
+     * @param bankDB Contains all data.
      */
     public void createButton(Customer customer, IBankDB bankDB) {
         this.button.setOnAction(e -> {

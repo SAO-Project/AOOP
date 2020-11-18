@@ -24,10 +24,20 @@ public class GetAmountController extends RunBankController {
     @FXML TextField amountTextField;
     @FXML Button backButton;
 
-    public void setText(String message) {
+    /**
+     * Displays message to the user.
+     *
+     * @param message Message to display to the user.
+     */
+    public void setMessage(String message) {
         labelField.setText(message);
     }
 
+    /**
+     * Gets amount.
+     *
+     * @return if empty, user did not enter amount.
+     */
     public Optional<Double> getAmount() {
         if (amount.isPresent()) {
             if (amount.get() <= 0) {
@@ -38,6 +48,11 @@ public class GetAmountController extends RunBankController {
         return amount;
     }
 
+    /**
+     * Parse amount user entered.
+     *
+     * @param actionEvent Not used.
+     */
     public void enter(ActionEvent actionEvent) {
         double amount;
         try {
@@ -56,6 +71,11 @@ public class GetAmountController extends RunBankController {
         }
     }
 
+    /**
+     * Closes window.
+     *
+     * @param actionEvent Not used.
+     */
     public void back(ActionEvent actionEvent) {
         exit(backButton);
     }

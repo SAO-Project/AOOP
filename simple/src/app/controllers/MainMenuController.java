@@ -25,8 +25,13 @@ public class MainMenuController extends RunBankController {
     @FXML Button transactionButton;
     @FXML Button exitButton;
 
+    /**
+     * Opens customer login and customer menu.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException Logical error in code.
+     */
     public void CustomerLogin(ActionEvent actionEvent) throws IOException {
-        // exit(customerLoginButton);
         customerLoginButton.getScene().getWindow().hide();
 
         // Move on to Login Customer menu.
@@ -54,12 +59,24 @@ public class MainMenuController extends RunBankController {
         moveScene(CUSTOMER_MENU, customer);
     }
 
+    /**
+     * Opens create customer window.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException Logical errors in code if thrown.
+     */
     public void CreateCustomer(ActionEvent actionEvent) throws IOException {
         exit(exitButton);
         moveScene(CREATE_CUSTOMER, Optional.empty());
         System.out.println("CreateCustomerButton");
     }
 
+    /**
+     * Opens bank manager window.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical errors in code.
+     */
     public void bankManagers(ActionEvent actionEvent) throws IOException {
         System.out.println("Bank manager");
         exit(exitButton);
@@ -77,13 +94,23 @@ public class MainMenuController extends RunBankController {
         stage.show();
     }
 
+    /**
+     * Opens transaction window.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException If thrown logical errors in code.
+     */
     public void transaction(ActionEvent actionEvent) throws IOException {
         exit(exitButton);
         moveScene(TRANSACTION_MENU, Optional.empty());
     }
 
+    /**
+     * Exits gracefully from process.
+     *
+     * @param actionEvent Not used.
+     */
     public void exit(ActionEvent actionEvent) {
-        System.out.println("Exit");
-        System.exit(0);
+        exit();
     }
 }

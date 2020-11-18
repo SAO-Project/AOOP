@@ -29,18 +29,39 @@ public class GetAccountController extends RunBankController {
     @FXML Button creditButton;
     @FXML Button backButton;
 
+    /**
+     * Sets message to display to the user.
+     *
+     * @param message Message to display to the user.
+     */
     public void setMessage(String message) {
         labelField.setText(message);
     }
 
+    /**
+     * Determines if at least one account must be activated.
+     *
+     * @param activateAccount Unlocks functionality to activate accounts.
+     */
     public void setActivateAccount(boolean activateAccount) {
         this.activateAccount = activateAccount;
     }
 
+    /**
+     * Only used in circumstances to retrieve an account.
+     *
+     * @return If empty account was picked.
+     */
     public Optional<Account> getAccount() {
         return account;
     }
 
+    /**
+     * Activates checking account or retrieves it.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException Customer was not set if thrown.
+     */
     public void checking(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         if (activateAccount) {
@@ -60,6 +81,12 @@ public class GetAccountController extends RunBankController {
         }
     }
 
+    /**
+     * Activates savings account or retrieves it.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException Customer was not set if thrown.
+     */
     public void savings(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         if (activateAccount) {
@@ -80,6 +107,12 @@ public class GetAccountController extends RunBankController {
         }
     }
 
+    /**
+     * Activates credit account or retrieves it.
+     *
+     * @param actionEvent Not used.
+     * @throws IOException Customer was not set if thrown.
+     */
     public void credit(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         if (activateAccount) {
@@ -100,6 +133,11 @@ public class GetAccountController extends RunBankController {
         }
     }
 
+    /**
+     * Goes back to previous menu.
+     *
+     * @param actionEvent Not used.
+     */
     public void back(ActionEvent actionEvent) {
         exit(backButton);
     }
