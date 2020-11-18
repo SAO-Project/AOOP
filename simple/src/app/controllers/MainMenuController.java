@@ -17,7 +17,6 @@ import java.util.Optional;
  * @since 11/14/20
  *
  * IOExceptions should not be caught, we want to know when the program crashes.
- *
  */
 public class MainMenuController extends RunBankController {
     @FXML Button customerLoginButton;
