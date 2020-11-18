@@ -6,9 +6,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.controllers.fxml.BankManagerMenu"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.fxml.BankManagerMenu">
+   <children>
+      <ScrollPane layoutY="59.0" prefHeight="341.0" prefWidth="600.0">
+         <content>
+            <TableView fx:id="tabel" prefHeight="340.0" prefWidth="598.0">
+              <columns>
+                <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+                <TableColumn fx:id="nameCol" prefWidth="165.0" text="Full Name" />
+                  <TableColumn fx:id="checkingColumn" prefWidth="112.0" text="Checking Number" />
+                  <TableColumn fx:id="creditCol" prefWidth="108.0" text="Credit Number" />
+                  <TableColumn fx:id="savingsColumn" prefWidth="125.0" text="Savings Number" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+      <TextField layoutX="110.0" layoutY="14.0" prefHeight="27.0" prefWidth="476.0" promptText="Account Number, ID, or Name" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" text="Back" />
+   </children>
 </AnchorPane>
