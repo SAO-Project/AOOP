@@ -179,7 +179,7 @@ public abstract class Account implements Printable {
 		if (!isActive) {
 			return "";
 		}
-		return (this.getClass().getName() + "\n" +
+		return (this.getClass().getSimpleName() + "\n" +
 			"Account number: " + number + "\n" +
 			"Account balance: " + String.format("$%.2f", balance) + "\n"
 		);
