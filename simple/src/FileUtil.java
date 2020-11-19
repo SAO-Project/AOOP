@@ -1,10 +1,7 @@
 
 
 import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -58,26 +55,20 @@ public class FileUtil {
      * customer object. The other is customer ID to customer object.
      * BankCustomerData object also contains the next ID available.
      */
-    public static IBankDB readFile(String pathToFile) {
+    public static IBankDB readFile(String pathToFile) throws IOException {
         HashMap<String, Customer> nameToCustomer = new HashMap<>();
         HashMap<Integer, Customer> idToCustomer = new HashMap<>();
         IBankDB bankCustomerData = new BankCustomerData();
-        try {
-            // Open file.
-            BufferedReader  cvsReader =
-                    new BufferedReader(new java.io.FileReader(pathToFile));
-            String line;
+        // Open file.
+        BufferedReader  cvsReader =
+                new BufferedReader(new java.io.FileReader(pathToFile));
+        String line;
 
-            setEachIndex(cvsReader.readLine().split(","));
-            while ((line = cvsReader.readLine()) != null) {
-                Customer customer = parseLine(line.split(REGEX)).orElseThrow();
-                
-                bankCustomerData.addCustomer(customer);
-            }
-        } catch (Exception e) {
-            // Uncomment if debugging
-            e.printStackTrace();
-            System.out.println("Failed to read line");
+        setEachIndex(cvsReader.readLine().split(","));
+        while ((line = cvsReader.readLine()) != null) {
+            Customer customer = parseLine(line.split(REGEX)).orElseThrow();
+
+            bankCustomerData.addCustomer(customer);
         }
         return bankCustomerData;
     }

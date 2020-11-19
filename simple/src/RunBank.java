@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -25,25 +26,52 @@ public class RunBank {
     final private static String PATH_TO_FILE = "simple/Bank_4_users.csv";
 
     public static void main(String[] args) {
-        IBankDB bankCustomerData = FileUtil.readFile(askForFileName());
-        userOrBankManager(bankCustomerData);
-    
-        //Write log file
-        try {
-            FileWriter myWriter = new FileWriter("transactions.txt");
-        
-            //First line of the output file
-            myWriter.write("Disney Bank transaction file\n");
-        
-            //gets transaction from iterable
-        
-            for(Transaction transaction : bankCustomerData.getTransactions()){
-                transaction.write(myWriter);
+        boolean validFileName = true;
+        while(validFileName){
+            //Write log file
+            IBankDB bankCustomerData = new BankCustomerData();
+            try {
+                bankCustomerData = FileUtil.readFile(askForFileName());
+                userOrBankManager(bankCustomerData);
+
+                FileWriter myWriter = new FileWriter("transactions.txt");
+
+                //First line of the output file
+                myWriter.write("Disney Bank transaction file\n");
+
+                //gets transaction from iterable
+
+                for(Transaction transaction : bankCustomerData.getTransactions()){
+                    transaction.write(myWriter);
+                }
+                validFileName = true;
+                myWriter.close();
+            } catch (FileNotFoundException e){
+                validFileName = true;
+                System.out.println("your file does not exist. please try again");
+            }catch (IOException e) {
+                validFileName = false;
+                System.out.println("An error occurred.");
             }
-        
-            myWriter.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
+
+            FileWriter myWriter = null;
+            try {
+                myWriter = new FileWriter("transactions.txt");
+                //First line of the output file
+                myWriter.write("Disney Bank transaction file\n");
+
+                //gets transaction from iterable
+
+                for(Transaction transaction : bankCustomerData.getTransactions()){
+                    transaction.write(myWriter);
+                }
+
+                myWriter.close();
+            } catch (IOException e) {
+                System.out.println("an error happened processing the file");
+            }
+
+
         }
     }
 
