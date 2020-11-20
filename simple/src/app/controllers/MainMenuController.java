@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.Customer;
+import app.NullCustomer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +58,7 @@ public class MainMenuController extends RunBankController {
         }
 
         // Generic move.
-        moveScene(CUSTOMER_MENU, customer);
+        moveScene(CUSTOMER_MENU, customer.get());
     }
 
     /**
@@ -68,7 +69,7 @@ public class MainMenuController extends RunBankController {
      */
     public void CreateCustomer(ActionEvent actionEvent) throws IOException {
         exit(exitButton);
-        moveScene(CREATE_CUSTOMER, Optional.empty());
+        moveScene(CREATE_CUSTOMER, new NullCustomer());
         System.out.println("CreateCustomerButton");
     }
 
@@ -103,7 +104,7 @@ public class MainMenuController extends RunBankController {
      */
     public void transaction(ActionEvent actionEvent) throws IOException {
         exit(exitButton);
-        moveScene(TRANSACTION_MENU, Optional.empty());
+        moveScene(TRANSACTION_MENU, new NullCustomer());
     }
 
     /**

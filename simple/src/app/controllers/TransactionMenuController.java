@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.ActionReader;
+import app.NullCustomer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,7 +9,6 @@ import javafx.scene.control.TextField;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 import java.util.Scanner;
 
 
@@ -60,6 +60,6 @@ public class TransactionMenuController extends RunBankController {
      */
     public void back(ActionEvent actionEvent) throws IOException {
         exit(backButton);
-        moveScene(MAIN_MENU, Optional.empty());
+        moveScene(MAIN_MENU, new NullCustomer());
     }
 }

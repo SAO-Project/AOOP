@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.NullCustomer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -13,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * @author Edd1e234
@@ -95,6 +95,6 @@ public class BankManagerMenuController extends RunBankController {
      */
     public void back(ActionEvent actionEvent) throws IOException {
         exit(backButton);
-        moveScene(MAIN_MENU, Optional.empty());
+        moveScene(MAIN_MENU, new NullCustomer());
     }
 }

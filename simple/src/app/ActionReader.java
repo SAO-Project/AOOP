@@ -1,17 +1,15 @@
 package app;
 
-import java.util.Optional;
-
 /**
- * @author Aler
+ * @author Alex
  * @since 11/09
  * @version 1
  * This class handles the Transaction actions csv file
- * the actions are handle here and this uses depency
+ * the actions are handle here and this uses dependency
  * inversion by only depending on an abstract interface database
  */
 public class ActionReader {
-	private IBankDB bank;
+	final private IBankDB bank;
 	
 	public ActionReader(IBankDB bank){
 		this.bank = bank;
@@ -55,10 +53,10 @@ public class ActionReader {
 			
 			bank.addTransaction(
 					new Transaction(
-							Optional.of(srcCustomer),
-							Optional.of(srcAccount),
-							Optional.of(destCustomer),
-							Optional.of(destAccount),
+							srcCustomer,
+							srcAccount,
+							destCustomer,
+							destAccount,
 							amount, "pays"));
 			
 		}catch(RuntimeException e){
@@ -81,10 +79,10 @@ public class ActionReader {
 			
 			bank.addTransaction(
 				new Transaction(
-						Optional.of(srcCustomer),
-						Optional.of(srcAccount),
-						Optional.of(destCustomer),
-						Optional.of(destAccount),
+						srcCustomer,
+						srcAccount,
+						destCustomer,
+						destAccount,
 						amount, ""));
 			
 		}catch (NumberFormatException e){
@@ -104,10 +102,10 @@ public class ActionReader {
 		//Add transaction
 		bank.addTransaction(
 			new Transaction(
-				Optional.of(customer),
-				Optional.of(customer.getAccountByType(actions[2])),
-				Optional.empty(),
-				Optional.empty(),
+				customer,
+				customer.getAccountByType(actions[2]),
+				new NullCustomer(),
+				new NullAccount(),
 				0,
 				"inquires"));
 	}
@@ -122,10 +120,10 @@ public class ActionReader {
 			
 			bank.addTransaction(
 				new Transaction(
-					Optional.of(customer),
-					Optional.of(account),
-					Optional.empty(),
-					Optional.empty(),
+					customer,
+					account,
+					new NullCustomer(),
+					new NullAccount(),
 					amount,
 					"withdraws"));
 		}catch (NullPointerException e){
@@ -148,10 +146,10 @@ public class ActionReader {
 			
 			bank.addTransaction(
 				new Transaction(
-					Optional.of(customer),
-					Optional.of(account),
-					Optional.of(customer),
-					Optional.of(account),
+					customer,
+					account,
+					customer,
+					account,
 					amount,
 					"deposits"));
 			

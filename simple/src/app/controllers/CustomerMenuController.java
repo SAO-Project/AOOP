@@ -1,8 +1,6 @@
 package app.controllers;
 
-import app.Account;
-import app.Customer;
-import app.Transaction;
+import app.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,9 +48,9 @@ public class CustomerMenuController extends RunBankController {
         displayMessage(account.get().getString());
         bankDB.addTransaction(new Transaction(
                 this.customer,
-                account,
-                Optional.empty(),
-                Optional.empty(),
+                account.orElseThrow(),
+                new NullCustomer(),
+                new NullAccount(),
                 0,
                 "inquires"));
         System.out.println("inquire balance");
@@ -83,10 +81,10 @@ public class CustomerMenuController extends RunBankController {
             account.get().deposit(amountToDeposit.get());
             bankDB.addTransaction(
                     new Transaction(
-                            Optional.empty(),
-                            Optional.empty(),
+                            new NullCustomer(),
+                            new NullAccount(),
                             customer,
-                            account,
+                            account.get(),
                             amountToDeposit.get(),
                             "deposits"));
             AlertBox.display(SUCCESS, OPERATION_SUCCESS);
@@ -119,9 +117,9 @@ public class CustomerMenuController extends RunBankController {
             account.get().withdraw(amountToWithdraw.get());
             bankDB.addTransaction(new Transaction(
                     customer,
-                    account,
-                    Optional.empty(),
-                    Optional.empty(),
+                    account.get(),
+                    new NullCustomer(),
+                    new NullAccount(),
                     amountToWithdraw.get(),
                     "withdraws"));
             AlertBox.display(SUCCESS, OPERATION_SUCCESS);
@@ -166,13 +164,13 @@ public class CustomerMenuController extends RunBankController {
         }
 
         try {
-            customer.get().transfer(sourceAccount.get(), destAccount.get(),
+            customer.transfer(sourceAccount.get(), destAccount.get(),
                     amountToTransfer.get());
             bankDB.addTransaction(new Transaction(
                     customer,
-                    sourceAccount,
-                    Optional.empty(),
-                    destAccount,
+                    sourceAccount.get(),
+                    new NullCustomer(),
+                    destAccount.get(),
                     amountToTransfer.get(),
                     "transfers"));
             AlertBox.display(SUCCESS, OPERATION_SUCCESS);
@@ -191,7 +189,7 @@ public class CustomerMenuController extends RunBankController {
     public void payMoney(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         System.out.println("pay");
-        if (!customer.get().getChecking().getIsActive()) {
+        if (!customer.getChecking().getIsActive()) {
             AlertBox.display(ERROR, "Please activate checking account");
         }
 
@@ -221,14 +219,14 @@ public class CustomerMenuController extends RunBankController {
         }
 
         try {
-            customer.get().paySomeone(destCustomer.get(), amount.get());
+            customer.paySomeone(destCustomer.get(), amount.get());
             AlertBox.display(SUCCESS, OPERATION_SUCCESS);
             this.bankDB.addTransaction(
                     new Transaction(
                             customer,
-                            Optional.of(customer.get().getChecking()),
-                            destCustomer,
-                            Optional.of(destCustomer.get().getChecking()),
+                            customer.getChecking(),
+                            destCustomer.get(),
+                            destCustomer.get().getChecking(),
                             amount.get(),
                             "pays"));
             AlertBox.display(SUCCESS, OPERATION_SUCCESS);
@@ -245,7 +243,7 @@ public class CustomerMenuController extends RunBankController {
      */
     public void showLogs(ActionEvent actionEvent) throws IOException {
         containsCustomer();
-        if (bankDB.getTransactions(customer.get()).isEmpty()) {
+        if (bankDB.getTransactions(customer).isEmpty()) {
             AlertBox.display(ERROR, "No logs");
             return;
         }
@@ -253,7 +251,7 @@ public class CustomerMenuController extends RunBankController {
 
         // Gather all the strings.
         // TODO(Edd1e): Make this more efficient.
-        for (Transaction transaction : bankDB.getTransactions(customer.get())) {
+        for (Transaction transaction : bankDB.getTransactions(customer)) {
             System.out.println(transaction.getString());
             transactionsStr.append(transaction.getString()).append("\n");
         }
@@ -270,10 +268,10 @@ public class CustomerMenuController extends RunBankController {
      */
     public void viewBankAccount(ActionEvent actionEvent) throws IOException {
         containsCustomer();
-        displayMessage(customer.get().customerInfoString() +
-                customer.get().getChecking().getString() + "\n" +
-                customer.get().getSavings().getString() + "\n" +
-                customer.get().getCredit().getString() + "\n");
+        displayMessage(customer.customerInfoString() +
+                customer.getChecking().getString() + "\n" +
+                customer.getSavings().getString() + "\n" +
+                customer.getCredit().getString() + "\n");
         System.out.println("view bank account");
     }
 
@@ -307,7 +305,7 @@ public class CustomerMenuController extends RunBankController {
      */
     public void back(ActionEvent actionEvent) throws IOException {
         exit(backButton);
-        moveScene(MAIN_MENU, Optional.empty());
+        moveScene(MAIN_MENU, new NullCustomer());
     }
 
     /**

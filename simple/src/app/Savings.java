@@ -1,5 +1,7 @@
 package app;
 
+import java.util.Optional;
+
 /**
  * @author Alex Avila
  * @version 1.0
@@ -28,7 +30,7 @@ public class Savings extends Account {
 		super(number, balance);
 		this.accountType = AccountType.SAVINGS;
 	}
-	
+
 	/**
 	 * This constructor includes all the attributes in the super and the interest rate however this method
 	 * is not use that much because there is not interest rate in the csv file
@@ -48,7 +50,12 @@ public class Savings extends Account {
 	public double getInterestRate() {
 		return interestRate;
 	}
-	
+
+	@Override
+	public Optional<Account> getOptional() {
+		return Optional.of(this);
+	}
+
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Setters
 	 ----------------------------------------------------------------------------------------------------------------*/

@@ -15,13 +15,12 @@ import java.util.Optional;
  * Contains all bank data.
  */
 public class BankCustomerData implements IBankDB{
-    private HashMap<String, Customer> nameToCustomer;
-    private HashMap<Integer, Customer> idToCustomer;
-    private HashMap<Integer, Customer> accountNumberToCustomer;
+    private final HashMap<String, Customer> nameToCustomer;
+    private final HashMap<Integer, Customer> idToCustomer;
     private HashMap<Integer, Account> accountNumberToAccount;
-    private ArrayList<Transaction> transactions;
-    private HashMap<Customer, ArrayList<Transaction>> customerToTransactions;
-    private HashMap<Customer, BankStatement> customerToBankStatement;
+    private final ArrayList<Transaction> transactions;
+    private final HashMap<Customer, ArrayList<Transaction>> customerToTransactions;
+    private final HashMap<Customer, BankStatement> customerToBankStatement;
 
     /**
      * Creates a object to contain all bank data.
@@ -147,8 +146,8 @@ public class BankCustomerData implements IBankDB{
      * @param idToCustomer Uses data to populate map.
      */
     public void createAccountNumberToCustomerHashMap(
-            HashMap<String, Customer> idToCustomer) {
-        this.accountNumberToCustomer = new HashMap<>();
+            HashMap<String, Customer> idToCustomer
+    ) {
         this.accountNumberToAccount = new HashMap<>();
 
         // Adds account number to map if account active...
@@ -164,22 +163,16 @@ public class BankCustomerData implements IBankDB{
      */
     private void addCustomerToAccountNumberToCustomerMap(Customer customer) {
         if (customer.getChecking().getIsActive()) {
-            this.accountNumberToCustomer.put(
-                    customer.getChecking().getNumber(), customer);
             this.accountNumberToAccount.put(
                     customer.getChecking().getNumber(), customer.getChecking());
         }
 
         if (customer.getSavings().getIsActive()) {
-            this.accountNumberToCustomer.put(
-                    customer.getSavings().getNumber(), customer);
             this.accountNumberToAccount.put(
                     customer.getSavings().getNumber(), customer.getSavings());
         }
 
         if (customer.getCredit().getIsActive()) {
-            this.accountNumberToCustomer.put(
-                    customer.getCredit().getNumber(), customer);
             this.accountNumberToAccount.put(
                     customer.getCredit().getNumber(), customer.getCredit());
         }

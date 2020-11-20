@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * @author Edd1e234
@@ -112,7 +111,7 @@ public class CustomerWrapperFX {
 
                 BankManagerCustomerMenuController
                         bankManagerCustomerMenuController = loader.getController();
-                bankManagerCustomerMenuController.setCustomer(Optional.of(customer));
+                bankManagerCustomerMenuController.setCustomer(customer);
                 bankManagerCustomerMenuController.enterData(bankDB);
 
                 Stage stage = new Stage();

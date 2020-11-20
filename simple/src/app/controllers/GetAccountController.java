@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.Account;
+import app.NullAccount;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ import java.util.Optional;
  *
  */
 public class GetAccountController extends RunBankController {
-    private Optional<Account> account = Optional.empty();
+    private Account account = new NullAccount();
     private boolean activateAccount = false;
 
     @FXML Label labelField;
@@ -49,7 +50,7 @@ public class GetAccountController extends RunBankController {
      * @return If empty account was picked.
      */
     public Optional<Account> getAccount() {
-        return account;
+        return account.getOptional();
     }
 
     /**
@@ -61,15 +62,15 @@ public class GetAccountController extends RunBankController {
     public void checking(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         if (activateAccount) {
-            if (this.customer.get().getChecking().getIsActive()) {
+            if (this.customer.getChecking().getIsActive()) {
                 AlertBox.display(ERROR, "Account is active");
             } else {
                 getAmount("Enter amount to start with").ifPresent(
-                        balance -> this.customer.get().setChecking(balance));
+                        balance -> this.customer.setChecking(balance));
             }
         } else {
-            if (this.customer.get().getChecking().getIsActive()) {
-                this.account = Optional.of(this.customer.get().getChecking());
+            if (this.customer.getChecking().getIsActive()) {
+                this.account = this.customer.getChecking();
                 exit(checkingButton);
             } else {
                 AlertBox.display(ERROR, "Checking was not active");
@@ -86,19 +87,19 @@ public class GetAccountController extends RunBankController {
     public void savings(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         if (activateAccount) {
-            if (this.customer.get().getSavings().getIsActive()) {
+            if (this.customer.getSavings().getIsActive()) {
                 AlertBox.display(ERROR, "Account is active");
             } else {
                 getAmount("Enter amount to start with").ifPresent(
-                        balance -> this.customer.get().setSavings(balance));
+                        balance -> this.customer.setSavings(balance));
             }
         } else {
-            if (this.customer.get().getSavings().getIsActive()) {
-                this.account = Optional.of(this.customer.get().getSavings());
+            if (this.customer.getSavings().getIsActive()) {
+                this.account = this.customer.getSavings();
                 exit(checkingButton);
             } else {
                 throw new IOException("Savings was not active for this " +
-                        "account " + this.customer.get().getFullName());
+                        "account " + this.customer.getFullName());
             }
         }
     }
@@ -112,16 +113,16 @@ public class GetAccountController extends RunBankController {
     public void credit(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         if (activateAccount) {
-            if (this.customer.get().getCredit().getIsActive()) {
+            if (this.customer.getCredit().getIsActive()) {
                 AlertBox.display(ERROR, "Already active");
             } else {
                 // TODO(Edd1e): Make box for credit max.
                 getAmount("Enter amount to start with").ifPresent(balance ->
-                        this.customer.get().setCredit(balance, 5000));
+                        this.customer.setCredit(balance, 5000));
             }
         } else {
-            if (this.customer.get().getCredit().getIsActive()) {
-                this.account = Optional.of(this.customer.get().getCredit());
+            if (this.customer.getCredit().getIsActive()) {
+                this.account = this.customer.getCredit();
                 exit(checkingButton);
             } else {
                 AlertBox.display(ERROR, "Inactive");

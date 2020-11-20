@@ -1,5 +1,7 @@
 package app;
 
+import java.util.Optional;
+
 /**
  * @author Alex Avila
  * @version 1.0
@@ -27,7 +29,7 @@ public class Credit extends Account{
 		super(number, balance);
 		this.accountType  = AccountType.CREDIT;
 	}
-	
+
 	/**
 	 * This constructor accepts all the attributes used in PA3
 	 * @param number Account number of the credit card. Always starts with digit 3
@@ -39,7 +41,12 @@ public class Credit extends Account{
 		this.maxCredit = maxCredit;
 		this.accountType = AccountType.CREDIT;
 	}
-	
+
+	@Override
+	public Optional<Account> getOptional() {
+		return Optional.of(this);
+	}
+
 	/**
 	 * Does deposit to credit if it is successful then return false
 	 * @param amount the amount of money the user wants to deposit into the account

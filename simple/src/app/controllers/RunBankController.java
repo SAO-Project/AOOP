@@ -1,9 +1,6 @@
 package app.controllers;
 
-import app.Account;
-import app.CSVFile;
-import app.Customer;
-import app.IBankDB;
+import app.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -46,7 +43,7 @@ abstract class RunBankController {
 
     // Model
     protected IBankDB bankDB;
-    protected Optional<Customer> customer = Optional.empty();
+    protected Customer customer = new NullCustomer();
 
     /**
      * Moves from scene to scene.
@@ -57,7 +54,7 @@ abstract class RunBankController {
      * for it.
      */
     private Parent createRoot(
-            String fxmlFile, Optional<Customer> customer) throws IOException {
+            String fxmlFile, Customer customer) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
 
@@ -76,16 +73,18 @@ abstract class RunBankController {
      * for it.
      */
     public void moveScene(
-            String fxmlFile, Optional<Customer> customer) throws IOException {
+            String fxmlFile,
+            Customer customer
+    ) throws IOException {
 
         // TODO(Edd1e) Extract these if statements out, to another util class.
         if (fxmlFile.equals(MAIN_MENU)) {
-            if (customer.isPresent()) {
+            if (customer.getOptional().isPresent()) {
                 throw new IOException("Customer is empty");
             }
         }
 
-        if (customer.isEmpty() && fxmlFile.equals(CUSTOMER_LOGIN)) {
+        if (customer.getOptional().isEmpty() && fxmlFile.equals(CUSTOMER_LOGIN)) {
             throw new IOException("while attempting to move to " + fxmlFile +
                     "Customer was empty!!!!");
         }
@@ -106,20 +105,16 @@ abstract class RunBankController {
      * Set customer for the window.
      * @param customer sets class customer.
      */
-    protected void setCustomer(Optional<Customer> customer) {
+    protected void setCustomer(Customer customer) {
         this.customer = customer;
     }
 
     protected Optional<Customer> getCustomer() {
-        return customer;
+        return customer.getOptional();
     }
 
-    // TODO(Edd1e): Make this void.
-    protected boolean containsCustomer() throws IOException {
-        if (customer.isPresent()) {
-            return true;
-        }
-        throw new IOException("Customer was not set before hand");
+    protected boolean containsCustomer() {
+        return customer.getOptional().isPresent();
     }
 
     public void enterData(IBankDB bankDB) {

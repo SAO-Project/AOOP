@@ -2,6 +2,7 @@ package app;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Optional;
 
 /**
  * @author Alex
@@ -60,6 +61,8 @@ public abstract class Account implements Printable {
 	public Boolean  getIsActive() {return isActive;}
 
 	public AccountType getAccountType() {return accountType;}
+
+	public abstract Optional<Account> getOptional();
 	
 	/**
 	 * @author Alex

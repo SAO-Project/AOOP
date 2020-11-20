@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 /**
  * @author Edd1e234
@@ -52,6 +51,8 @@ public class CreateCustomerMenuController extends RunBankController {
     @FXML Button addToSystemButton;
     @FXML Button backButton;
 
+
+
     /**
      * Records users first name.
      *
@@ -63,7 +64,7 @@ public class CreateCustomerMenuController extends RunBankController {
             AlertBox.display(ERROR, "text field is empty");
             return;
         }
-        if (RunBank.nameValidator(firstName)) {
+        if (Validator.isNameValid(firstName)) {
             this.firstName = firstName;
             return;
         }
@@ -81,7 +82,7 @@ public class CreateCustomerMenuController extends RunBankController {
             AlertBox.display(ERROR,"text field is empty");
             return;
         }
-        if (RunBank.nameValidator(lastName)) {
+        if (Validator.isNameValid(lastName)) {
             this.lastName = lastName;
             return;
         }
@@ -115,7 +116,7 @@ public class CreateCustomerMenuController extends RunBankController {
             AlertBox.display(ERROR, "Email is empty");
             return;
         }
-        if (RunBank.emailValidator(email)) {
+        if (Validator.isEmailValid(email)) {
             this.email = email;
             return;
         }
@@ -133,7 +134,7 @@ public class CreateCustomerMenuController extends RunBankController {
             AlertBox.display(ERROR, "Phone number text field empty");
             return;
         }
-        if (RunBank.phoneNumberValidator(phoneNumber)) {
+        if (Validator.isPhoneNumberValid(phoneNumber)) {
             phoneNumber = "(" + phoneNumber.substring(0, 3) + ") " +
                     phoneNumber.substring(3, 6) + "-"
                     + phoneNumber.substring(6, 10);
@@ -167,14 +168,14 @@ public class CreateCustomerMenuController extends RunBankController {
         try {
             Customer customer =
                     new Customer(
-                            validateStr(firstName).orElseThrow(),
-                            validateStr(lastName).orElseThrow(),
-                            validateStr(dob).orElseThrow(),
+                            Validator.validateStr(firstName).orElseThrow(),
+                            Validator.validateStr(lastName).orElseThrow(),
+                            Validator.validateStr(dob).orElseThrow(),
                             bankDB.getNextId(),
-                            validateStr(phoneNumber).orElseThrow(),
-                            validateStr(email).orElseThrow(),
-                            validateStr(address).orElseThrow(),
-                            RunBank.generatePassword(firstName, lastName),
+                            Validator.validateStr(phoneNumber).orElseThrow(),
+                            Validator.validateStr(email).orElseThrow(),
+                            Validator.validateStr(address).orElseThrow(),
+                            CustomerUtil.generatePassword(firstName, lastName),
                             new Checking(),
                             new Credit(),
                             new Savings());
@@ -182,7 +183,7 @@ public class CreateCustomerMenuController extends RunBankController {
             Parent root = loader.load();
 
             GetAccountController getAccountController = loader.getController();
-            getAccountController.setCustomer(Optional.of(customer));
+            getAccountController.setCustomer(customer);
             getAccountController.setMessage("Please activate at least " +
                     "the savings account account");
             getAccountController.setActivateAccount(true);
@@ -212,7 +213,7 @@ public class CreateCustomerMenuController extends RunBankController {
      */
     public void back(ActionEvent actionEvent) throws IOException {
         exit(backButton);
-        moveScene(MAIN_MENU, Optional.empty());
+        moveScene(MAIN_MENU, new NullCustomer());
     }
 
     /**
@@ -231,21 +232,5 @@ public class CreateCustomerMenuController extends RunBankController {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Validate a string. Make sure it is not length zero.
-     *
-     * @param str String to validate.
-     * @return If empty() string is not valid.
-     */
-    public static Optional<String> validateStr(String str) {
-        if (str == null) {
-            return Optional.empty();
-        }
-        if (str.length() == 0) {
-            return Optional.empty();
-        }
-        return Optional.of(str);
     }
 }

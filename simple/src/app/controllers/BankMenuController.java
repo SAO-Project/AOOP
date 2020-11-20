@@ -1,13 +1,13 @@
 package app.controllers;
 
 import app.FileUtil;
+import app.NullCustomer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * @author Edd1e234
@@ -34,7 +34,7 @@ public class BankMenuController extends RunBankController {
             // Opens main menu.
             this.bankDB = FileUtil.readFileV2(textField.getText());
             exit(backButton);
-            moveScene(MAIN_MENU, Optional.empty());
+            moveScene(MAIN_MENU, new NullCustomer());
         } catch (IOException e) {
             AlertBox.display(ERROR, e.getMessage());
         }
