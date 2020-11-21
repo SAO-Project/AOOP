@@ -47,6 +47,7 @@ public class TransactionMenuController extends RunBankController {
             while (fileScanner.hasNextLine()) {
                 actionReader.process(fileScanner.nextLine());
             }
+            AlertBox.display(SUCCESS, "File was process");
         } catch (Exception e) {
             e.printStackTrace();
             AlertBox.display(ERROR, "Failed to find file");
