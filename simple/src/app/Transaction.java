@@ -99,7 +99,7 @@ public class Transaction implements Printable {
 	private String transfersString(){
 		return ( srcCustomer.getFullName() + " transferred " +
 			getBalanceString() + " from " +
-			srcAccount.getClass().getSimpleName() + " to" +
+			srcAccount.getClass().getSimpleName() + " to " +
 			destAccount.getClass().getSimpleName()
 		);
 	}

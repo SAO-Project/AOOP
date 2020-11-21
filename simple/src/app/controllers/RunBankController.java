@@ -198,6 +198,12 @@ abstract class RunBankController {
      */
     protected void exit() {
         (new CSVFile(bankDB)).writeCSV();
+        try{
+            FileUtil.writeTransactions(bankDB.getTransactions());
+        }catch(IOException e){
+            AlertBox.display(ERROR, "There was an error printing the transactions");
+        }
+
         System.exit(0);
     }
 }

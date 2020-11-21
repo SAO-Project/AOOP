@@ -1,8 +1,11 @@
 package app;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Optional;
 
 
@@ -297,5 +300,23 @@ public class FileUtil {
      */
     private static String removeQuotes(String str) {
         return str.substring(1, str.length() - 1);
+    }
+
+    /**
+     * @author Alex
+     *
+     * uses transactions to print then into a file
+     */
+    public static void writeTransactions(Collection<Transaction> transactions) throws IOException{
+        String firstLine = "Transaction Logs";
+        Writer writer = new FileWriter("transaction.txt");
+        writer.write(firstLine + "\n");
+
+        for (Transaction transaction : transactions) {
+            transaction.write(writer);
+        }
+
+        writer.close();
+
     }
 }

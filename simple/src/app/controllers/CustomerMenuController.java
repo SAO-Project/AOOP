@@ -189,7 +189,7 @@ public class CustomerMenuController extends RunBankController {
     public void payMoney(ActionEvent actionEvent) throws IOException {
         containsCustomer();
         System.out.println("pay");
-        if (!customer.getChecking().getIsActive()) {
+        if (!customer.getChecking().IsActive()) {
             AlertBox.display(ERROR, "Please activate checking account");
         }
 
@@ -220,7 +220,6 @@ public class CustomerMenuController extends RunBankController {
 
         try {
             customer.paySomeone(destCustomer.get(), amount.get());
-            AlertBox.display(SUCCESS, OPERATION_SUCCESS);
             this.bankDB.addTransaction(
                     new Transaction(
                             customer,

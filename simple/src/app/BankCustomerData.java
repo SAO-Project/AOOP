@@ -162,17 +162,17 @@ public class BankCustomerData implements IBankDB{
      * @param customer Customer to add.
      */
     private void addCustomerToAccountNumberToCustomerMap(Customer customer) {
-        if (customer.getChecking().getIsActive()) {
+        if (customer.getChecking().IsActive()) {
             this.accountNumberToAccount.put(
                     customer.getChecking().getNumber(), customer.getChecking());
         }
 
-        if (customer.getSavings().getIsActive()) {
+        if (customer.getSavings().IsActive()) {
             this.accountNumberToAccount.put(
                     customer.getSavings().getNumber(), customer.getSavings());
         }
 
-        if (customer.getCredit().getIsActive()) {
+        if (customer.getCredit().IsActive()) {
             this.accountNumberToAccount.put(
                     customer.getCredit().getNumber(), customer.getCredit());
         }

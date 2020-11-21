@@ -227,7 +227,7 @@ public class CreateCustomerMenuController extends RunBankController {
             return false;
         }
 
-        if (customer.getSavings().getIsActive()) {
+        if (customer.getSavings().IsActive()) {
             bankDB.addCustomer(customer);
             return true;
         }

@@ -60,16 +60,19 @@ public class GetAccountController extends RunBankController {
      * @throws IOException Customer was not set if thrown.
      */
     public void checking(ActionEvent actionEvent) throws IOException {
-        containsCustomer();
+        if (!containsCustomer()){
+            throw new IOException("Customer does not exist");
+        }
         if (activateAccount) {
-            if (this.customer.getChecking().getIsActive()) {
+            if (this.customer.getChecking().IsActive()) {
                 AlertBox.display(ERROR, "Account is active");
             } else {
                 getAmount("Enter amount to start with").ifPresent(
                         balance -> this.customer.setChecking(balance));
+                AlertBox.display(SUCCESS, "Successfully activated");
             }
         } else {
-            if (this.customer.getChecking().getIsActive()) {
+            if (this.customer.getChecking().IsActive()) {
                 this.account = this.customer.getChecking();
                 exit(checkingButton);
             } else {
@@ -85,16 +88,19 @@ public class GetAccountController extends RunBankController {
      * @throws IOException Customer was not set if thrown.
      */
     public void savings(ActionEvent actionEvent) throws IOException {
-        containsCustomer();
+        if (!containsCustomer()){
+            throw new IOException("Customer does not exist");
+        }
         if (activateAccount) {
-            if (this.customer.getSavings().getIsActive()) {
+            if (this.customer.getSavings().IsActive()) {
                 AlertBox.display(ERROR, "Account is active");
             } else {
                 getAmount("Enter amount to start with").ifPresent(
                         balance -> this.customer.setSavings(balance));
+                AlertBox.display(SUCCESS, "Successfully activated");
             }
         } else {
-            if (this.customer.getSavings().getIsActive()) {
+            if (this.customer.getSavings().IsActive()) {
                 this.account = this.customer.getSavings();
                 exit(checkingButton);
             } else {
@@ -111,17 +117,20 @@ public class GetAccountController extends RunBankController {
      * @throws IOException Customer was not set if thrown.
      */
     public void credit(ActionEvent actionEvent) throws IOException {
-        containsCustomer();
+        if (!containsCustomer()){
+            throw new IOException("Customer does not exist");
+        }
         if (activateAccount) {
-            if (this.customer.getCredit().getIsActive()) {
+            if (this.customer.getCredit().IsActive()) {
                 AlertBox.display(ERROR, "Already active");
             } else {
                 // TODO(Edd1e): Make box for credit max.
                 getAmount("Enter amount to start with").ifPresent(balance ->
                         this.customer.setCredit(balance, 5000));
+                AlertBox.display(SUCCESS, "Successfully activated");
             }
         } else {
-            if (this.customer.getCredit().getIsActive()) {
+            if (this.customer.getCredit().IsActive()) {
                 this.account = this.customer.getCredit();
                 exit(checkingButton);
             } else {

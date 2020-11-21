@@ -188,7 +188,9 @@ public class Customer extends Person{
 	 * @param amount Amount of money that is going to be transfer
 	 */
 	public void paySomeone(Customer dest, double amount) throws RuntimeException{
-		//get checking account from customer
+		if(this == dest){
+			throw new RuntimeException("Cannot pay yourself");
+		}
 		transfer(checking, dest.getChecking(), amount);
 	}
 	
