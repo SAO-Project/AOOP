@@ -1,5 +1,7 @@
 package app;
 
+import java.util.Optional;
+
 /**
  * @author Alex Avila
  * @version 1.0
@@ -129,6 +131,10 @@ public class Customer extends Person{
 		return firstName + " " + lastName;
 	}
 
+	public Optional<Customer> getOptional(){
+		return Optional.of(this);
+	}
+
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Setters
 	 ----------------------------------------------------------------------------------------------------------------*/
@@ -137,8 +143,8 @@ public class Customer extends Person{
 		this.id = id;
 	}
 	
-	public void setChecking(Checking cheking) {
-		this.checking = cheking;
+	public void setChecking(Checking checking) {
+		this.checking = checking;
 	}
 
 	public void setChecking(double amount) {
@@ -182,7 +188,9 @@ public class Customer extends Person{
 	 * @param amount Amount of money that is going to be transfer
 	 */
 	public void paySomeone(Customer dest, double amount) throws RuntimeException{
-		//get checking account from customer
+		if(this == dest){
+			throw new RuntimeException("Cannot pay yourself");
+		}
 		transfer(checking, dest.getChecking(), amount);
 	}
 	
@@ -199,38 +207,7 @@ public class Customer extends Person{
 		}
 	}
 	
-	/**
-	 * Formats the user information into csv style
-	 * @return String with the Customers information formatted to be a line of the CSV file
-	 */
-	public String toCsvLine(){
-		
-		String checkingNumber = "";
-		String checkingBalance = "";
-		if(checking != null){
-			checkingNumber = checking.getNumber() + "";
-			checkingBalance = String.format("%.2f", checking.getBalance()) + "";
-		}
-		
-		String savingsNumber = "";
-		String savingsBalance = "";
-		if(savings != null){
-			savingsNumber =  savings.getNumber() + "";
-			savingsBalance = String.format("%.2f", savings.getBalance()) + "";
-		}
-		
-		String creditNumber = "";
-		String creditBalance = "";
-		if(credit != null){
-			creditNumber =  credit.getNumber() + "";
-			creditBalance = String.format("%.2f", credit.getBalance()) + "";
-		}
-		
-		return firstName + "," + lastName + "," + dob + "," + id + "," +
-			address + "," + phone + "," + checkingNumber + "," + savingsNumber + "," +
-			creditNumber + "," + checkingBalance + "," + savingsBalance + "," +
-			creditBalance;
-	}
+
 
 	public String customerInfoString() {
 		return  "Costumer Information:\n" +

@@ -2,6 +2,7 @@ package app;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Optional;
 
 /**
  * @author Alex
@@ -57,26 +58,12 @@ public abstract class Account implements Printable {
 		return customer;
 	}
 
-	public Boolean  getIsActive() {return isActive;}
+	public Boolean IsActive() {return isActive;}
 
 	public AccountType getAccountType() {return accountType;}
-	
-	/**
-	 * @author Alex
-	 * gets a specific String depending on what type of account this instance is
-	 * @return a string describing the account
-	 */
-	public String getAccountTypeStr() {
-		switch (accountType) {
-			case CHECKING:
-				return "Checking account";
-			case SAVINGS:
-				return "Savings account";
-			case CREDIT:
-				return "Credit account";
-		}
-		return "FAIL FAIL";
-	}
+
+	public abstract Optional<Account> getOptional();
+
 	
 	/*-----------------------------------------------------------------------------------------------------------------
 	                                            Setters
@@ -118,7 +105,11 @@ public abstract class Account implements Printable {
 		if(amount < 0){
 			throw new RuntimeException("No negative numbers accepted");
 		}
-		
+
+		if(!IsActive()){
+			throw new RuntimeException("Account is not active");
+		}
+
 		balance += amount;
 	}
 	
@@ -135,6 +126,10 @@ public abstract class Account implements Printable {
 		//not enough balance to withdraw
 		if(amount > balance){
 			throw new RuntimeException("Not enough funds to withdraw");
+		}
+
+		if(!IsActive()){
+			throw new RuntimeException("Account is not Active");
 		}
 		
 		//withdraw amount from the balance

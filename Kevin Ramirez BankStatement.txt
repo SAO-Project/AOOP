@@ -1,0 +1,31 @@
+Minor Bank
+
+Costumer Information:
+Full Name: Kevin Ramirez
+Date of birth: 05/11/2020
+Address: (999) 999-9999
+Phone: kevin@gmail.com
+ID: 104
+
+Date accessed: 19/11/20
+
+Starting accounts: 
+
+
+Savings
+Account number: 2104
+Account balance: $50.00
+
+
+
+All Transactions during session: 
+
+Kevin Ramirez inquired their Savings account
+
+
+
+Savings
+Account number: 2104
+Account balance: $50.00
+
+

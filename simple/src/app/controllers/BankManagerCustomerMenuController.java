@@ -29,10 +29,10 @@ public class BankManagerCustomerMenuController extends RunBankController {
      */
     public void viewAccount(ActionEvent actionEvent) throws IOException {
         containsCustomer();
-        displayMessage(customer.get().customerInfoString() +
-                customer.get().getChecking().getString() + "\n" +
-                customer.get().getSavings().getString() + "\n" +
-                customer.get().getCredit().getString() + "\n");
+        displayMessage(customer.customerInfoString() +
+                customer.getChecking().getString() + "\n" +
+                customer.getSavings().getString() + "\n" +
+                customer.getCredit().getString() + "\n");
     }
 
     /**
@@ -45,11 +45,9 @@ public class BankManagerCustomerMenuController extends RunBankController {
     public void generateBankStatement(
             ActionEvent actionEvent) throws IOException {
         containsCustomer();
-        bankDB.getBankStatement(
-                customer.get()).ifPresent(
-                        bankStatement ->
-                                bankStatement.createBankStatement(bankDB));
-        if (bankDB.getBankStatement(customer.get()).isPresent()) {
+        bankDB.getBankStatement(customer)
+                .ifPresent(bankStatement -> bankStatement.createBankStatement(bankDB));
+        if (bankDB.getBankStatement(customer).isPresent()) {
             AlertBox.display(SUCCESS, "File will create at end of session");
         } else {
             AlertBox.display(ERROR, "No transactions were recorded") ;

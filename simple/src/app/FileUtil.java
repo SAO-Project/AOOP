@@ -1,9 +1,11 @@
 package app;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Optional;
 
 
@@ -40,42 +42,7 @@ public class FileUtil {
     /**
      * No Instance of the class should be allowed.
      */
-    private FileUtil() {
-    }
-
-    /**
-     * Goes through each line of customers.cvs. Each line is parsed, which
-     * creates a Customer object. Customer class is stored in two separate hash
-     * maps. These hash maps are returned via array.
-     * <p>
-     * If fails to parse error message will be thrown to the screen.
-     *
-     * @param pathToFile opens file according to this.
-     * @return Object containing two hashmaps. One hash map is customer name to
-     * customer object. The other is customer ID to customer object.
-     * BankCustomerData object also contains the next ID available.
-     */
-    public static IBankDB readFile(String pathToFile) {
-        HashMap<String, Customer> nameToCustomer = new HashMap<>();
-        HashMap<Integer, Customer> idToCustomer = new HashMap<>();
-        IBankDB bankCustomerData = new BankCustomerData();
-        try {
-            // Open file.
-            BufferedReader  cvsReader =
-                    new BufferedReader(new java.io.FileReader(pathToFile));
-            String line = cvsReader.readLine();
-            setEachIndex(line.split(","));
-            while ((line = cvsReader.readLine()) != null) {
-                Customer customer = parseLine(line.split(REGEX)).orElseThrow();
-                bankCustomerData.addCustomer(customer);
-            }
-        } catch (Exception e) {
-            // Uncomment if debugging
-            e.printStackTrace();
-            System.out.println("Failed to read line");
-        }
-        return bankCustomerData;
-    }
+    private FileUtil() {}
 
     public static IBankDB readFileV2(String pathToFile) throws IOException {
         IBankDB bankCustomerData = new BankCustomerData();
@@ -218,7 +185,9 @@ public class FileUtil {
      * @return Optional containing checking account.
      */
     public static Optional<Checking> parseCheckingAccount(
-            String accountNumStr, String accountBalanceStr) {
+            String accountNumStr,
+            String accountBalanceStr
+    ) {
         return Optional.of(new Checking(
                 parseInt(
                         accountNumStr,
@@ -240,9 +209,11 @@ public class FileUtil {
      * @param accountBalanceStr Starting balance.
      * @return Optional containing credit account.
      */
-    public static Optional<Credit>
-    parseCreditAccount(String accountNumStr, String accountBalanceStr,
-                       String creditMaxStr) {
+    public static Optional<Credit> parseCreditAccount(
+            String accountNumStr,
+            String accountBalanceStr,
+            String creditMaxStr
+    ) {
         return Optional.of(new Credit(
                 parseInt(
                         accountNumStr,
@@ -267,8 +238,8 @@ public class FileUtil {
      * @return Optional containing credit account.
      */
     public static Optional<Savings> parseSavingAccount(
-            String accountNumStr, String accountBalanceStr) {
-
+            String accountNumStr, String accountBalanceStr
+    ) {
         return Optional.of(new Savings(
                 parseInt(
                         accountNumStr,
@@ -294,7 +265,7 @@ public class FileUtil {
     public static Optional<Integer> parseInt(String line, String message) {
         StringBuilder value = new StringBuilder();
         try {
-            // Split line, combine nums
+            // Split line, combine numbers
             Arrays.stream(line.split("-")).forEach(value::append);
             return Optional.of(Integer.valueOf(value.toString()));
         } catch (Exception exception) {
@@ -329,5 +300,23 @@ public class FileUtil {
      */
     private static String removeQuotes(String str) {
         return str.substring(1, str.length() - 1);
+    }
+
+    /**
+     * @author Alex
+     *
+     * uses transactions to print then into a file
+     */
+    public static void writeTransactions(Collection<Transaction> transactions) throws IOException{
+        String firstLine = "Transaction Logs";
+        Writer writer = new FileWriter("transaction.txt");
+        writer.write(firstLine + "\n");
+
+        for (Transaction transaction : transactions) {
+            transaction.write(writer);
+        }
+
+        writer.close();
+
     }
 }

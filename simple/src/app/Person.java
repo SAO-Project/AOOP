@@ -62,29 +62,5 @@ public abstract class Person {
 	public String getFullName(){
 		return firstName + " " + lastName;
 	}
-	
-	/*-----------------------------------------------------------------------------------------------------------------
-	                                            Setters
-	 ----------------------------------------------------------------------------------------------------------------*/
-	
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	
-	public void setDob(String dob) {
-		this.dob = dob;
-	}
-	
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 }
 

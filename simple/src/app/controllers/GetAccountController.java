@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.Account;
+import app.NullAccount;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ import java.util.Optional;
  *
  */
 public class GetAccountController extends RunBankController {
-    private Optional<Account> account = Optional.empty();
+    private Account account = new NullAccount();
     private boolean activateAccount = false;
 
     @FXML Label labelField;
@@ -49,7 +50,7 @@ public class GetAccountController extends RunBankController {
      * @return If empty account was picked.
      */
     public Optional<Account> getAccount() {
-        return account;
+        return account.getOptional();
     }
 
     /**
@@ -59,17 +60,20 @@ public class GetAccountController extends RunBankController {
      * @throws IOException Customer was not set if thrown.
      */
     public void checking(ActionEvent actionEvent) throws IOException {
-        containsCustomer();
+        if (!containsCustomer()){
+            throw new IOException("Customer does not exist");
+        }
         if (activateAccount) {
-            if (this.customer.get().getChecking().getIsActive()) {
+            if (this.customer.getChecking().IsActive()) {
                 AlertBox.display(ERROR, "Account is active");
             } else {
                 getAmount("Enter amount to start with").ifPresent(
-                        balance -> this.customer.get().setChecking(balance));
+                        balance -> this.customer.setChecking(balance));
+                AlertBox.display(SUCCESS, "Successfully activated");
             }
         } else {
-            if (this.customer.get().getChecking().getIsActive()) {
-                this.account = Optional.of(this.customer.get().getChecking());
+            if (this.customer.getChecking().IsActive()) {
+                this.account = this.customer.getChecking();
                 exit(checkingButton);
             } else {
                 AlertBox.display(ERROR, "Checking was not active");
@@ -84,21 +88,24 @@ public class GetAccountController extends RunBankController {
      * @throws IOException Customer was not set if thrown.
      */
     public void savings(ActionEvent actionEvent) throws IOException {
-        containsCustomer();
+        if (!containsCustomer()){
+            throw new IOException("Customer does not exist");
+        }
         if (activateAccount) {
-            if (this.customer.get().getSavings().getIsActive()) {
+            if (this.customer.getSavings().IsActive()) {
                 AlertBox.display(ERROR, "Account is active");
             } else {
                 getAmount("Enter amount to start with").ifPresent(
-                        balance -> this.customer.get().setSavings(balance));
+                        balance -> this.customer.setSavings(balance));
+                AlertBox.display(SUCCESS, "Successfully activated");
             }
         } else {
-            if (this.customer.get().getSavings().getIsActive()) {
-                this.account = Optional.of(this.customer.get().getSavings());
+            if (this.customer.getSavings().IsActive()) {
+                this.account = this.customer.getSavings();
                 exit(checkingButton);
             } else {
                 throw new IOException("Savings was not active for this " +
-                        "account " + this.customer.get().getFullName());
+                        "account " + this.customer.getFullName());
             }
         }
     }
@@ -110,18 +117,21 @@ public class GetAccountController extends RunBankController {
      * @throws IOException Customer was not set if thrown.
      */
     public void credit(ActionEvent actionEvent) throws IOException {
-        containsCustomer();
+        if (!containsCustomer()){
+            throw new IOException("Customer does not exist");
+        }
         if (activateAccount) {
-            if (this.customer.get().getCredit().getIsActive()) {
+            if (this.customer.getCredit().IsActive()) {
                 AlertBox.display(ERROR, "Already active");
             } else {
                 // TODO(Edd1e): Make box for credit max.
                 getAmount("Enter amount to start with").ifPresent(balance ->
-                        this.customer.get().setCredit(balance, 5000));
+                        this.customer.setCredit(balance, 5000));
+                AlertBox.display(SUCCESS, "Successfully activated");
             }
         } else {
-            if (this.customer.get().getCredit().getIsActive()) {
-                this.account = Optional.of(this.customer.get().getCredit());
+            if (this.customer.getCredit().IsActive()) {
+                this.account = this.customer.getCredit();
                 exit(checkingButton);
             } else {
                 AlertBox.display(ERROR, "Inactive");

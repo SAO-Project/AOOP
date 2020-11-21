@@ -1,5 +1,7 @@
 package app;
 
+import java.util.Optional;
+
 /**
  * @author Alex Avila
  * @version 1.0
@@ -28,7 +30,7 @@ public class Checking extends Account {
 		super(number, balance);
 		this.accountType  = AccountType.CHECKING;
 	}
-	
+
 	/**
 	 * Constructor that takes interest rate as a parameter but it is never use because the interest rate is
 	 * not in the csv file.
@@ -47,6 +49,11 @@ public class Checking extends Account {
 	
 	public double getInterestRate() {
 		return interestRate;
+	}
+
+	@Override
+	public Optional<Account> getOptional() {
+		return Optional.of(this);
 	}
 	
 	/*-----------------------------------------------------------------------------------------------------------------

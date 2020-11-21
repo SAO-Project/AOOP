@@ -48,7 +48,7 @@ public class CustomerLoginController extends RunBankController {
      * @return Customer from logging.
      */
     public Optional<Customer> getCustomer() {
-        return this.customer;
+        return this.customer.getOptional();
     }
 
     /**
@@ -66,7 +66,7 @@ public class CustomerLoginController extends RunBankController {
                     "Please enter numbers in text field");
             return;
         }
-        this.customer = bankDB.getCustomer(id);
+        this.customer = bankDB.getCustomer(id).orElseThrow();
 
         // Runs through checks.
         determinePath();
@@ -79,7 +79,7 @@ public class CustomerLoginController extends RunBankController {
      */
     public void enterFullName(ActionEvent actionEvent) {
         System.out.println("Enter Full Name");
-        this.customer = bankDB.getCustomer(enterFullNameTextField.getText());
+        this.customer = bankDB.getCustomer(enterFullNameTextField.getText()).orElseThrow();
 
         // Runs through checks
         determinePath();
@@ -92,14 +92,14 @@ public class CustomerLoginController extends RunBankController {
      */
     public void password(ActionEvent actionEvent)  {
         System.out.println("Entering Password");
-        if (customer.isEmpty()) {
+        if (customer.getOptional().isEmpty()) {
             AlertBox.display(ERROR, "Please enter ID or Name first");
 
-        } else if (customer.get().getPassword().equals(passwordField.getText())
+        } else if (customer.getPassword().equals(passwordField.getText())
                 // Quick access
-        || customer.get().getPassword().equals("m")) {
+        || customer.getPassword().equals("m")) {
             System.out.println(
-                    "Logging in Customer " + customer.get().getFullName());
+                    "Logging in Customer " + customer.getFullName());
             exit(backButton);
         } else {
             AlertBox.display(ERROR, "Password is wrong");
@@ -120,14 +120,14 @@ public class CustomerLoginController extends RunBankController {
      * Makes password portion visiable.
      */
     private void needsPassword() {
-        passwordVbox.setVisible(customer.isPresent());
+        passwordVbox.setVisible(customer.getOptional().isPresent());
     }
 
     /**
      * Closes window if password is not needed.
      */
     private void doesNotNeedPassword() {
-        if (customer.isPresent()) {
+        if (customer.getOptional().isPresent()) {
             exit(backButton);
         }
     }
