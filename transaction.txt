@@ -1,10 +1,10 @@
 Transaction Logs
 Mickey Mouse paid $100.00 to Donald Duck
- is not a valid action
+Mickey Mouse transferred $400.00 from Savings to Checking
 Mickey Mouse inquired their Savings account
 Mickey Mouse withdrew $100.00 from Checking account
 Mickey Mouse deposited $500.00 into their Savings account
- is not a valid action
+Mickey Mouse transferred $300.00 from Savings to Credit
 Alberto Miranda deposited $5000.00 into their Checking account
 Alex Avila deposited $5000.00 into their Checking account
 Alfonso Beltran deposited $5000.00 into their Checking account
@@ -161,9 +161,3 @@ Gaston Disney paid $41.20 to Robert Evans
 Shere Khan withdrew $86.00 from Checking account
 Captaiin Hook paid $11.83 to Sofia Hernandez
 Kaa Disney withdrew $86.00 from Checking account
-Alex Avila inquired their Credit account
-Alex Avila deposited $1000.00 into their Credit account
-Alex Avila inquired their Credit account
-Alex Avila paid $100.00 to Mario Bros
-Alex Avila transferred $900.00 from Savings to Checking
-Alex Avila inquired their Credit account
