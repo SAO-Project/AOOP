@@ -36,11 +36,9 @@ public class BankManagerCustomerMenuController extends RunBankController {
      * Writes a bank statement.
      *
      * @param actionEvent Not used.
-     * @throws IOException If file not found, will display to user. Else if
-     * thrown logical in code.
      */
     public void generateBankStatement(
-            ActionEvent actionEvent) throws IOException {
+            ActionEvent actionEvent) {
         containsCustomer();
         bankDB.getBankStatement(customer)
                 .ifPresent(bankStatement -> bankStatement.createBankStatement(bankDB));
