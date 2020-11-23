@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
  * @version 1.0
  * @since 11/17/20
  *
- *
+ * Controls window to add a new customer to the system.
  */
 public class CreateCustomerMenuController extends RunBankController {
     private String firstName;

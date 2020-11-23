@@ -17,6 +17,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 11/15/20
  *
+ * Controls retrieving and activating accounts.
  */
 public class GetAccountController extends RunBankController {
     private static final int NO_CREDIT_MAX = -1;

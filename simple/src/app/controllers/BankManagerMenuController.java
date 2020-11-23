@@ -19,6 +19,8 @@ import java.io.IOException;
  * @author Edd1e234
  * @version 1.0
  * @since 11/17/20
+ *
+ * Controls bank manager window.
  */
 public class BankManagerMenuController extends RunBankController {
     @FXML Button backButton;

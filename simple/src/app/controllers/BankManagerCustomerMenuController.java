@@ -12,9 +12,6 @@ import java.io.IOException;
  * @since 11/17/20
  *
  * Controller for the Bank Manager Customer Menu window.
- *
- * TODO(Edd1e234): Make customer must have transactions to create bank
- *      statement.
  */
 public class BankManagerCustomerMenuController extends RunBankController {
     @FXML Button backButton;

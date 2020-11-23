@@ -16,7 +16,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 11/14/20
  *
- *
+ * Parent for all controllers.
  */
 abstract class RunBankController {
     // fxml files
