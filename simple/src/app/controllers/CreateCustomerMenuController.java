@@ -166,7 +166,7 @@ public class CreateCustomerMenuController extends RunBankController {
      */
     public void addToSystem(ActionEvent actionEvent) {
         try {
-            Customer customer =
+            Customer newCustomer =
                     new Customer(
                             Validator.validateStr(firstName).orElseThrow(),
                             Validator.validateStr(lastName).orElseThrow(),
@@ -179,11 +179,18 @@ public class CreateCustomerMenuController extends RunBankController {
                             new Checking(),
                             new Credit(),
                             new Savings());
+
+            if (bankDB.containsCustomer(newCustomer.getFullName())) {
+                AlertBox.display(ERROR, "Customer name is already in " +
+                        "system");
+                return;
+            }
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource(ACCOUNT));
             Parent root = loader.load();
 
             GetAccountController getAccountController = loader.getController();
-            getAccountController.setCustomer(customer);
+            getAccountController.setCustomer(newCustomer);
             getAccountController.setMessage("Please activate at least " +
                     "the savings account account");
             getAccountController.setActivateAccount(true);
@@ -192,9 +199,11 @@ public class CreateCustomerMenuController extends RunBankController {
             stage.setScene(new Scene(root));
             stage.showAndWait();
 
-            if (validateCustomer(customer)) {
+            // Adds customer to system.
+            if (newCustomer.getSavings().IsActive()) {
+                bankDB.addCustomer(newCustomer);
                 displayMessage("Customer added\n"
-                        + customer.customerInfoString());
+                        + newCustomer.customerInfoString());
             } else {
                 AlertBox.display(ERROR, "Failed to add to the system");
             }
@@ -214,23 +223,5 @@ public class CreateCustomerMenuController extends RunBankController {
     public void back(ActionEvent actionEvent) throws IOException {
         exit(backButton);
         moveScene(MAIN_MENU, new NullCustomer());
-    }
-
-    /**
-     * Adds customer to the System.
-     *
-     * @param customer Customer to be added.
-     * @return If True customer was added to the system. 
-     */
-    public Boolean validateCustomer(Customer customer) {
-        if (bankDB.containsCustomer(customer.getFullName())) {
-            return false;
-        }
-
-        if (customer.getSavings().IsActive()) {
-            bankDB.addCustomer(customer);
-            return true;
-        }
-        return false;
     }
 }
