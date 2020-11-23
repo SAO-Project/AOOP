@@ -15,7 +15,7 @@ public class ActionReader {
 		this.bank = bank;
 	}
 	
-	public void process(String fileLine){
+	public void process(String fileLine) throws RuntimeException, InvalidTransaction{
 		String[] actions = fileLine.split(",");
 		switch (actions[3]){
 			case "pays":
@@ -33,133 +33,99 @@ public class ActionReader {
 			case "deposits":
 				deposits(actions);
 				break;
+			default:
+				throw new InvalidTransaction(actions[3] + " is not a valid transaction");
 		}
 	}
 	
-	private void pays(String[] actions){
-		
-		try{
-			//Find source user and account
-			Customer srcCustomer = bank.getCustomer(actions[0] + " " + actions[1]).orElseThrow();
-			System.out.println(srcCustomer);
-			Account srcAccount = srcCustomer.getAccountByType(actions[2]);
-			
-			//Find dest user and account
-			Customer destCustomer = bank.getCustomer(actions[4] + " " + actions[5]).orElseThrow();
-			Account destAccount = destCustomer.getAccountByType(actions[6]);
-			
-			double amount = Double.parseDouble(actions[7]);
-			srcAccount.transfer(destAccount, amount);
-			
-			bank.addTransaction(
-					new Transaction(
-							srcCustomer,
-							srcAccount,
-							destCustomer,
-							destAccount,
-							amount, "pays"));
-			
-		}catch(RuntimeException e){
-			String log = e.getMessage() + " in transaction: " + String.join(", ", actions);
-		}
-	}
-	
-	private void transfers(String[] actions){
-		try{
-			//Find source user and account
-			Customer srcCustomer = bank.getCustomer(actions[0] + " " + actions[1]).orElseThrow();
-			Account srcAccount = srcCustomer.getAccountByType(actions[2]);
-			
-			//Find dest user and account
-			Customer destCustomer = bank.getCustomer(actions[4] + " " + actions[5]).orElseThrow();
-			Account destAccount = destCustomer.getAccountByType(actions[6]);
-			
-			double amount = Double.parseDouble(actions[7]);
-			srcAccount.transfer(destAccount, amount);
-			
-			bank.addTransaction(
+	private void pays(String[] actions) throws RuntimeException{
+		//Find source user and account
+		Customer srcCustomer = bank.getCustomer(actions[0] + " " + actions[1]).orElseThrow();
+		System.out.println(srcCustomer);
+		Account srcAccount = srcCustomer.getAccountByType(actions[2]);
+
+		//Find dest user and account
+		Customer destCustomer = bank.getCustomer(actions[4] + " " + actions[5]).orElseThrow();
+		Account destAccount = destCustomer.getAccountByType(actions[6]);
+
+		double amount = Double.parseDouble(actions[7]);
+		srcAccount.transfer(destAccount, amount);
+
+		bank.addTransaction(
 				new Transaction(
 						srcCustomer,
 						srcAccount,
 						destCustomer,
 						destAccount,
-						amount, ""));
-			
-		}catch (NumberFormatException e){
-			System.out.println("Please enter a number");
-		} catch (RuntimeException e){
-			String log = e.getMessage() + " in transaction: " + String.join(", ", actions);
-		}
-		
+						amount, "pays"));
 	}
 	
-	private void inquires(String[] actions){
-		//Find customer
+	private void transfers(String[] actions) throws RuntimeException{
+		//Find source user and account
+		Customer srcCustomer = bank.getCustomer(actions[0] + " " + actions[1]).orElseThrow();
+		Account srcAccount = srcCustomer.getAccountByType(actions[2]);
+
+		//Find dest user and account
+		Customer destCustomer = bank.getCustomer(actions[4] + " " + actions[5]).orElseThrow();
+		Account destAccount = destCustomer.getAccountByType(actions[6]);
+
+		double amount = Double.parseDouble(actions[7]);
+		srcAccount.transfer(destAccount, amount);
+
+		bank.addTransaction(
+				new Transaction(
+						srcCustomer,
+						srcAccount,
+						destCustomer,
+						destAccount,
+						amount,
+						"transfers"));
+	}
+	
+	private void inquires(String[] actions) throws RuntimeException{
 		System.out.println(actions[0]);
 		System.out.println(bank.getCustomer(actions[0] + " " + actions[1]));
 		Customer customer = bank.getCustomer(actions[0] + " " + actions[1]).orElseThrow();
-		
-		//Add transaction
+
 		bank.addTransaction(
-			new Transaction(
-				customer,
-				customer.getAccountByType(actions[2]),
-				new NullCustomer(),
-				new NullAccount(),
-				0,
-				"inquires"));
+				new Transaction(
+						customer,
+						customer.getAccountByType(actions[2]),
+						new NullCustomer(),
+						new NullAccount(),
+						0,
+						"inquires"));
 	}
 	
-	private void withdraws(String[] actions){
-		try{
-			//Find account and Customer
-			Customer customer = bank.getCustomer(actions[0] + " " + actions[1]).orElseThrow();
-			Account account = customer.getAccountByType(actions[2]);
-			double amount = Double.parseDouble(actions[7]);
-			account.withdraw(amount);
-			
-			bank.addTransaction(
+	private void withdraws(String[] actions) throws RuntimeException{
+		Customer customer = bank.getCustomer(actions[0] + " " + actions[1]).orElseThrow();
+		Account account = customer.getAccountByType(actions[2]);
+		double amount = Double.parseDouble(actions[7]);
+		account.withdraw(amount);
+
+		bank.addTransaction(
 				new Transaction(
-					customer,
-					account,
-					new NullCustomer(),
-					new NullAccount(),
-					amount,
-					"withdraws"));
-		}catch (NullPointerException e){
-			String log = "Failed Transaction: ";
-			for(int i = 0; i < actions.length; i++){
-				log += actions[i];
-			}
-		}catch (RuntimeException e){
-			String log = e.getMessage() + " in transaction: " + String.join(", ", actions);
-		}
+						customer,
+						account,
+						new NullCustomer(),
+						new NullAccount(),
+						amount,
+						"withdraws"));
 	}
 	
-	private void deposits(String[] actions){
-		try{
-			//Get customer and account to deposit
-			Customer customer = bank.getCustomer(actions[4] + " " + actions[5]).orElseThrow();
-			Account account = customer.getAccountByType(actions[6]);
-			double amount = Double.parseDouble(actions[7]);
-			account.deposit(Double.parseDouble(actions[7]));
-			
-			bank.addTransaction(
+	private void deposits(String[] actions) throws RuntimeException{
+		Customer customer = bank.getCustomer(actions[4] + " " + actions[5]).orElseThrow();
+		Account account = customer.getAccountByType(actions[6]);
+		double amount = Double.parseDouble(actions[7]);
+		account.deposit(Double.parseDouble(actions[7]));
+
+		bank.addTransaction(
 				new Transaction(
-					customer,
-					account,
-					customer,
-					account,
-					amount,
-					"deposits"));
-			
-		} catch (NullPointerException e){
-			String log = e.getMessage() + " in transaction: " + String.join(", ", actions);
-		} catch (RuntimeException e){
-			String log = e.getMessage() + " in transaction: ";
-			for(int i = 0; i < actions.length; i++){
-				log += actions[i];
-			}
-		}
+						new NullCustomer(),
+						new NullAccount(),
+						customer,
+						account,
+						amount,
+						"deposits"));
 	}
 }
