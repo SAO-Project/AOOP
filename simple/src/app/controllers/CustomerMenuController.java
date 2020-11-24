@@ -191,9 +191,8 @@ public class CustomerMenuController extends RunBankController {
         System.out.println("pay");
         if (!customer.getChecking().IsActive()) {
             AlertBox.display(ERROR, "Please activate checking account");
+            return;
         }
-
-        // TODO(Edd1e234): Translate this to its own method.
         FXMLLoader loader =
                 new FXMLLoader(getClass().getResource(CUSTOMER_LOGIN));
         Parent root = loader.load();
