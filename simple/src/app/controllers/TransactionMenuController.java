@@ -19,7 +19,7 @@ import java.util.Scanner;
  * @version 1.0
  * @since 11/17/20
  *
- * Performs transactions.
+ * Controls menu to perfrom actions.
  */
 public class TransactionMenuController extends RunBankController {
     @FXML Button backButton;

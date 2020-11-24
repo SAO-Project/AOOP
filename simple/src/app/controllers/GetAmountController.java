@@ -12,6 +12,8 @@ import java.util.Optional;
  * @author Edd1e234
  * @version 1.0
  * @since 11/14/20
+ *
+ * Controls retrieving money from user window.
  */
 public class GetAmountController extends RunBankController {
     Optional<Double> amount = Optional.empty();

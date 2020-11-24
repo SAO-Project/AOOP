@@ -2,7 +2,7 @@ package app;
 
 import java.util.Optional;
 
-public class NullAccount extends Account{
+public class NullAccount extends Account {
 
     @Override
     public Optional<Account> getOptional() {

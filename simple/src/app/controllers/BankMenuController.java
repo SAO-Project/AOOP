@@ -14,7 +14,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 11/18/20
  *
- * First window to display.
+ * First window to display. Reads bank data.
  */
 public class BankMenuController extends RunBankController {
     @FXML TextField textField;

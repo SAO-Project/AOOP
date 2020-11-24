@@ -1,6 +1,8 @@
 package app.controllers;
 
 import app.Account;
+import app.AccountType;
+import app.Customer;
 import app.NullAccount;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,8 +17,12 @@ import java.util.Optional;
  * @version 1.0
  * @since 11/15/20
  *
+ * Controls retrieving and activating accounts.
  */
 public class GetAccountController extends RunBankController {
+    private static final int NO_CREDIT_MAX = -1;
+    private static final int DEFAULT_CREDIT_MAX = 5000;
+
     private Account account = new NullAccount();
     private boolean activateAccount = false;
 
@@ -68,8 +74,8 @@ public class GetAccountController extends RunBankController {
                 AlertBox.display(ERROR, "Account is active");
             } else {
                 getAmount("Enter amount to start with").ifPresent(
-                        balance -> this.customer.setChecking(balance));
-                AlertBox.display(SUCCESS, "Successfully activated");
+                        balance -> activateAccount(
+                                this.customer, AccountType.CHECKING, balance));
             }
         } else {
             if (this.customer.getChecking().IsActive()) {
@@ -96,8 +102,8 @@ public class GetAccountController extends RunBankController {
                 AlertBox.display(ERROR, "Account is active");
             } else {
                 getAmount("Enter amount to start with").ifPresent(
-                        balance -> this.customer.setSavings(balance));
-                AlertBox.display(SUCCESS, "Successfully activated");
+                        balance -> activateAccount(
+                                this.customer, AccountType.SAVINGS, balance));
             }
         } else {
             if (this.customer.getSavings().IsActive()) {
@@ -124,10 +130,9 @@ public class GetAccountController extends RunBankController {
             if (this.customer.getCredit().IsActive()) {
                 AlertBox.display(ERROR, "Already active");
             } else {
-                // TODO(Edd1e): Make box for credit max.
-                getAmount("Enter amount to start with").ifPresent(balance ->
-                        this.customer.setCredit(balance, 5000));
-                AlertBox.display(SUCCESS, "Successfully activated");
+                getAmount("Enter amount to start with").ifPresent(
+                        balance -> activateAccount(
+                                this.customer, AccountType.CREDIT, balance));
             }
         } else {
             if (this.customer.getCredit().IsActive()) {
@@ -146,5 +151,43 @@ public class GetAccountController extends RunBankController {
      */
     public void back(ActionEvent actionEvent) {
         exit(backButton);
+    }
+
+    /**
+     * Activates a given account.
+     *
+     * @param customer The customer to activate account.
+     * @param accountType Which account to activate.
+     * @param balance The amount of money to activate the account with.
+     */
+    private void activateAccount(
+            Customer customer, AccountType accountType, double balance) {
+        switch (accountType) {
+            case SAVINGS:
+                customer.setSavings(balance);
+                break;
+            case CHECKING:
+                customer.setChecking(balance);
+                break;
+            case CREDIT:
+                try {
+                    Optional<Double> creditMax = getAmount("Enter Credit Max ");
+                    if (creditMax.isPresent()) {
+                        customer.setCredit(balance,
+                                (int) Math.round(creditMax.get()));
+                        break;
+                    }
+                    AlertBox.display(ERROR, "Failed to activate account");
+                } catch (Exception e) {
+                    AlertBox.display(ERROR, "Operation Failed exception " +
+                            "thrown");
+                }
+                return;
+                default:
+                    AlertBox.display(ERROR, "IN ACTIVATE ACCOUNT IN " +
+                            "getAccountController AND DEFAULT OPTION WAS SET");
+                    return;
+        }
+        AlertBox.display(SUCCESS, "Successfully added");
     }
 }
