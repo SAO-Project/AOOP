@@ -111,7 +111,7 @@ abstract class RunBankController {
     /**
      * Gets customer for the controller.
      *
-     * @return Optional customer. 
+     * @return Optional customer.
      */
     protected Optional<Customer> getCustomer() {
         return customer.getOptional();

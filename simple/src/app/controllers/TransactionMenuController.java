@@ -32,9 +32,8 @@ public class TransactionMenuController extends RunBankController {
      * @throws IOException IOException should not be thrown, only for file
      * retrieval.
      */
-    public void performTransactions(
-            ActionEvent actionEvent
-    ) throws IOException {
+    public void performTransactions(ActionEvent actionEvent)
+            throws IOException {
         if (textField.getText().length() == 0) {
             AlertBox.display(ERROR, "Please enter file name");
             return;
@@ -52,11 +51,16 @@ public class TransactionMenuController extends RunBankController {
         Scanner fileScanner = new Scanner(transactionFile);
 
         ActionReader actionReader = new ActionReader(this.bankDB);
-        fileScanner.next();
+        fileScanner.nextLine();
 
         // Process.
         while (fileScanner.hasNextLine()) {
-            processTransactions(fileScanner, actionReader);
+            try {
+                processTransactions(fileScanner, actionReader);
+            } catch (InvalidTransaction e) {
+                System.out.println("Failed to perform transaction "
+                        + e.getMessage());
+            }
         }
         AlertBox.display(SUCCESS, "File was process");
     }
@@ -64,9 +68,6 @@ public class TransactionMenuController extends RunBankController {
     private void processTransactions(Scanner fileScanner, ActionReader actionReader) {
         try{
             actionReader.process(fileScanner.nextLine());
-        } catch (InvalidTransaction e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
         }
