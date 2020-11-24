@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Optional;
 
@@ -113,10 +112,20 @@ abstract class RunBankController {
         return customer.getOptional();
     }
 
+    /**
+     * Checks if the customer is not null.
+     *
+     * @return If true, controller contains a customer.
+     */
     protected boolean containsCustomer() {
         return customer.getOptional().isPresent();
     }
 
+    /**
+     * Sets the model for the controller to retrieve data from.
+     *
+     * @param bankDB Contains all customer data.
+     */
     public void enterData(IBankDB bankDB) {
         this.bankDB = bankDB;
     }
@@ -151,7 +160,6 @@ abstract class RunBankController {
      */
     protected Optional<Account> getAccount(String message) throws IOException {
         containsCustomer();
-        // TODO(Edd1e234): Add message feature
         FXMLLoader fxmlLoader =
                 new FXMLLoader(getClass().getResource(ACCOUNT));
         Parent root = fxmlLoader.load();
@@ -188,7 +196,11 @@ abstract class RunBankController {
         stage.showAndWait();
     }
 
-    // Exits from scene.
+    /**
+     * Exits from window.
+     *
+     * @param button Source of scene.
+     */
     protected void exit(Button button) {
         ((Stage) button.getScene().getWindow()).close();
     }
@@ -203,7 +215,6 @@ abstract class RunBankController {
         }catch(IOException e){
             AlertBox.display(ERROR, "There was an error printing the transactions");
         }
-
         System.exit(0);
     }
 }
